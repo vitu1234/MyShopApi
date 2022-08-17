@@ -26,3 +26,11 @@ Route::prefix('category')->group(function () {
     Route::put('/{id}', ['App\Http\Controllers\CategoryController', 'update']);
     Route::delete('/{id}', ['App\Http\Controllers\CategoryController', 'destroy']);
 });
+
+Route::prefix('product')->group(function () {
+    Route::get('/', ['App\Http\Controllers\ProductController', 'index']);
+    Route::get('/{id}', ['App\Http\Controllers\ProductController', 'show']);
+    Route::post('/', ['App\Http\Controllers\ProductController', 'store']);
+    Route::put('/{id}', ['App\Http\Controllers\ProductController', 'update']);
+    Route::delete('/{id}', ['App\Http\Controllers\ProductController', 'destroy']);
+});
