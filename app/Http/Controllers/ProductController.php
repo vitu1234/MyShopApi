@@ -21,6 +21,17 @@ class ProductController extends Controller
         return response()->json($products, 200);
     }
 
+    public function product_by_category($category_id)
+    {
+        $products = DB::connection('mysql')->select(
+            'SELECT * FROM product WHERE category_id = :category_id',
+            [
+                'category_id'=>$category_id
+            ]
+        );
+        return response()->json($products, 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -77,12 +88,14 @@ class ProductController extends Controller
                     product_name,
                     qty,
                     price,
+                    product_description,
                     img_url
                     ) VALUES (
                     :category_id,
                     :product_name,
                     :qty,
                     :price,
+                    :product_description,
                     :img_url
                     )
             ',
@@ -91,6 +104,7 @@ class ProductController extends Controller
                 'product_name' => $request->product_name,
                 'qty' => $request->qty,
                 'price' => $request->price,
+                'product_description' => $request->product_description,
                 'img_url' => $fileNamToStore
             ]
         );
@@ -177,6 +191,7 @@ class ProductController extends Controller
             category_id  =:category_id,
             product_name  =:product_name,
             qty  =:qty,
+            product_description  =:product_description,
             price  =:price
             WHERE product_id =:product_id
             ',
@@ -185,6 +200,7 @@ class ProductController extends Controller
                     'product_name' => $request->product_name,
                     'qty' => $request->qty,
                     'price' => $request->price,
+                    'product_description' => $request->product_description,
                     'img_url' => $fileNamToStore,
                     'product_id' => $id
                 ]
