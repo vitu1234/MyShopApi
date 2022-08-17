@@ -15,10 +15,17 @@ class CategoryController extends Controller
     public function index()
     {
         $category = DB::connection('mysql')->select(
+            'SELECT * FROM category'
+        );
+        return response()->json($category, 200);
+    }
+
+    public function limited_categories()
+    {
+        $category = DB::connection('mysql')->select(
             'SELECT * FROM category ORDER BY RAND() LIMIT 10 '
         );
         return response()->json($category, 200);
-
     }
 
     /**
@@ -39,7 +46,27 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'category_name' => 'string|required|max:255'
+        ]);
+
+        $saveData = DB::connection('mysql')->insert(
+            '
+                INSERT INTO category(
+                    category_name
+                    ) VALUES (
+                    :category_name
+                    )
+            ',
+            [
+                'category_name' => $request->category_name
+            ]
+        );
+        if ($saveData) {
+            return response()->json(['isError' => false, 'message' => 'Category save successful'], 200);
+        } else {
+            return response()->json(['isError' => true, 'message' => 'Category save failed'], 201);
+        }
     }
 
     /**
@@ -50,7 +77,15 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $category = DB::connection('mysql')->select(
+            'SELECT * FROM category WHERE category_id =:id ', ['id' => $id]
+        );
+        if (!empty($category)) {
+            return response()->json($category[0], 200);
+        } else {
+            return response()->json($category, 200);
+
+        }
     }
 
     /**
@@ -73,7 +108,28 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'category_name' => 'string|required|max:255'
+        ]);
+
+        $saveData = DB::connection('mysql')->update(
+            '
+            UPDATE category 
+            SET
+            category_name =:category_name
+                
+            WHERE category_id =:id
+            ',
+            [
+                'category_name' => $request->category_name,
+                'id' => $id
+            ]
+        );
+        if ($saveData) {
+            return response()->json(['isError' => false, 'message' => 'Category update successful'], 200);
+        } else {
+            return response()->json(['isError' => true, 'message' => 'Category update failed'], 201);
+        }
     }
 
     /**
@@ -84,6 +140,11 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delete = DB::connection('mysql')->delete('DELETE FROM category WHERE category_id=:id', ['id' => $id]);
+        if ($delete) {
+            return response()->json(['isError' => false, 'message' => 'Category delete successful'], 200);
+        } else {
+            return response()->json(['isError' => true, 'message' => 'Category delete failed'], 201);
+        }
     }
 }
