@@ -35,3 +35,7 @@ Route::prefix('product')->group(function () {
     Route::put('/{id}', ['App\Http\Controllers\ProductController', 'update']);
     Route::delete('/{id}', ['App\Http\Controllers\ProductController', 'destroy']);
 });
+
+Route::prefix('homescreen')->group(function () {
+    Route::get('/', ['App\Http\Controllers\HomeScreenController', 'index']);
+});
