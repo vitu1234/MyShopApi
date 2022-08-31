@@ -11,14 +11,24 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
         $products = DB::connection('mysql')->select(
-            'SELECT * FROM product'
+            'SELECT product.*, category.category_name FROM product
+                    LEFT JOIN category
+                    ON product.category_id = category.category_id
+               '
         );
-        return response()->json($products, 200);
+        $categories = DB::connection('mysql')->select(
+            'SELECT * FROM category ORDER BY category_name ASC',
+        );
+        $array = array();
+        $array['categories'] = $categories;
+        $array['products'] = $products;
+
+        return response()->json($array, 200);
     }
 
     public function product_by_category($category_id)
@@ -26,7 +36,7 @@ class ProductController extends Controller
         $products = DB::connection('mysql')->select(
             'SELECT * FROM product WHERE category_id = :category_id',
             [
-                'category_id'=>$category_id
+                'category_id' => $category_id
             ]
         );
         return response()->json($products, 200);
