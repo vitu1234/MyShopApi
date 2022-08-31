@@ -10,25 +10,21 @@ class HomeScreenController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
         $categories = DB::connection('mysql')->select(
             'SELECT * FROM category ORDER BY RAND()',
         );
-        $products_first_row = DB::connection('mysql')->select(
-            'SELECT * FROM product ORDER BY RAND() LIMIT 10',
-        );
 
-        $products_flash = DB::connection('mysql')->select(
+        $products_homescreen = DB::connection('mysql')->select(
             'SELECT * FROM product ORDER BY RAND() LIMIT 20',
         );
 
         $array = array();
         $array['categories'] = $categories;
-        $array['products_first_row'] = $products_first_row;
-        $array['products_flash'] = $products_flash;
+        $array['products_homescreen'] = $products_homescreen;
 
 
         return response()->json($array, 200);
