@@ -53,7 +53,7 @@ class ProductController extends Controller
         $request->validate([
             'category_id' => 'integer|required',
             'product_name' => 'string|required',
-            'product_description' => 'string|nullable|max:255',
+            'product_description' => 'string|nullable',
             'qty' => 'integer|required',
             'price' => 'numeric|required',
             'img_url' => 'image|required|max:3000'
@@ -149,7 +149,7 @@ class ProductController extends Controller
         $request->validate([
             'category_id' => 'integer|required',
             'product_name' => 'string|required',
-            'product_description' => 'string|nullable|max:255',
+            'product_description' => 'string|nullable',
             'qty' => 'integer|required',
             'price' => 'numeric|required',
             'img_url' => 'image|required|max:3000'
@@ -185,8 +185,8 @@ class ProductController extends Controller
 
             $saveData = DB::connection('mysql')->update(
                 '
-            UPDATE product 
-            SET           
+            UPDATE product
+            SET
             img_url =:img_url,
             category_id  =:category_id,
             product_name  =:product_name,
@@ -227,7 +227,7 @@ class ProductController extends Controller
         if (!empty($checkProduct)) {
 
 
-            $delete = DB::connection('mysql')->select('DELETE FROM product WHERE product_id=:product_id', ['product_id' => $id]);
+            $delete = DB::connection('mysql')->delete('DELETE FROM product WHERE product_id=:product_id', ['product_id' => $id]);
             if ($delete) {
                 if ($checkProduct[0]->img_url != 'noimage.jpg') {
                     //delete image
