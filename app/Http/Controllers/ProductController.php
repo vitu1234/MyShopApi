@@ -33,13 +33,29 @@ class ProductController extends Controller
 
     public function product_by_category($category_id)
     {
+
         $products = DB::connection('mysql')->select(
-            'SELECT * FROM product WHERE category_id = :category_id',
+            'SELECT product.*, category.category_name FROM product
+                    LEFT JOIN category
+                    ON product.category_id = category.category_id
+                WHERE product.category_id = :category_id
+               ',
             [
                 'category_id' => $category_id
             ]
         );
-        return response()->json($products, 200);
+        $categories = DB::connection('mysql')->select(
+            'SELECT *FROM category ORDER BY (category_id <> :category_id) ASC,category_id; '
+            ,
+            [
+                'category_id' => $category_id
+            ]
+        );
+        $array = array();
+        $array['categories'] = $categories;
+        $array['products'] = $products;
+
+        return response()->json($array, 200);
     }
 
     /**
