@@ -39,3 +39,13 @@ Route::prefix('product')->group(function () {
 Route::prefix('homescreen')->group(function () {
     Route::get('/', ['App\Http\Controllers\HomeScreenController', 'index']);
 });
+
+
+Route::prefix('user')->group(function () {
+    Route::get('/', ['App\Http\Controllers\UserController', 'index']);
+    Route::get('/{id}', ['App\Http\Controllers\UserController', 'show']);
+    Route::post('/', ['App\Http\Controllers\UserController', 'store']);
+    Route::put('/{id}', ['App\Http\Controllers\UserController', 'update']);
+    Route::put('/profile/{id}', ['App\Http\Controllers\UserController', 'remove_profile_picture']);
+    Route::delete('/{id}', ['App\Http\Controllers\UserController', 'destroy']);
+});
