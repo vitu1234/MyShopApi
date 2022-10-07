@@ -164,7 +164,7 @@ class UserController extends Controller
                     Mail::to($request->email)->send(new \App\Mail\MailConfig($details));
                 }
 
-                return response()->json(['isError' => false, 'message' => 'Account created, we sent you an email to verify your account'], 200);
+                return response()->json(['isError' => false, 'message' => 'Account created, we sent you a code to verify your account'], 200);
             } else {
                 return response()->json(['isError' => true, 'message' => 'Failed creating user profile'], 201);
             }
