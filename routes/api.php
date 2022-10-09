@@ -50,3 +50,12 @@ Route::prefix('user')->group(function () {
     Route::post('/verify_email_phone_code', ['App\Http\Controllers\UserController', 'verify_email_phone_code']);
     Route::delete('/{id}', ['App\Http\Controllers\UserController', 'destroy']);
 });
+
+Route::group(['prefix' => 'auth'], function ($router) {
+
+    Route::post('login', 'App\Http\Controllers\AuthController@login');
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::post('me', 'AuthController@me');
+
+});
