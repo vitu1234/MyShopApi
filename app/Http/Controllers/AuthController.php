@@ -37,22 +37,35 @@ class AuthController extends Controller
             $credentials = request(['phone', 'password']);
         }
 
-//        echo '<pre>';
-//        print_r($credentials);
-//        echo '</pre>';
-//        return;
-
         if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['isError' => true, 'message' => "Wrong username or password!"], 401);
         }
         $json = $this->respondWithToken($token)->getData();
         $user = $this->me()->getData();
         $access_token = $json->access_token;
         $result = array();
-        $result['access_token'] = $access_token;
-//        $result['username'] = $user->username;
 
-        return $this->respondWithToken($token);
+        $result['access_token'] = $access_token;
+        $result['user_id'] = $user->user_id;
+        $result['first_name'] = $user->first_name;
+        $result['last_name'] = $user->last_name;
+        $result['phone'] = $user->phone;
+        $result['email'] = $user->email;
+        $result['profile_img'] = $user->profile_img;
+        $result['is_active'] = $user->is_active;
+        $result['is_verified'] = $user->is_verified;
+
+        if ($user->is_active != 1) {
+            return response()->json(['isError' => true, 'message' => "Your account is in an inactive state, contact admin!"], 201);
+        }
+
+        if ($user->is_verified != 1) {
+            return response()->json(['isError' => true, 'message' => "Verify your account first to proceed, if message persists, contact admin !"], 201);
+        }
+
+        return response()->json(['isError' => false, 'message' => "Login successful!", "user_data" => $result], 200);
+
+
     }
 
     /**
