@@ -24,11 +24,33 @@ class AuthController extends Controller
      */
     public function login()
     {
-        $credentials = request(['email', 'password']);
+//        $credentials = request(['email', 'password']);
+
+        //input validation
+        if (!isset(request(['password'])['password']) && (!isset(request(['email'])['email']) || !isset(request(['phone'])['phone']))) {
+            return response()->json(['isError' => true, 'message' => 'Both fields are required, please check input!'], 201);
+        }
+
+        if (!empty(request(['email'])['email'])) {
+            $credentials = request(['email', 'password']);
+        } else {
+            $credentials = request(['phone', 'password']);
+        }
+
+//        echo '<pre>';
+//        print_r($credentials);
+//        echo '</pre>';
+//        return;
 
         if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+        $json = $this->respondWithToken($token)->getData();
+        $user = $this->me()->getData();
+        $access_token = $json->access_token;
+        $result = array();
+        $result['access_token'] = $access_token;
+//        $result['username'] = $user->username;
 
         return $this->respondWithToken($token);
     }
