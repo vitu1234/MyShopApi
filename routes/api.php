@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
+
 Route::prefix('category')->group(function () {
     Route::get('/', ['App\Http\Controllers\CategoryController', 'index']);
     Route::get('/limited_categories', ['App\Http\Controllers\CategoryController', 'limited_categories']);
@@ -56,6 +57,6 @@ Route::group(['prefix' => 'auth'], function ($router) {
     Route::post('login', 'App\Http\Controllers\AuthController@login');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
-    Route::post('me', 'AuthController@me');
+    Route::get('me', 'App\Http\Controllers\AuthController@me');
 
 });
