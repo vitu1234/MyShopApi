@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
-
 Route::prefix('category')->group(function () {
     Route::get('/', ['App\Http\Controllers\CategoryController', 'index']);
     Route::get('/limited_categories', ['App\Http\Controllers\CategoryController', 'limited_categories']);
@@ -48,11 +47,16 @@ Route::prefix('user')->group(function () {
     Route::post('/', ['App\Http\Controllers\UserController', 'store']);
     Route::put('/{id}', ['App\Http\Controllers\UserController', 'update']);
     Route::put('/profile/{id}', ['App\Http\Controllers\UserController', 'remove_profile_picture']);
-    Route::post('/verify_email_phone_code', ['App\Http\Controllers\UserController', 'verify_email_phone_code']);
+    Route::put('/verify_email_phone_code/{id}', ['App\Http\Controllers\UserController', 'verify_email_phone_code']);
     Route::delete('/{id}', ['App\Http\Controllers\UserController', 'destroy']);
 });
 
-Route::group(['prefix' => 'auth'], function ($router) {
+Route::group([
+
+    'middleware' => 'api',
+    'prefix' => 'auth'
+
+], function ($router) {
 
     Route::post('login', 'App\Http\Controllers\AuthController@login');
     Route::post('logout', 'AuthController@logout');

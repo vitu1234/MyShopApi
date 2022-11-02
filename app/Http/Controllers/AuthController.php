@@ -24,48 +24,13 @@ class AuthController extends Controller
      */
     public function login()
     {
-//        $credentials = request(['email', 'password']);
+        $credentials = request(['phone', 'password']);
 
-        //input validation
-        if (!isset(request(['password'])['password']) && (!isset(request(['email'])['email']) || !isset(request(['phone'])['phone']))) {
-            return response()->json(['isError' => true, 'message' => 'Both fields are required, please check input!'], 201);
+        if (! $token = auth()->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        if (!empty(request(['email'])['email'])) {
-            $credentials = request(['email', 'password']);
-        } else {
-            $credentials = request(['phone', 'password']);
-        }
-
-        if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['isError' => true, 'message' => "Wrong username or password!"], 401);
-        }
-        $json = $this->respondWithToken($token)->getData();
-        $user = $this->me()->getData();
-        $access_token = $json->access_token;
-        $result = array();
-
-        $result['access_token'] = $access_token;
-        $result['user_id'] = $user->user_id;
-        $result['first_name'] = $user->first_name;
-        $result['last_name'] = $user->last_name;
-        $result['phone'] = $user->phone;
-        $result['email'] = $user->email;
-        $result['profile_img'] = $user->profile_img;
-        $result['is_active'] = $user->is_active;
-        $result['is_verified'] = $user->is_verified;
-
-        if ($user->is_active != 1) {
-            return response()->json(['isError' => true, 'message' => "Your account is in an inactive state, contact admin!"], 201);
-        }
-
-        if ($user->is_verified != 1) {
-            return response()->json(['isError' => true, 'message' => "Verify your account first to proceed, if message persists, contact admin !"], 201);
-        }
-
-        return response()->json(['isError' => false, 'message' => "Login successful!", "user_data" => $result], 200);
-
-
+        return $this->respondWithToken($token);
     }
 
     /**
@@ -103,7 +68,7 @@ class AuthController extends Controller
     /**
      * Get the token array structure.
      *
-     * @param string $token
+     * @param  string $token
      *
      * @return \Illuminate\Http\JsonResponse
      */
