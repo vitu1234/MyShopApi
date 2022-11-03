@@ -164,7 +164,7 @@ class UserController extends Controller
                     Mail::to($request->email)->send(new \App\Mail\MailConfig($details));
                 }
 
-                return response()->json(['isError' => false, 'message' => 'Account created, we sent you an email to verify your account'], 200);
+                return response()->json(['isError' => false, 'message' => 'Account created, we sent you a code to verify your account'], 200);
             } else {
                 return response()->json(['isError' => true, 'message' => 'Failed creating user profile'], 201);
             }
@@ -310,54 +310,70 @@ class UserController extends Controller
         }
     }
 
-    public function verify_email_phone_code(Request $request, $id)
+    public function verify_email_phone_code(Request $request)
     {
         $request->validate([
             'code' => 'integer|required',
+            'email' => 'string|nullable',
+            'phone' => 'string|required',
         ]);
 
-        $checkUser = DB::connection('mysql')->select('SELECT * FROM user WHERE user_id =:user_id', ['user_id' => $id]);
+        $checkUser = DB::connection('mysql')->select('
+            SELECT * FROM user
+            WHERE
+            phone =:phone
+            OR email =:email
+                     ',
+            [
+                'phone' => $request->phone,
+                'email' => $request->email
+            ]);
         if (!empty($checkUser)) {
+            $id = $checkUser[0]->user_id;
+            $is_verified = $checkUser[0]->is_verified;
+            if (!$is_verified) {
+                $checkCode = DB::connection('mysql')->select('SELECT * FROM user_account_verification WHERE user_id =:user_id', ['user_id' => $id]);
+                if (!empty($checkCode)) {
+                    if ($checkCode[0]->code == $request->code) {
 
-            $checkCode = DB::connection('mysql')->select('SELECT * FROM user_account_verification WHERE user_id =:user_id', ['user_id' => $id]);
-            if (!empty($checkCode)) {
-                if ($checkCode[0]->code == $request->code) {
-
-                    $expiry = strtotime($checkCode[0]->expires_at);
-                    $date_now = strtotime(date("Y-m-d H:i:s"));
-                    if ($expiry >= $date_now) {
-                        $saveData = DB::connection('mysql')->update(
-                            '
-            UPDATE user
-            SET
-            is_verified=:is_verified
-            WHERE user_id =:user_id
-            ',
-                            [
-                                'is_verified' => 1,
-                                'user_id' => $id
-                            ]
-                        );
-                        if ($saveData) {
-                            DB::connection('mysql')->delete('DELETE FROM user_account_verification WHERE user_id=:user_id', ['user_id' => $id]);
-                            return response()->json(['isError' => false, 'message' => 'Your account has been verified!'], 200);
+                        $expiry = strtotime($checkCode[0]->expires_at);
+                        $date_now = strtotime(date("Y-m-d H:i:s"));
+                        if ($expiry >= $date_now) {
+                            $saveData = DB::connection('mysql')->update(
+                                '
+                                UPDATE user
+                                SET
+                                is_verified=:is_verified
+                                WHERE user_id =:user_id
+                                ',
+                                [
+                                    'is_verified' => 1,
+                                    'user_id' => $id
+                                ]
+                            );
+                            if ($saveData) {
+                                DB::connection('mysql')->delete('DELETE FROM user_account_verification WHERE user_id=:user_id', ['user_id' => $id]);
+                                return response()->json(['isError' => false, 'message' => 'Your account has been verified!'], 200);
+                            } else {
+                                return response()->json(['isError' => true, 'message' => 'Verification failed, please try again later!'], 201);
+                            }
                         } else {
-                            return response()->json(['isError' => true, 'message' => 'Verification failed, please try again later!'], 201);
+                            return response()->json(['isError' => true, 'message' => 'Verification failed, the code you entered has expired!'], 201);
                         }
+
                     } else {
-                        return response()->json(['isError' => true, 'message' => 'Verification failed, the code you entered has expired!'], 201);
+                        return response()->json(['isError' => true, 'message' => 'Verification failed, please enter the correct code!'], 201);
                     }
 
                 } else {
-                    return response()->json(['isError' => true, 'message' => 'Verification failed, please enter the correct code!'], 201);
+                    return response()->json(['isError' => true, 'message' => 'Failed to verify your email, please click on resend verification code to resend!'], 201);
                 }
-
             } else {
-                return response()->json(['isError' => true, 'message' => 'Failed to verify your email, please click on resend verification code to resend!'], 201);
+                return response()->json(['isError' => true, 'message' => 'Oops! it seems like you are already verified, please login to continue!'], 201);
             }
 
         } else {
-            return response()->json(['isError' => true, 'message' => 'Requested resource not found'], 201);
+            return response()->json(['isError' => true, 'message' => 'Requested resource or user not found'], 201);
         }
     }
 
