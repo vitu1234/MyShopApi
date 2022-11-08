@@ -75,7 +75,8 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(auth()->user());
+
+        return response()->json(["isError" => false, 'user_data' => auth()->user()]);
     }
 
     /**
@@ -87,7 +88,7 @@ class AuthController extends Controller
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(["isError" => false, 'message' => 'Successfully logged out']);
     }
 
     /**
