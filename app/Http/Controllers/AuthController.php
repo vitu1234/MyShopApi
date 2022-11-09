@@ -41,9 +41,12 @@ class AuthController extends Controller
             return response()->json(['isError' => true, 'message' => "Wrong username or password!"], 401);
         }
         $json = $this->respondWithToken($token)->getData();
-        $user = $this->me()->getData();
+        $user = $this->me()->getData()->user_data;
         $access_token = $json->access_token;
         $result = array();
+
+//        return $user->user_data;
+
 
         $result['access_token'] = $access_token;
         $result['user_id'] = $user->user_id;
