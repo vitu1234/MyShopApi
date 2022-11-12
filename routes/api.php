@@ -61,6 +61,6 @@ Route::group([
     Route::post('login', 'App\Http\Controllers\AuthController@login');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
-    Route::get('me', 'App\Http\Controllers\AuthController@me');
+    Route::get('profile', 'App\Http\Controllers\AuthController@me');
 
 });
