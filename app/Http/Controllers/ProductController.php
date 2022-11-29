@@ -2,12 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
+
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['index', 'product_by_category',]]);
+    }
+
+    //===============================================
+    //=============PRODUCT===========================
+    //===============================================
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +26,9 @@ class ProductController extends Controller
     public function index()
     {
         $products = DB::connection('mysql')->select(
-            'SELECT product.*, category.category_name FROM product
+            'SELECT product.*, category.category_name,
+                    (SELECT COUNT(*) FROM product_like WHERE product_like.product_id = product.product_id) AS likes
+                    FROM product
                     LEFT JOIN category
                     ON product.category_id = category.category_id
                '
@@ -35,7 +47,9 @@ class ProductController extends Controller
     {
 
         $products = DB::connection('mysql')->select(
-            'SELECT product.*, category.category_name FROM product
+            'SELECT product.*, category.category_name
+                    (SELECT COUNT(*) FROM product_like WHERE product_like.product_id = product.product_id) AS likes
+                    FROM product
                     LEFT JOIN category
                     ON product.category_id = category.category_id
                 WHERE product.category_id = :category_id
@@ -268,4 +282,189 @@ class ProductController extends Controller
             return response()->json(['isError' => true, 'message' => 'Requested resource failed'], 201);
         }
     }
+
+
+    //===============================================
+    //=============PRODUCT LIKES=====================
+    //===============================================
+    //products liked by user
+    public function get_user_wishlist()
+    {
+        $auth_instance = new AuthController();
+        $user = $auth_instance->me()->getData()->user_data;
+        $user_id = $user->user_id;
+
+        $wishlist_products = DB::connection('mysql')->select(
+            '
+            SELECT
+                product_like.prod_like_id,
+                product_like.user_id,
+                product.*,
+                category.category_name
+              FROM product_like
+            LEFT JOIN product
+                ON product_like.product_id = product.product_id
+            LEFT JOIN category
+                ON product.category_id = category.category_id
+            WHERE user_id = :user_id',
+            [
+                'user_id' => $user_id
+            ]
+        );
+
+        $array = array();
+        $array['wishlist_products'] = $wishlist_products;
+
+        return response()->json($array, 200);
+    }
+
+    //like a product | add product to wishlist
+    public function like_product(Request $request)
+    {
+        $request->validate([
+//            'user_id' => 'integer|required',
+            'product_id' => 'integer|required',
+        ]);
+        $auth_instance = new AuthController();
+        $user = $auth_instance->me()->getData()->user_data;
+        $user_id = $user->user_id;
+
+        $saveData = DB::connection('mysql')->insert(
+            '
+                INSERT INTO product_like(
+                    user_id,
+                    product_id
+                    ) VALUES (
+                    :user_id,
+                    :product_id
+                    )
+            ',
+            [
+                'user_id' => $user_id,
+                'product_id' => $request->product_id
+            ]
+        );
+        if ($saveData) {
+            return response()->json(['isError' => false, 'message' => 'Product added to WishList'], 200);
+        } else {
+            return response()->json(['isError' => true, 'message' => 'Failed to add product to WishList'], 201);
+        }
+    }
+
+    //unlike a product | remove product from wishlist
+    public function unlike_product($prod_like_id)
+    {
+
+
+        $saveData = DB::connection('mysql')->insert(
+            '
+                DELETE FROM product_like where prod_like_id =:prod_like_id
+            ',
+            [
+                'prod_like_id' => $prod_like_id
+            ]
+        );
+        if ($saveData) {
+            return response()->json(['isError' => false, 'message' => 'Product remove from WishList'], 200);
+        } else {
+            return response()->json(['isError' => true, 'message' => 'Failed to remove product from WishList'], 201);
+        }
+    }
+
+
+    //===============================================
+    //=============PRODUCT ORDERS====================
+    //===============================================
+    public function user_add_products_order(Request $request)
+    {
+        $request->validate([
+            'product_order' => 'required|array',
+            'product_order.*' => 'required|array',
+            "product_order.*.product_id" => "integer|required",
+            "product_order.*.prod_order_user_id" => "integer|required",
+            "product_order.*.prod_order_qty" => "integer|required",
+            "product_order.*.prod_order_amount" => "required|regex:/^\d+(\.\d{1,2})?$/",
+
+            'order_qty' => 'integer|required',
+            'total_amount' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+        ]);
+
+
+        $data = $request->all();
+
+        $auth_instance = new AuthController();
+        $user = $auth_instance->me()->getData()->user_data;
+        $user_id = $user->user_id;
+
+        $saveData = DB::connection('mysql')->insert(
+            '
+                INSERT INTO product_order_user(
+                    user_id,
+                    order_qty,
+                    total_amount
+                    ) VALUES (
+                    :user_id,
+                    :order_qty,
+                    :total_amount
+                    )
+            ',
+            [
+                'user_id' => $user_id,
+                'order_qty' => $request->order_qty,
+                'total_amount' => $request->total_amount
+            ]
+        );
+
+        //get the inserted record
+        $getInsertedRecord = DB::select('
+            SELECT *FROM product_order_user
+            WHERE user_id =:user_id
+              AND order_qty=:order_qty
+              AND total_amount =:total_amount
+            ORDER BY created_at DESC LIMIT 1',
+            [
+                'user_id' => $user_id,
+                'order_qty' => $request->order_qty,
+                'total_amount' => $request->total_amount,
+            ]
+        );
+
+        $prod_order_user_id = $getInsertedRecord[0]->prod_order_user_id;
+
+        if ($saveData) {
+
+            foreach ($data['product_order'] as $product_order) {
+                $product_id = $product_order['product_id'];
+                $prod_order_qty = $product_order['prod_order_qty'];
+                $prod_order_amount = $product_order['prod_order_amount'];
+                DB::connection('mysql')->insert(
+                    '
+                INSERT INTO product_order_product(
+                    product_id,
+                    prod_order_user_id,
+                    prod_order_qty,
+                    prod_order_amount
+                    ) VALUES (
+                    :product_id,
+                    :prod_order_user_id,
+                    :prod_order_qty,
+                    :prod_order_amount
+                    )
+            ',
+                    [
+                        'product_id' => $product_id,
+                        'prod_order_user_id' => $prod_order_user_id,
+                        'prod_order_qty' => $prod_order_qty,
+                        'prod_order_amount' => $prod_order_amount,
+                    ]
+                );
+            }
+
+
+            return response()->json(['isError' => false, 'message' => 'Your order has been received'], 200);
+        } else {
+            return response()->json(['isError' => true, 'message' => 'Failed to save your order'], 201);
+        }
+    }
+
 }
