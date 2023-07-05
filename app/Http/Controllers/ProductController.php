@@ -467,4 +467,41 @@ class ProductController extends Controller
         }
     }
 
+    //products ordered by user
+    public function get_user_orderlist()
+    {
+        $auth_instance = new AuthController();
+        $user = $auth_instance->me()->getData()->user_data;
+        $user_id = $user->user_id;
+//echo $user_id;return;
+        $orderlist = DB::connection('mysql')->select(
+            '
+            SELECT
+                product_order_product.prod_order_product_id,
+                product_order_product.prod_order_user_id,
+                product_order_product.prod_order_qty,
+                product_order_product.prod_order_amount,
+                product_order_product.created_at AS order_created_at,
+                product.*,
+                category.category_name
+              FROM product_order_product
+            LEFT JOIN product_order_user
+                ON product_order_product.prod_order_user_id = product_order_user.prod_order_user_id
+                AND product_order_user.user_id = :user_id
+            LEFT JOIN product
+                ON product_order_product.product_id = product.product_id
+            LEFT JOIN category
+                ON product.category_id = category.category_id
+            WHERE product_order_product.prod_order_user_id = :prod_order_user_id',
+            [
+                'user_id' => $user_id,
+                'prod_order_user_id' => $user_id
+            ]
+        );
+
+        $array = array();
+        $array['orderlist'] = $orderlist;
+
+        return response()->json($array, 200);
+    }
 }
