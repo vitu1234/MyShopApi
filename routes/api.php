@@ -34,6 +34,21 @@ Route::prefix('product')->group(function () {
     Route::post('/', ['App\Http\Controllers\ProductController', 'store']);
     Route::put('/{id}', ['App\Http\Controllers\ProductController', 'update']);
     Route::delete('/{id}', ['App\Http\Controllers\ProductController', 'destroy']);
+
+    //handle wishlist
+    Route::prefix('wishlist')->group(function () {
+        Route::get('get', ['App\Http\Controllers\ProductController', 'get_user_wishlist']);
+        Route::post('add', ['App\Http\Controllers\ProductController', 'like_product']);
+        Route::delete('remove/{id}', ['App\Http\Controllers\ProductController', 'unlike_product']);
+    });
+
+
+    //handle orders
+    Route::prefix('order')->group(function () {
+        Route::get('get', ['App\Http\Controllers\ProductController', 'get_user_orderlist']);
+        Route::post('add', ['App\Http\Controllers\ProductController', 'user_add_products_order']);
+    });
+
 });
 
 Route::prefix('homescreen')->group(function () {
