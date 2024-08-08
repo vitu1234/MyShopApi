@@ -27,6 +27,14 @@ Route::prefix('category')->group(function () {
     Route::delete('/{id}', ['App\Http\Controllers\CategoryController', 'destroy']);
 });
 
+Route::prefix('subcategory')->group(function () {
+    Route::get('/', ['App\Http\Controllers\SubCategoryController', 'index']);
+    Route::get('/{id}', ['App\Http\Controllers\SubCategoryController', 'show']);
+    Route::post('/', ['App\Http\Controllers\SubCategoryController', 'store']);
+    Route::put('/{id}', ['App\Http\Controllers\SubCategoryController', 'update']);
+    Route::delete('/{id}', ['App\Http\Controllers\SubCategoryController', 'destroy']);
+});
+
 
 Route::prefix('product')->group(function () {
     Route::get('/', ['App\Http\Controllers\ProductController', 'index']);
