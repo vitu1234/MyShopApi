@@ -125,13 +125,26 @@ class ProductController extends Controller
     {
         \Log::info('Store method called with data: ', $request->all());
 
+
+
         $validator = Validator::make($request->all(), [
-            'category_id' => 'required|integer',
             'product_name' => 'required|string|max:255',
             'product_description' => 'nullable|string',
-            'qty' => 'required|integer',
-            'price' => 'numeric|required',
-            'img_url' => 'image|required|max:3000'
+            'cover' => 'image|required|max:3000',
+
+            'sub_category_id' => 'required|integer',
+
+            'product_images' => 'nullable|array',
+            'product_images.*.img_url' => 'required|integer|1',
+
+            'product_attributes' => 'required|array',
+            'product_attributes.*.product_attributes_default' => 'required|integer|1',
+            'product_attributes.*.product_attributes_name' => 'required|string|max:255',
+            'product_attributes.*.product_attributes_value' => 'required|string|max:255',
+            'product_attributes.*.product_attributes_summary' => 'nullable|text',
+            'product_attributes.*.product_attributes_price' => 'required|decimal',
+            'product_attributes.*.product_attributes_stock_qty' => 'required|integer',
+            
         ]);
 
         if ($validator->fails()) {
