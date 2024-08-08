@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 08, 2024 at 05:19 PM
+-- Generation Time: Aug 08, 2024 at 07:51 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -134,7 +134,7 @@ CREATE TABLE `payment_details` (
 CREATE TABLE `product` (
   `product_id` int(11) NOT NULL,
   `product_name` varchar(255) NOT NULL,
-  `img_url` varchar(255) NOT NULL DEFAULT 'noimage.jpg',
+  `cover` varchar(255) NOT NULL DEFAULT 'noimage.jpg',
   `product_description` text DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -151,11 +151,26 @@ CREATE TABLE `product_attributes` (
   `product_id` int(11) NOT NULL,
   `product_attributes_default` tinyint(1) NOT NULL DEFAULT 1,
   `product_attributes_name` varchar(255) NOT NULL,
+  `product_attributes_value` varchar(255) NOT NULL,
   `product_attributes_summary` text DEFAULT NULL,
   `product_attributes_price` decimal(10,0) NOT NULL,
   `product_attributes_stock_qty` int(11) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_images`
+--
+
+CREATE TABLE `product_images` (
+  `product_images_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `img_url` varchar(255) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -314,6 +329,13 @@ ALTER TABLE `product_attributes`
   ADD KEY `product_id` (`product_id`);
 
 --
+-- Indexes for table `product_images`
+--
+ALTER TABLE `product_images`
+  ADD PRIMARY KEY (`product_images_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
 -- Indexes for table `product_like`
 --
 ALTER TABLE `product_like`
@@ -395,6 +417,12 @@ ALTER TABLE `product_attributes`
   MODIFY `product_attributes_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `product_images`
+--
+ALTER TABLE `product_images`
+  MODIFY `product_images_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `product_like`
 --
 ALTER TABLE `product_like`
@@ -454,6 +482,12 @@ ALTER TABLE `order_item`
 --
 ALTER TABLE `product_attributes`
   ADD CONSTRAINT `product_attributes_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `product_images`
+--
+ALTER TABLE `product_images`
+  ADD CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `product_like`
