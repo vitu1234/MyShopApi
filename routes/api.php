@@ -27,6 +27,7 @@ Route::prefix('category')->group(function () {
     Route::delete('/{id}', ['App\Http\Controllers\CategoryController', 'destroy']);
 });
 
+
 Route::prefix('product')->group(function () {
     Route::get('/', ['App\Http\Controllers\ProductController', 'index']);
     Route::get('/{id}', ['App\Http\Controllers\ProductController', 'show']);

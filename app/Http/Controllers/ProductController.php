@@ -6,13 +6,13 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['index', 'product_by_category',]]);
+        $this->middleware('auth:api', ['except' => ['index', 'product_by_category','store']]);
     }
 
     //===============================================
@@ -38,8 +38,24 @@ class ProductController extends Controller
         );
         $array = array();
         $array['categories'] = $categories;
-        $array['products'] = $products;
+        $new_products = array();
+        foreach ($products as $key => $value) {
+            $new_product['product_id'] = $value->product_id;
+            $new_product['category_id'] = $value->category_id;
+            $new_product['product_name'] = $value->product_name;
+            $new_product['qty'] = $value->qty;
+            $new_product['price'] = $value->price;
+            $new_product['img_url'] = asset('storage/products/' . $value->img_url);
+            $new_product['product_description'] = $value->product_description;
+            $new_product['created_at'] = $value->created_at;
+            $new_product['updated_at'] = $value->updated_at;
+            $new_product['category_name'] = $value->category_name;
+            $new_product['likes'] = $value->likes;
+            
+          array_push($new_products,$new_product);
+        }
 
+        $array['products'] = $new_products;
         return response()->json($array, 200);
     }
 
@@ -67,7 +83,24 @@ class ProductController extends Controller
         );
         $array = array();
         $array['categories'] = $categories;
-        $array['products'] = $products;
+        $new_products = array();
+        foreach ($products as $key => $value) {
+            $new_product['product_id'] = $value->product_id;
+            $new_product['category_id'] = $value->category_id;
+            $new_product['product_name'] = $value->product_name;
+            $new_product['qty'] = $value->qty;
+            $new_product['price'] = $value->price;
+            $new_product['img_url'] = asset('storage/products/' . $value->img_url);
+            $new_product['product_description'] = $value->product_description;
+            $new_product['created_at'] = $value->created_at;
+            $new_product['updated_at'] = $value->updated_at;
+            $new_product['category_name'] = $value->category_name;
+            $new_product['likes'] = $value->likes;
+            
+          array_push($new_products,$new_product);
+        }
+
+        $array['products'] = $new_products;
 
         return response()->json($array, 200);
     }
@@ -90,14 +123,24 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'category_id' => 'integer|required',
-            'product_name' => 'string|required',
-            'product_description' => 'string|nullable',
-            'qty' => 'integer|required',
+        \Log::info('Store method called with data: ', $request->all());
+
+        $validator = Validator::make($request->all(), [
+            'category_id' => 'required|integer',
+            'product_name' => 'required|string|max:255',
+            'product_description' => 'nullable|string',
+            'qty' => 'required|integer',
             'price' => 'numeric|required',
             'img_url' => 'image|required|max:3000'
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'isError' => true,
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
 
         //Handle file upload
         if ($request->file('img_url') != null) {
@@ -186,7 +229,16 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+        // $request->validate([
+        //     'category_id' => 'integer|required',
+        //     'product_name' => 'string|required',
+        //     'product_description' => 'string|nullable',
+        //     'qty' => 'integer|required',
+        //     'price' => 'numeric|required',
+        //     'img_url' => 'image|required|max:3000'
+        // ]);
+
+        $validator = Validator::make($request->all(), [
             'category_id' => 'integer|required',
             'product_name' => 'string|required',
             'product_description' => 'string|nullable',
@@ -194,6 +246,15 @@ class ProductController extends Controller
             'price' => 'numeric|required',
             'img_url' => 'image|required|max:3000'
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'isError' => true,
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
 
         $checkProduct = DB::connection('mysql')->select('SELECT * FROM product WHERE product_id =:product_id', ['product_id' => $id]);
         if (!empty($checkProduct)) {
@@ -321,10 +382,25 @@ class ProductController extends Controller
     //like a product | add product to wishlist
     public function like_product(Request $request)
     {
-        $request->validate([
-//            'user_id' => 'integer|required',
-            'product_id' => 'integer|required',
+//         $request->validate([
+// //            'user_id' => 'integer|required',
+//             'product_id' => 'integer|required',
+//         ]);
+
+        $validator = Validator::make($request->all(), [
+            'product_id' => 'integer|required'
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'isError' => true,
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+
+
         $auth_instance = new AuthController();
         $user = $auth_instance->me()->getData()->user_data;
         $user_id = $user->user_id;
@@ -377,7 +453,19 @@ class ProductController extends Controller
     //===============================================
     public function user_add_products_order(Request $request)
     {
-        $request->validate([
+        // $request->validate([
+        //     'product_order' => 'required|array',
+        //     'product_order.*' => 'required|array',
+        //     "product_order.*.product_id" => "integer|required",
+        //     "product_order.*.prod_order_user_id" => "integer|required",
+        //     "product_order.*.prod_order_qty" => "integer|required",
+        //     "product_order.*.prod_order_amount" => "required|regex:/^\d+(\.\d{1,2})?$/",
+
+        //     'order_qty' => 'integer|required',
+        //     'total_amount' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+        // ]);
+
+        $validator = Validator::make($request->all(), [
             'product_order' => 'required|array',
             'product_order.*' => 'required|array',
             "product_order.*.product_id" => "integer|required",
@@ -388,6 +476,15 @@ class ProductController extends Controller
             'order_qty' => 'integer|required',
             'total_amount' => 'required|regex:/^\d+(\.\d{1,2})?$/',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'isError' => true,
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
 
 
         $data = $request->all();

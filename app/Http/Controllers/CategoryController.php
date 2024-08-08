@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -46,20 +46,37 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'category_name' => 'string|required|max:255'
+        // $request->validate([
+        //     'category_name' => 'string|required|max:255',
+        //     'category_description' => 'string|nullable|max:255'
+        // ]);
+
+        $validator = Validator::make($request->all(), [
+            'category_name' => 'string|required|max:255',
+            'category_description' => 'string|nullable'
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'isError' => true,
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
 
         $saveData = DB::connection('mysql')->insert(
             '
                 INSERT INTO category(
-                    category_name
+                    category_name,
+                    category_description
                     ) VALUES (
-                    :category_name
+                    :category_name,
+                    :category_description
                     )
             ',
             [
-                'category_name' => $request->category_name
+                'category_name' => $request->category_name,
+                'category_description' => $request->category_description
             ]
         );
         if ($saveData) {
@@ -108,20 +125,35 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'category_name' => 'string|required|max:255'
+        // $request->validate([
+        //     'category_name' => 'string|required|max:255'
+        // ]);
+
+        $validator = Validator::make($request->all(), [
+            'category_name' => 'string|required|max:255',
+            'category_description' => 'string|nullable'
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'isError' => true,
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
 
         $saveData = DB::connection('mysql')->update(
             '
             UPDATE category 
             SET
-            category_name =:category_name
+            category_name =:category_name,
+            category_description  =:category_description,
                 
             WHERE category_id =:id
             ',
             [
                 'category_name' => $request->category_name,
+                'category_description' => $request->category_description,
                 'id' => $id
             ]
         );
