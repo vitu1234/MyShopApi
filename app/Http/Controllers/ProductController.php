@@ -12,7 +12,7 @@ class ProductController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['index', 'product_by_category','store']]);
+        $this->middleware('auth:api', ['except' => ['index', 'product_by_category', 'store']]);
     }
 
     //===============================================
@@ -51,8 +51,8 @@ class ProductController extends Controller
             $new_product['updated_at'] = $value->updated_at;
             $new_product['category_name'] = $value->category_name;
             $new_product['likes'] = $value->likes;
-            
-          array_push($new_products,$new_product);
+
+            array_push($new_products, $new_product);
         }
 
         $array['products'] = $new_products;
@@ -96,8 +96,8 @@ class ProductController extends Controller
             $new_product['updated_at'] = $value->updated_at;
             $new_product['category_name'] = $value->category_name;
             $new_product['likes'] = $value->likes;
-            
-          array_push($new_products,$new_product);
+
+            array_push($new_products, $new_product);
         }
 
         $array['products'] = $new_products;
@@ -130,22 +130,25 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(), [
             'product_name' => 'required|string|max:255',
             'product_description' => 'nullable|string',
-            'cover' => 'image|required|max:3000',
+            'cover' => 'image|required|max:2000',
 
-            'sub_category_id' => 'required|integer',
+            'sub_category_id' => 'required|array',
+            'sub_category_id.*' => 'required|integer',
 
-            'product_images' => 'nullable|array',
-            'product_images.*.img_url' => 'required|integer|1',
+            'product_images' => 'required|array',
+            'product_images.*' => 'image|required|max:1000',
 
             'product_attributes' => 'required|array',
-            'product_attributes.*.product_attributes_default' => 'required|integer|1',
+            'product_attributes.*.product_attributes_default' => 'required|integer|in:1',
             'product_attributes.*.product_attributes_name' => 'required|string|max:255',
             'product_attributes.*.product_attributes_value' => 'required|string|max:255',
-            'product_attributes.*.product_attributes_summary' => 'nullable|text',
-            'product_attributes.*.product_attributes_price' => 'required|decimal',
+            'product_attributes.*.product_attributes_summary' => 'nullable|string',
+            'product_attributes.*.product_attributes_price' => 'required|numeric',
             'product_attributes.*.product_attributes_stock_qty' => 'required|integer',
-            
         ]);
+
+
+
 
         if ($validator->fails()) {
             return response()->json([
@@ -155,22 +158,23 @@ class ProductController extends Controller
             ], 422);
         }
 
-        //Handle file upload
-        if ($request->file('img_url') != null) {
+
+        //Handle cover photo file upload
+        if ($request->file('cover') != null) {
             // get filename with extension
-            $fileNameWithExt = $request->file('img_url')->getClientOriginalName();
+            $fileNameWithExt = $request->file('cover')->getClientOriginalName();
 
             //get just filename
             $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
 
             //get just extension
-            $extension = $request->file('img_url')->getClientOriginalExtension();
+            $extension = $request->file('cover')->getClientOriginalExtension();
 
             //filename to store
-            $fileNamToStore = $filename . '_' . time() . '.' . $extension;
+            $fileNamToStore = trim(str_replace(' ', '', $filename.'_' .substr($request->product_name, 0, 10). '_' . time() . '.' . $extension));
 
             //upload the image
-            $path = $request->file('img_url')->storeAs('public/products', $fileNamToStore);
+            $path = $request->file('cover')->storeAs('public/products', $fileNamToStore);
 
         } else {
             $fileNamToStore = 'noimage.jpg';
@@ -180,31 +184,144 @@ class ProductController extends Controller
         $saveData = DB::connection('mysql')->insert(
             '
                 INSERT INTO product(
-                    category_id,
                     product_name,
-                    qty,
-                    price,
-                    product_description,
-                    img_url
+                    cover,
+                    product_description
                     ) VALUES (
-                    :category_id,
                     :product_name,
-                    :qty,
-                    :price,
-                    :product_description,
-                    :img_url
+                    :cover,
+                    :product_description
                     )
             ',
             [
-                'category_id' => $request->category_id,
                 'product_name' => $request->product_name,
-                'qty' => $request->qty,
-                'price' => $request->price,
                 'product_description' => $request->product_description,
-                'img_url' => $fileNamToStore
+                'cover' => $fileNamToStore
             ]
         );
         if ($saveData) {
+
+            // Get the ID of the last inserted record
+            $lastInsertId = DB::connection('mysql')->select('SELECT LAST_INSERT_ID() as product_id');
+            $insertedProductId = $lastInsertId[0]->product_id;
+
+
+            //save product sub categories
+            for ($i = 0; $i < count($request->sub_category_id); $i++) {
+                $getSubCategoryNameByID = DB::connection('mysql')->select('SELECT sub_category_name FROM sub_category WHERE sub_category_id =:id ', ['id' => $request->sub_category_id[$i]]);
+
+                if (!empty($getSubCategoryNameByID)) {
+                    $sub_category_name = $getSubCategoryNameByID[0]->sub_category_name;
+                    $saveDataProductSubCategory = DB::connection('mysql')->insert(
+                        '
+                            INSERT INTO product_sub_category(
+                                product_id,
+                                sub_category_id
+                                ) VALUES (
+                                :product_id,
+                                :sub_category_id
+                                )
+                        ',
+                        [
+                            'product_id' => $insertedProductId,
+                            'sub_category_id' => $request->sub_category_id[$i]
+                        ]
+                    );
+
+                    if (!$saveDataProductSubCategory) {
+                        return response()->json(['isError' => true, 'message' => 'Product save failed but an error is keeping you from saving product sub category name: ' . $sub_category_name], 201);
+                    }
+                } else {
+                    return response()->json(['isError' => true, 'message' => 'Product save failed but an error is keeping you from saving product sub category name, check input'], 201);
+                }
+
+
+            }
+
+            //save product attributes
+            foreach ($request->product_attributes as $key => $value) {
+                $saveDataProductAttributes = DB::connection('mysql')->insert(
+                    '
+                        INSERT INTO product_attributes(
+                            product_id,
+                            product_attributes_default,
+                            product_attributes_name,
+                            product_attributes_value,
+                            product_attributes_summary,
+                            product_attributes_price,
+                            product_attributes_stock_qty
+                            ) VALUES (
+                            :product_id,
+                            :product_attributes_default,
+                            :product_attributes_name,
+                            :product_attributes_value,
+                            :product_attributes_summary,
+                            :product_attributes_price,
+                            :product_attributes_stock_qty
+                            )
+                    ',
+                    [
+                        'product_id' => $insertedProductId,
+                        'product_attributes_default' => $value['product_attributes_default'],
+                        'product_attributes_name' => $value['product_attributes_name'],
+                        'product_attributes_value' => $value['product_attributes_value'],
+                        'product_attributes_summary' => $value['product_attributes_summary'],
+                        'product_attributes_price' => $value['product_attributes_price'],
+                        'product_attributes_stock_qty' => $value['product_attributes_stock_qty']
+                    ]
+                );
+
+                if (!$saveDataProductAttributes) {
+                    return response()->json(['isError' => true, 'message' => 'Product save failed but an error is keeping you from saving product attribute: ' . $value['product_attributes_name']], 201);
+                }
+            }
+
+
+            // handle product images file upload
+            for ($i = 0; $i < count($request->product_images); $i++) {
+                //Handle file upload
+                if ($request->product_images[$i] != null) {
+                    // get filename with extension
+                    $fileNameWithExt = $request->product_images[$i]->getClientOriginalName();
+
+                    //get just filename
+                    $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+
+                    //get just extension
+                    $extension = $request->product_images[$i]->getClientOriginalExtension();
+
+                    //filename to store
+                    $fileNamToStore = $filename . '_' . time() . '.' . $extension;
+
+                    //upload the image
+                    $path = $request->product_images[$i]->storeAs('public/products', $fileNamToStore);
+
+                } else {
+                    $fileNamToStore = 'noimage.jpg';
+                }
+
+                $saveDataProductImages = DB::connection('mysql')->insert(
+                    '
+                        INSERT INTO product_images(
+                            product_id,
+                            img_url
+                            ) VALUES (
+                            :product_id,
+                            :img_url
+                            )
+                    ',
+                    [
+                        'product_id' => $insertedProductId,
+                        'img_url' => $fileNamToStore
+                    ]
+                );
+
+                if (!$saveDataProductImages) {
+                    return response()->json(['isError' => true, 'message' => 'Product save failed but an error is keeping you from saving product picture: ' . $fileNamToStore], 201);
+                }
+            }
+
+
             return response()->json(['isError' => false, 'message' => 'Product save successful'], 200);
         } else {
             return response()->json(['isError' => true, 'message' => 'Product save failed'], 201);
@@ -395,7 +512,7 @@ class ProductController extends Controller
     //like a product | add product to wishlist
     public function like_product(Request $request)
     {
-//         $request->validate([
+        //         $request->validate([
 // //            'user_id' => 'integer|required',
 //             'product_id' => 'integer|required',
 //         ]);
@@ -583,7 +700,7 @@ class ProductController extends Controller
         $auth_instance = new AuthController();
         $user = $auth_instance->me()->getData()->user_data;
         $user_id = $user->user_id;
-//echo $user_id;return;
+        //echo $user_id;return;
         $orderlist = DB::connection('mysql')->select(
             '
             SELECT
