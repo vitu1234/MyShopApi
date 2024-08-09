@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 08, 2024 at 07:51 PM
+-- Generation Time: Aug 09, 2024 at 07:24 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -77,7 +77,9 @@ INSERT INTO `category` (`category_id`, `category_name`, `category_description`, 
 (16, 'Books & Media', NULL, '2024-08-08 23:51:18', '2024-08-08 23:51:18'),
 (17, 'Sports', NULL, '2024-08-08 23:51:30', '2024-08-08 23:51:30'),
 (18, 'Automotive', 'Car accessories, auto electronics and related items', '2024-08-08 23:52:32', '2024-08-08 23:52:32'),
-(19, 'Jewelry & Watches', NULL, '2024-08-08 23:52:51', '2024-08-08 23:52:51');
+(19, 'Jewelry & Watches', NULL, '2024-08-08 23:52:51', '2024-08-08 23:52:51'),
+(20, 'Apparel Accessories', 'Fancy men and wowen Accessories', '2024-08-09 21:24:03', '2024-08-09 21:24:03'),
+(21, 'Kids Clothing', 'Kids clothes', '2024-08-09 23:04:45', '2024-08-09 23:04:45');
 
 -- --------------------------------------------------------
 
@@ -140,6 +142,19 @@ CREATE TABLE `product` (
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`product_id`, `product_name`, `cover`, `product_description`, `created_at`, `updated_at`) VALUES
+(7, 'Converse All Star Limited Edition', '7799_ConverseA_1723192134.jpg', 'This is a sample product description', '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
+(8, 'Stylehorn Gavin Polarized Sunglasses', '17308_Stylehorn_1723206840.jpg', 'This is a sample product description', '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
+(9, 'Business Men\'s Quartz Watch', '17417_BusinessM_1723207540.jpg', 'This is a sample product description', '2024-08-09 21:45:40', '2024-08-09 21:45:40'),
+(10, 'Vans Unisex Old School Black', '17706_VansUnise_1723208256.jpg', 'This is a sample product description', '2024-08-09 21:57:36', '2024-08-09 21:57:36'),
+(16, 'Vans Unisex Old Canvas', '17692_VansUnise_1723208870.jpg', 'This is a sample product description', '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
+(17, 'Men\'s Panties Drawers Square Functional Long Drawers', '17857_Men\'sPant_1723209973.jpg', 'This is a sample product description |  Season of use: All seasons', '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
+(18, '0-12 years twin shirt', '3813_0-12years_1723212682.jpg', 'This is a sample product description |  Season of use: All seasons', '2024-08-09 23:11:22', '2024-08-09 23:11:22');
+
 -- --------------------------------------------------------
 
 --
@@ -159,6 +174,21 @@ CREATE TABLE `product_attributes` (
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `product_attributes`
+--
+
+INSERT INTO `product_attributes` (`product_attributes_id`, `product_id`, `product_attributes_default`, `product_attributes_name`, `product_attributes_value`, `product_attributes_summary`, `product_attributes_price`, `product_attributes_stock_qty`, `created_at`, `updated_at`) VALUES
+(6, 7, 1, 'Size', '8', 'This is a product sample attribute description', 200000, 15, '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
+(7, 8, 1, 'Frame Color', 'Black', 'WARNING: Fashion Glasses. Not to be worn outside to protect the eyes against strong sunlight. Not designed or intended for use in play by children', 10000, 11, '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
+(8, 9, 1, 'Watch Shape', 'Round', 'Strap Material:	Zinc Alloy, PU Leather\nDial Color:	Orange\nWater Resistance:	No Waterproof\nGender:	Men\nStyle:	Casual, Simple\nType:	Wrist Watches\nBoxes Included:	No\nScale Display:	Bar Scale\nCase Material:	Zinc Alloy\nSpecular Material:	Mineral Glass\nPower Supply:	Battery Powered(Button/Coin Cell Battery)', 200000, 4, '2024-08-09 21:45:40', '2024-08-09 21:45:40'),
+(9, 10, 1, 'Color', 'Black Series | All Seasons', 'Strap Material:	Zinc Alloy, PU Leather\nDial Color:	Orange\nWater Resistance:	No Waterproof\nGender:	Men\nStyle:	Casual, Simple\nType:	Wrist Watches\nBoxes Included:	No\nScale Display:	Bar Scale\nCase Material:	Zinc Alloy\nSpecular Material:	Mineral Glass\nPower Supply:	Battery Powered(Button/Coin Cell Battery)', 56000, 23, '2024-08-09 21:57:36', '2024-08-09 21:57:36'),
+(18, 16, 1, 'Color', 'Red Series | All Seasons', 'This is a description for first Product', 33500, 17, '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
+(19, 16, 0, 'Color', 'Maron Series | All Seasons', NULL, 41000, 10, '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
+(20, 17, 1, 'Tape Multicolor Set', '95% Polyester, 5% Elastane', 'This is a description for first Product', 15000, 50, '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
+(21, 18, 1, 'Color', 'Yellow Shirt', 'This is a description for first Product attribute 1', 5000, 12, '2024-08-09 23:11:22', '2024-08-09 23:11:22'),
+(22, 18, 0, 'Color', 'Black Shirt', 'Description goes here', 5200, 24, '2024-08-09 23:11:22', '2024-08-09 23:11:22');
+
 -- --------------------------------------------------------
 
 --
@@ -172,6 +202,31 @@ CREATE TABLE `product_images` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_images`
+--
+
+INSERT INTO `product_images` (`product_images_id`, `product_id`, `img_url`, `created_at`, `updated_at`) VALUES
+(16, 7, '3594_1723192134.jpg', '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
+(17, 7, '3798_1723192134.jpg', '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
+(18, 7, '9001_1723192134.jpg', '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
+(19, 8, '17209_1723206841.jpg', '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
+(20, 8, '17210_1723206841.jpg', '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
+(21, 8, '17215_1723206841.jpg', '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
+(22, 9, '17417_1723207540.jpg', '2024-08-09 21:45:40', '2024-08-09 21:45:40'),
+(23, 10, '17704_1723208256.jpg', '2024-08-09 21:57:36', '2024-08-09 21:57:36'),
+(33, 16, '17695_1723208870.jpg', '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
+(34, 16, '17692_1723208870.jpg', '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
+(35, 16, '17708_1723208870.jpg', '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
+(36, 17, '17858_1723209973.jpg', '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
+(37, 17, '17859_1723209973.jpg', '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
+(38, 17, '17861_1723209973.jpg', '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
+(39, 17, '17862_1723209973.jpg', '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
+(40, 18, '3813_1723212682.jpg', '2024-08-09 23:11:22', '2024-08-09 23:11:22'),
+(41, 18, '3814_1723212682.jpg', '2024-08-09 23:11:22', '2024-08-09 23:11:22'),
+(42, 18, '3816_1723212682.jpg', '2024-08-09 23:11:22', '2024-08-09 23:11:22'),
+(43, 18, '3815_1723212682.jpg', '2024-08-09 23:11:22', '2024-08-09 23:11:22');
 
 -- --------------------------------------------------------
 
@@ -200,6 +255,24 @@ CREATE TABLE `product_sub_category` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_sub_category`
+--
+
+INSERT INTO `product_sub_category` (`product_sub_category_id`, `sub_category_id`, `product_id`, `created_at`, `updated_at`) VALUES
+(11, 3, 7, '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
+(12, 4, 7, '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
+(13, 22, 8, '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
+(14, 21, 8, '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
+(15, 19, 9, '2024-08-09 21:45:40', '2024-08-09 21:45:40'),
+(16, 3, 10, '2024-08-09 21:57:36', '2024-08-09 21:57:36'),
+(17, 4, 10, '2024-08-09 21:57:36', '2024-08-09 21:57:36'),
+(28, 3, 16, '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
+(29, 4, 16, '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
+(30, 3, 17, '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
+(31, 23, 18, '2024-08-09 23:11:22', '2024-08-09 23:11:22'),
+(32, 4, 18, '2024-08-09 23:11:22', '2024-08-09 23:11:22');
 
 -- --------------------------------------------------------
 
@@ -238,7 +311,13 @@ INSERT INTO `sub_category` (`sub_category_id`, `category_id`, `sub_category_name
 (15, 18, 'Car Accessories', NULL, '2024-08-09 00:15:00', '2024-08-09 00:15:00'),
 (16, 18, 'Car Care', NULL, '2024-08-09 00:15:08', '2024-08-09 00:15:08'),
 (17, 19, 'Fine Jewelry', NULL, '2024-08-09 00:15:20', '2024-08-09 00:15:20'),
-(18, 19, 'Fashion Jewelry', NULL, '2024-08-09 00:15:29', '2024-08-09 00:15:29');
+(18, 19, 'Fashion Jewelry', NULL, '2024-08-09 00:15:29', '2024-08-09 00:15:29'),
+(19, 20, 'Men Accessories', NULL, '2024-08-09 21:25:16', '2024-08-09 21:25:16'),
+(20, 20, 'Women Accessories', NULL, '2024-08-09 21:25:16', '2024-08-09 21:25:16'),
+(21, 20, 'Customized Accessories', NULL, '2024-08-09 21:25:35', '2024-08-09 21:25:35'),
+(22, 20, 'Gender Neutral Accessories', NULL, '2024-08-09 21:26:18', '2024-08-09 21:26:18'),
+(23, 21, 'Boys\' Clothing', 'boy\'s clothing', '2024-08-09 23:05:43', '2024-08-09 23:05:43'),
+(24, 21, 'Girls\' Clothing', 'girls\' Clothing', '2024-08-09 23:05:43', '2024-08-09 23:05:43');
 
 -- --------------------------------------------------------
 
@@ -384,7 +463,7 @@ ALTER TABLE `cart_item`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -408,19 +487,19 @@ ALTER TABLE `payment_details`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `product_attributes`
 --
 ALTER TABLE `product_attributes`
-  MODIFY `product_attributes_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `product_attributes_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `product_images_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `product_images_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `product_like`
@@ -432,13 +511,13 @@ ALTER TABLE `product_like`
 -- AUTO_INCREMENT for table `product_sub_category`
 --
 ALTER TABLE `product_sub_category`
-  MODIFY `product_sub_category_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `product_sub_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `sub_category`
 --
 ALTER TABLE `sub_category`
-  MODIFY `sub_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `sub_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `user`
