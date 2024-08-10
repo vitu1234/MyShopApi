@@ -55,6 +55,7 @@ class HomeScreenController extends Controller
             foreach ($product_images as $product_image) {
                 $product_image_array = array();
                 $product_image_array['product_images_id'] = $product_image->product_images_id;
+                $product_image_array['product_id'] = $value->product_id;
                 $product_image_array['img_url'] = asset('storage/products/' . $product_image->img_url);
                 $product_image_array['created_at'] = $product_image->created_at;
                 $product_image_array['updated_at'] = $product_image->updated_at;
@@ -70,6 +71,8 @@ class HomeScreenController extends Controller
             $new_product_attributes = array();
             foreach ($product_attributes as $product_attribute) {
                 $product_attribute_array = array();
+                $product_attribute_array['product_attributes_id'] = $product_attribute->product_attributes_id;
+                $product_attribute_array['product_id'] = $value->product_id;
                 $product_attribute_array['product_attributes_default'] = $product_attribute->product_attributes_default;
                 $product_attribute_array['product_attributes_name'] = $product_attribute->product_attributes_name;
                 $product_attribute_array['product_attributes_value'] = $product_attribute->product_attributes_value;
@@ -107,6 +110,7 @@ class HomeScreenController extends Controller
                 $product_subcategory_array = array();
                 $product_subcategory_array['sub_category_id'] = $product_subcategory->sub_category_id;
                 $product_subcategory_array['category_id'] = $product_subcategory->category_id;
+                $product_subcategory_array['product_id'] = $value->product_id;
                 $product_subcategory_array['product_sub_category_id'] = $product_subcategory->product_sub_category_id;
                 $product_subcategory_array['sub_category_name'] = $product_subcategory->sub_category_name;
                 $product_subcategory_array['category_name'] = $product_subcategory->category_name;

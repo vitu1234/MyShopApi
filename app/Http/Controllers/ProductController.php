@@ -60,6 +60,7 @@ class ProductController extends Controller
             foreach ($product_images as $product_image) {
                 $product_image_array = array();
                 $product_image_array['product_images_id'] = $product_image->product_images_id;
+                $product_image_array['product_id'] = $value->product_id;
                 $product_image_array['img_url'] = asset('storage/products/' . $product_image->img_url);
                 $product_image_array['created_at'] = $product_image->created_at;
                 $product_image_array['updated_at'] = $product_image->updated_at;
@@ -75,6 +76,8 @@ class ProductController extends Controller
             $new_product_attributes = array();
             foreach ($product_attributes as $product_attribute) {
                 $product_attribute_array = array();
+                $product_attribute_array['product_attributes_id'] = $product_attribute->product_attributes_id;
+                $product_attribute_array['product_id'] = $value->product_id;
                 $product_attribute_array['product_attributes_default'] = $product_attribute->product_attributes_default;
                 $product_attribute_array['product_attributes_name'] = $product_attribute->product_attributes_name;
                 $product_attribute_array['product_attributes_value'] = $product_attribute->product_attributes_value;
@@ -89,21 +92,21 @@ class ProductController extends Controller
             //retrieve product subcategories
             $product_subcategories = DB::connection('mysql')->select(
                 'SELECT 
-                    product_sub_category.product_sub_category_id, 
-                    product_sub_category.sub_category_id, 
-                    category.category_id, 
-                    sub_category.sub_category_name, 
-                    sub_category.sub_category_description,
-                    category.category_name, 
-                    category.category_description
-                FROM 
-                    product_sub_category
-                    INNER JOIN sub_category 
-                        ON product_sub_category.sub_category_id = sub_category.sub_category_id
-                    INNER JOIN category 
-                        ON sub_category.category_id = category.category_id
-                WHERE 
-                    product_sub_category.product_id =:product_id',
+                            product_sub_category.product_sub_category_id, 
+                            product_sub_category.sub_category_id, 
+                            category.category_id, 
+                            sub_category.sub_category_name, 
+                            sub_category.sub_category_description,
+                            category.category_name, 
+                            category.category_description
+                        FROM 
+                            product_sub_category
+                            INNER JOIN sub_category 
+                                ON product_sub_category.sub_category_id = sub_category.sub_category_id
+                            INNER JOIN category 
+                                ON sub_category.category_id = category.category_id
+                        WHERE 
+                            product_sub_category.product_id =:product_id',
                 ['product_id' => $value->product_id],
             );
 
@@ -112,6 +115,7 @@ class ProductController extends Controller
                 $product_subcategory_array = array();
                 $product_subcategory_array['sub_category_id'] = $product_subcategory->sub_category_id;
                 $product_subcategory_array['category_id'] = $product_subcategory->category_id;
+                $product_subcategory_array['product_id'] = $value->product_id;
                 $product_subcategory_array['product_sub_category_id'] = $product_subcategory->product_sub_category_id;
                 $product_subcategory_array['sub_category_name'] = $product_subcategory->sub_category_name;
                 $product_subcategory_array['category_name'] = $product_subcategory->category_name;
@@ -188,6 +192,7 @@ class ProductController extends Controller
             foreach ($product_images as $product_image) {
                 $product_image_array = array();
                 $product_image_array['product_images_id'] = $product_image->product_images_id;
+                $product_image_array['product_id'] = $value->product_id;
                 $product_image_array['img_url'] = asset('storage/products/' . $product_image->img_url);
                 $product_image_array['created_at'] = $product_image->created_at;
                 $product_image_array['updated_at'] = $product_image->updated_at;
@@ -203,6 +208,8 @@ class ProductController extends Controller
             $new_product_attributes = array();
             foreach ($product_attributes as $product_attribute) {
                 $product_attribute_array = array();
+                $product_attribute_array['product_attributes_id'] = $product_attribute->product_attributes_id;
+                $product_attribute_array['product_id'] = $value->product_id;
                 $product_attribute_array['product_attributes_default'] = $product_attribute->product_attributes_default;
                 $product_attribute_array['product_attributes_name'] = $product_attribute->product_attributes_name;
                 $product_attribute_array['product_attributes_value'] = $product_attribute->product_attributes_value;
@@ -217,21 +224,21 @@ class ProductController extends Controller
             //retrieve product subcategories
             $product_subcategories = DB::connection('mysql')->select(
                 'SELECT 
-                    product_sub_category.product_sub_category_id, 
-                    product_sub_category.sub_category_id, 
-                    category.category_id, 
-                    sub_category.sub_category_name, 
-                    sub_category.sub_category_description,
-                    category.category_name, 
-                    category.category_description
-                FROM 
-                    product_sub_category
-                    INNER JOIN sub_category 
-                        ON product_sub_category.sub_category_id = sub_category.sub_category_id
-                    INNER JOIN category 
-                        ON sub_category.category_id = category.category_id
-                WHERE 
-                    product_sub_category.product_id =:product_id',
+                            product_sub_category.product_sub_category_id, 
+                            product_sub_category.sub_category_id, 
+                            category.category_id, 
+                            sub_category.sub_category_name, 
+                            sub_category.sub_category_description,
+                            category.category_name, 
+                            category.category_description
+                        FROM 
+                            product_sub_category
+                            INNER JOIN sub_category 
+                                ON product_sub_category.sub_category_id = sub_category.sub_category_id
+                            INNER JOIN category 
+                                ON sub_category.category_id = category.category_id
+                        WHERE 
+                            product_sub_category.product_id =:product_id',
                 ['product_id' => $value->product_id],
             );
 
@@ -240,6 +247,7 @@ class ProductController extends Controller
                 $product_subcategory_array = array();
                 $product_subcategory_array['sub_category_id'] = $product_subcategory->sub_category_id;
                 $product_subcategory_array['category_id'] = $product_subcategory->category_id;
+                $product_subcategory_array['product_id'] = $value->product_id;
                 $product_subcategory_array['product_sub_category_id'] = $product_subcategory->product_sub_category_id;
                 $product_subcategory_array['sub_category_name'] = $product_subcategory->sub_category_name;
                 $product_subcategory_array['category_name'] = $product_subcategory->category_name;
