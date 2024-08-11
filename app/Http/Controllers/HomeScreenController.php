@@ -56,6 +56,7 @@ class HomeScreenController extends Controller
                 $product_image_array = array();
                 $product_image_array['product_id'] = $value->product_id;
                 $product_image_array['product_images_id'] = $product_image->product_images_id;
+                $product_image_array['product_id'] = $value->product_id;
                 $product_image_array['img_url'] = asset('storage/products/' . $product_image->img_url);
                 $product_image_array['created_at'] = $product_image->created_at;
                 $product_image_array['updated_at'] = $product_image->updated_at;
@@ -110,6 +111,7 @@ class HomeScreenController extends Controller
                 $product_subcategory_array['product_id'] = $value->product_id;
                 $product_subcategory_array['sub_category_id'] = $product_subcategory->sub_category_id;
                 $product_subcategory_array['category_id'] = $product_subcategory->category_id;
+                $product_subcategory_array['product_id'] = $value->product_id;
                 $product_subcategory_array['product_sub_category_id'] = $product_subcategory->product_sub_category_id;
                 $product_subcategory_array['sub_category_name'] = $product_subcategory->sub_category_name;
                 $product_subcategory_array['category_name'] = $product_subcategory->category_name;
