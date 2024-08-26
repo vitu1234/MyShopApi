@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 09, 2024 at 07:24 PM
+-- Generation Time: Aug 26, 2024 at 05:41 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -147,13 +147,16 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`product_id`, `product_name`, `cover`, `product_description`, `created_at`, `updated_at`) VALUES
-(7, 'Converse All Star Limited Edition', '7799_ConverseA_1723192134.jpg', 'This is a sample product description', '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
-(8, 'Stylehorn Gavin Polarized Sunglasses', '17308_Stylehorn_1723206840.jpg', 'This is a sample product description', '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
-(9, 'Business Men\'s Quartz Watch', '17417_BusinessM_1723207540.jpg', 'This is a sample product description', '2024-08-09 21:45:40', '2024-08-09 21:45:40'),
-(10, 'Vans Unisex Old School Black', '17706_VansUnise_1723208256.jpg', 'This is a sample product description', '2024-08-09 21:57:36', '2024-08-09 21:57:36'),
-(16, 'Vans Unisex Old Canvas', '17692_VansUnise_1723208870.jpg', 'This is a sample product description', '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
-(17, 'Men\'s Panties Drawers Square Functional Long Drawers', '17857_Men\'sPant_1723209973.jpg', 'This is a sample product description |  Season of use: All seasons', '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
-(18, '0-12 years twin shirt', '3813_0-12years_1723212682.jpg', 'This is a sample product description |  Season of use: All seasons', '2024-08-09 23:11:22', '2024-08-09 23:11:22');
+(19, 'Female colourful Jeans Waist Span', '1_Femalecol_1724393355.jpg', 'This is a sample product description', '2024-08-23 15:09:16', '2024-08-23 15:09:16'),
+(20, 'Sdang Club Men\'s Span Slim Fit Soft Jeans SKD0923', '7_SdangClub_1724393670.jpg', 'This is a sample product description', '2024-08-23 15:14:30', '2024-08-23 15:14:30'),
+(21, 'Women\'s Pretty Slim Blue Jeans', '194_Women\'sPr_1724393840.jpg', 'This is a sample product description', '2024-08-23 15:17:20', '2024-08-23 15:17:20'),
+(22, 'Wellfurniture Monster Premium Tybo Aquatex Fabric Sofa 3-seater Home Installation', '1_Wellfurnit_1724394119.jpg', 'Sofa/Chair Material: Fabric\nInstallation support method: On-site installation\nSize: 2000 x 980 x 930mm\nColor series: Beige series\nLength: 2000mm\nCoupang product number: 5766926027 - 9785670322', '2024-08-23 15:21:59', '2024-08-23 15:21:59'),
+(23, 'Crystal House Kids Dandy Check Shirt T242', '5425_CrystalHo_1724394866.jpg', 'This is a sample product description', '2024-08-23 15:34:26', '2024-08-23 15:34:26'),
+(24, 'Lollytree Kids 1-Piece Jeans Shorts', '37173_Lollytree_1724395330.jpg', 'This is a sample product description', '2024-08-23 15:42:10', '2024-08-23 15:42:10'),
+(25, 'Kisspo Kids City 2-Piece Pants + Armless shirt', '36746_KisspoKid_1724396501.jpg', 'This is a sample product description', '2024-08-23 16:01:41', '2024-08-23 16:01:41'),
+(26, 'Petitmue Toddler Today Stripe Short Sleeve T-shirt GMECT53', '38496_PetitmueT_1724396913.jpg', 'This is a sample product description', '2024-08-23 16:08:33', '2024-08-23 16:08:33'),
+(27, 'Samsung Galaxy Z Flip 6 Self-Payment', '1_SamsungGa_1724398130.png', 'This is a sample product description', '2024-08-23 16:28:50', '2024-08-23 16:28:50'),
+(28, 'Unisex Adidas Shoes Running Galaxy 7', '2219_UnisexAdi_1724399439.jpg', 'This is a sample product description', '2024-08-23 16:50:39', '2024-08-23 16:50:39');
 
 -- --------------------------------------------------------
 
@@ -179,15 +182,20 @@ CREATE TABLE `product_attributes` (
 --
 
 INSERT INTO `product_attributes` (`product_attributes_id`, `product_id`, `product_attributes_default`, `product_attributes_name`, `product_attributes_value`, `product_attributes_summary`, `product_attributes_price`, `product_attributes_stock_qty`, `created_at`, `updated_at`) VALUES
-(6, 7, 1, 'Size', '8', 'This is a product sample attribute description', 200000, 15, '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
-(7, 8, 1, 'Frame Color', 'Black', 'WARNING: Fashion Glasses. Not to be worn outside to protect the eyes against strong sunlight. Not designed or intended for use in play by children', 10000, 11, '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
-(8, 9, 1, 'Watch Shape', 'Round', 'Strap Material:	Zinc Alloy, PU Leather\nDial Color:	Orange\nWater Resistance:	No Waterproof\nGender:	Men\nStyle:	Casual, Simple\nType:	Wrist Watches\nBoxes Included:	No\nScale Display:	Bar Scale\nCase Material:	Zinc Alloy\nSpecular Material:	Mineral Glass\nPower Supply:	Battery Powered(Button/Coin Cell Battery)', 200000, 4, '2024-08-09 21:45:40', '2024-08-09 21:45:40'),
-(9, 10, 1, 'Color', 'Black Series | All Seasons', 'Strap Material:	Zinc Alloy, PU Leather\nDial Color:	Orange\nWater Resistance:	No Waterproof\nGender:	Men\nStyle:	Casual, Simple\nType:	Wrist Watches\nBoxes Included:	No\nScale Display:	Bar Scale\nCase Material:	Zinc Alloy\nSpecular Material:	Mineral Glass\nPower Supply:	Battery Powered(Button/Coin Cell Battery)', 56000, 23, '2024-08-09 21:57:36', '2024-08-09 21:57:36'),
-(18, 16, 1, 'Color', 'Red Series | All Seasons', 'This is a description for first Product', 33500, 17, '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
-(19, 16, 0, 'Color', 'Maron Series | All Seasons', NULL, 41000, 10, '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
-(20, 17, 1, 'Tape Multicolor Set', '95% Polyester, 5% Elastane', 'This is a description for first Product', 15000, 50, '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
-(21, 18, 1, 'Color', 'Yellow Shirt', 'This is a description for first Product attribute 1', 5000, 12, '2024-08-09 23:11:22', '2024-08-09 23:11:22'),
-(22, 18, 0, 'Color', 'Black Shirt', 'Description goes here', 5200, 24, '2024-08-09 23:11:22', '2024-08-09 23:11:22');
+(23, 19, 1, 'Female colourful Jeans Waist Span', 'Series', 'Yellow Series', 21000, 4, '2024-08-23 15:09:16', '2024-08-23 15:09:16'),
+(24, 20, 1, 'Size', '32(L)', 'Season of use: All seasons\nColor series: Black series\nBottom size: Men\'s 32-33 inches\nTarget audience: Men', 42300, 10, '2024-08-23 15:14:30', '2024-08-23 15:14:30'),
+(25, 21, 1, 'Size', '26(L)', 'Season of use: All seasons\nColor series: Blue series\nBottom size: women\'s 26-29 inches\nTarget audience: Men', 42300, 11, '2024-08-23 15:17:20', '2024-08-23 15:17:20'),
+(26, 22, 1, 'Size, Color and Material', '2000 x 980 x 930mm - Black - Fabric', 'Season of use: All seasons\nColor series: Blue series\nBottom size: women\'s 26-29 inches\nTarget audience: Men', 551000, 5, '2024-08-23 15:21:59', '2024-08-23 15:21:59'),
+(27, 23, 1, 'Size, Color and Material', '150 - Gray - Fabric', 'Country of Origin: China OEM\nProduct material: 100% cotton\nRelease season: Spring/Fall\nSize (age): Long sleeve (longer than wrist)\nSize (Lake): 150/11', 551000, 12, '2024-08-23 15:34:26', '2024-08-23 15:34:26'),
+(28, 24, 1, 'Size, Color and Material', '110 (4-5years) - Red - Jeans', 'Country of Origin: INDIA\nMaterial: 100% Cotton\nRelease year: 2023\nRelease season: Summer\nColor series: Beige series', 13700, 20, '2024-08-23 15:42:10', '2024-08-23 15:42:10'),
+(29, 24, 0, 'Size, Color and Material', '100 (36M and Above ~) - Black - Jeans', 'Country of Origin: INDIA\nMaterial: 100% Cotton\nRelease year: 2023\nRelease season: Summer\nColor series: Beige series', 13700, 17, '2024-08-23 15:42:10', '2024-08-23 15:42:10'),
+(30, 25, 1, 'Size, Color and Material', 'No 13 - Red - Soft', 'Country of Origin: Korea\nMaterial: 100% cotton\nBottom length: Above knee\nGender: Children\'s\nRelease year: 2024', 17100, 20, '2024-08-23 16:01:41', '2024-08-23 16:01:41'),
+(31, 25, 0, 'Size, Color and Material', 'No 15 - Blue - Soft', 'Country of Origin: Korea\nMaterial: 100% cotton\nBottom length: Above knee\nGender: Children\'s\nRelease year: 2024', 19900, 3, '2024-08-23 16:01:41', '2024-08-23 16:01:41'),
+(32, 26, 1, 'Size, Color and Material', '105 - Blue - Soft', 'Country of Origin: Bangladesh\nMaterial: See contents\nQuantity: 1\nPattern/Print: Stripes\nRelease year: 2024', 5000, 11, '2024-08-23 16:08:33', '2024-08-23 16:08:33'),
+(33, 26, 0, 'Size, Color and Material', '120 - Green - Soft', 'Country of Origin: Bangladesh\nMaterial: See contents\nQuantity: 1\nPattern/Print: Stripes\nRelease year: 2024', 6500, 3, '2024-08-23 16:08:33', '2024-08-23 16:08:33'),
+(34, 26, 0, 'Size, Color and Material', '120 - Yellow - Soft', 'Country of Origin: Bangladesh\r\nMaterial: See contents\r\nQuantity: 1\r\nPattern/Print: Stripes\r\nRelease year: 2024', 4500, 3, '2024-08-23 16:08:33', '2024-08-23 16:08:33'),
+(35, 27, 1, 'Size, Color and OS', '5.5 - Purple - Flip-Android 14', 'Cellular carrier: Air Machine\nCore Type: Octacore\nHome Appliance Model: Galaxy Z Flip', 1500000, 33, '2024-08-23 16:28:50', '2024-08-23 16:28:50'),
+(36, 28, 1, 'Size, Color', '250 - Black', 'Season of use: All seasons\nColor series: Black series', 58000, 12, '2024-08-23 16:50:39', '2024-08-23 16:50:39');
 
 -- --------------------------------------------------------
 
@@ -208,25 +216,37 @@ CREATE TABLE `product_images` (
 --
 
 INSERT INTO `product_images` (`product_images_id`, `product_id`, `img_url`, `created_at`, `updated_at`) VALUES
-(16, 7, '3594_1723192134.jpg', '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
-(17, 7, '3798_1723192134.jpg', '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
-(18, 7, '9001_1723192134.jpg', '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
-(19, 8, '17209_1723206841.jpg', '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
-(20, 8, '17210_1723206841.jpg', '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
-(21, 8, '17215_1723206841.jpg', '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
-(22, 9, '17417_1723207540.jpg', '2024-08-09 21:45:40', '2024-08-09 21:45:40'),
-(23, 10, '17704_1723208256.jpg', '2024-08-09 21:57:36', '2024-08-09 21:57:36'),
-(33, 16, '17695_1723208870.jpg', '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
-(34, 16, '17692_1723208870.jpg', '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
-(35, 16, '17708_1723208870.jpg', '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
-(36, 17, '17858_1723209973.jpg', '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
-(37, 17, '17859_1723209973.jpg', '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
-(38, 17, '17861_1723209973.jpg', '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
-(39, 17, '17862_1723209973.jpg', '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
-(40, 18, '3813_1723212682.jpg', '2024-08-09 23:11:22', '2024-08-09 23:11:22'),
-(41, 18, '3814_1723212682.jpg', '2024-08-09 23:11:22', '2024-08-09 23:11:22'),
-(42, 18, '3816_1723212682.jpg', '2024-08-09 23:11:22', '2024-08-09 23:11:22'),
-(43, 18, '3815_1723212682.jpg', '2024-08-09 23:11:22', '2024-08-09 23:11:22');
+(44, 19, '2_1724393356.jpg', '2024-08-23 15:09:16', '2024-08-23 15:09:16'),
+(45, 19, '3_1724393356.jpg', '2024-08-23 15:09:16', '2024-08-23 15:09:16'),
+(46, 19, '4_1724393356.jpg', '2024-08-23 15:09:16', '2024-08-23 15:09:16'),
+(47, 19, '5_1724393356.jpg', '2024-08-23 15:09:16', '2024-08-23 15:09:16'),
+(48, 19, '6_1724393356.jpg', '2024-08-23 15:09:16', '2024-08-23 15:09:16'),
+(49, 20, '8_1724393670.jpg', '2024-08-23 15:14:30', '2024-08-23 15:14:30'),
+(50, 20, '9_1724393670.jpg', '2024-08-23 15:14:30', '2024-08-23 15:14:30'),
+(51, 20, '10_1724393670.jpg', '2024-08-23 15:14:30', '2024-08-23 15:14:30'),
+(52, 20, '11_1724393670.jpg', '2024-08-23 15:14:30', '2024-08-23 15:14:30'),
+(53, 20, '12_1724393670.jpg', '2024-08-23 15:14:30', '2024-08-23 15:14:30'),
+(54, 21, '195_1724393840.jpg', '2024-08-23 15:17:20', '2024-08-23 15:17:20'),
+(55, 21, '196_1724393840.jpg', '2024-08-23 15:17:20', '2024-08-23 15:17:20'),
+(56, 21, '197_1724393840.jpg', '2024-08-23 15:17:20', '2024-08-23 15:17:20'),
+(57, 21, '198_1724393840.jpg', '2024-08-23 15:17:20', '2024-08-23 15:17:20'),
+(58, 21, '199_1724393840.jpg', '2024-08-23 15:17:20', '2024-08-23 15:17:20'),
+(59, 22, '1_1724394119.jpg', '2024-08-23 15:21:59', '2024-08-23 15:21:59'),
+(60, 23, '5425_1724394866.jpg', '2024-08-23 15:34:26', '2024-08-23 15:34:26'),
+(61, 24, '37172_1724395330.jpg', '2024-08-23 15:42:10', '2024-08-23 15:42:10'),
+(62, 24, '37173_1724395330.jpg', '2024-08-23 15:42:10', '2024-08-23 15:42:10'),
+(63, 25, '36746_1724396501.jpg', '2024-08-23 16:01:41', '2024-08-23 16:01:41'),
+(64, 25, '36747_1724396501.jpg', '2024-08-23 16:01:41', '2024-08-23 16:01:41'),
+(65, 25, '36748_1724396501.jpg', '2024-08-23 16:01:41', '2024-08-23 16:01:41'),
+(66, 26, '38987_1724396913.jpg', '2024-08-23 16:08:33', '2024-08-23 16:08:33'),
+(67, 26, '38989_1724396913.jpg', '2024-08-23 16:08:33', '2024-08-23 16:08:33'),
+(68, 26, '38988_1724396913.jpg', '2024-08-23 16:08:33', '2024-08-23 16:08:33'),
+(69, 26, '38496_1724396913.jpg', '2024-08-23 16:08:33', '2024-08-23 16:08:33'),
+(70, 27, '2_1724398130.png', '2024-08-23 16:28:50', '2024-08-23 16:28:50'),
+(71, 27, '3_1724398130.png', '2024-08-23 16:28:50', '2024-08-23 16:28:50'),
+(72, 27, '4_1724398130.png', '2024-08-23 16:28:50', '2024-08-23 16:28:50'),
+(73, 27, '5_1724398130.png', '2024-08-23 16:28:50', '2024-08-23 16:28:50'),
+(74, 28, '59943_1724399439.jpg', '2024-08-23 16:50:39', '2024-08-23 16:50:39');
 
 -- --------------------------------------------------------
 
@@ -238,6 +258,22 @@ CREATE TABLE `product_like` (
   `product_like` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_shipping`
+--
+
+CREATE TABLE `product_shipping` (
+  `product_shipping_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `shipping_type` enum('Free','Paid') NOT NULL DEFAULT 'Free',
+  `shipping_amount` decimal(10,0) NOT NULL DEFAULT 0,
+  `shipping_company` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -261,18 +297,21 @@ CREATE TABLE `product_sub_category` (
 --
 
 INSERT INTO `product_sub_category` (`product_sub_category_id`, `sub_category_id`, `product_id`, `created_at`, `updated_at`) VALUES
-(11, 3, 7, '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
-(12, 4, 7, '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
-(13, 22, 8, '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
-(14, 21, 8, '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
-(15, 19, 9, '2024-08-09 21:45:40', '2024-08-09 21:45:40'),
-(16, 3, 10, '2024-08-09 21:57:36', '2024-08-09 21:57:36'),
-(17, 4, 10, '2024-08-09 21:57:36', '2024-08-09 21:57:36'),
-(28, 3, 16, '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
-(29, 4, 16, '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
-(30, 3, 17, '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
-(31, 23, 18, '2024-08-09 23:11:22', '2024-08-09 23:11:22'),
-(32, 4, 18, '2024-08-09 23:11:22', '2024-08-09 23:11:22');
+(33, 4, 19, '2024-08-23 15:09:16', '2024-08-23 15:09:16'),
+(34, 3, 20, '2024-08-23 15:14:30', '2024-08-23 15:14:30'),
+(35, 4, 21, '2024-08-23 15:17:20', '2024-08-23 15:17:20'),
+(36, 5, 22, '2024-08-23 15:21:59', '2024-08-23 15:21:59'),
+(37, 23, 23, '2024-08-23 15:34:26', '2024-08-23 15:34:26'),
+(38, 24, 23, '2024-08-23 15:34:26', '2024-08-23 15:34:26'),
+(39, 23, 24, '2024-08-23 15:42:10', '2024-08-23 15:42:10'),
+(40, 24, 24, '2024-08-23 15:42:10', '2024-08-23 15:42:10'),
+(41, 23, 25, '2024-08-23 16:01:41', '2024-08-23 16:01:41'),
+(42, 24, 25, '2024-08-23 16:01:41', '2024-08-23 16:01:41'),
+(43, 23, 26, '2024-08-23 16:08:33', '2024-08-23 16:08:33'),
+(44, 24, 26, '2024-08-23 16:08:33', '2024-08-23 16:08:33'),
+(45, 1, 27, '2024-08-23 16:28:50', '2024-08-23 16:28:50'),
+(46, 3, 28, '2024-08-23 16:50:39', '2024-08-23 16:50:39'),
+(47, 4, 28, '2024-08-23 16:50:39', '2024-08-23 16:50:39');
 
 -- --------------------------------------------------------
 
@@ -423,6 +462,13 @@ ALTER TABLE `product_like`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `product_shipping`
+--
+ALTER TABLE `product_shipping`
+  ADD PRIMARY KEY (`product_shipping_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
 -- Indexes for table `product_sub_category`
 --
 ALTER TABLE `product_sub_category`
@@ -487,31 +533,37 @@ ALTER TABLE `payment_details`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `product_attributes`
 --
 ALTER TABLE `product_attributes`
-  MODIFY `product_attributes_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `product_attributes_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `product_images_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `product_images_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT for table `product_like`
 --
 ALTER TABLE `product_like`
-  MODIFY `product_like` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `product_like` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `product_shipping`
+--
+ALTER TABLE `product_shipping`
+  MODIFY `product_shipping_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `product_sub_category`
 --
 ALTER TABLE `product_sub_category`
-  MODIFY `product_sub_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `product_sub_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `sub_category`
@@ -574,6 +626,12 @@ ALTER TABLE `product_images`
 ALTER TABLE `product_like`
   ADD CONSTRAINT `product_like_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `product_like_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `product_shipping`
+--
+ALTER TABLE `product_shipping`
+  ADD CONSTRAINT `product_shipping_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `product_sub_category`
