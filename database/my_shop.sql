@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 26, 2024 at 05:41 PM
+-- Generation Time: Sep 12, 2024 at 10:22 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -255,7 +255,7 @@ INSERT INTO `product_images` (`product_images_id`, `product_id`, `img_url`, `cre
 --
 
 CREATE TABLE `product_like` (
-  `product_like` int(11) NOT NULL,
+  `product_like_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
@@ -457,7 +457,7 @@ ALTER TABLE `product_images`
 -- Indexes for table `product_like`
 --
 ALTER TABLE `product_like`
-  ADD PRIMARY KEY (`product_like`),
+  ADD PRIMARY KEY (`product_like_id`),
   ADD KEY `product_id` (`product_id`),
   ADD KEY `user_id` (`user_id`);
 
@@ -551,7 +551,7 @@ ALTER TABLE `product_images`
 -- AUTO_INCREMENT for table `product_like`
 --
 ALTER TABLE `product_like`
-  MODIFY `product_like` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `product_like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `product_shipping`
