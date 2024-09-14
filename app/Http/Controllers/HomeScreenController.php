@@ -121,6 +121,12 @@ class HomeScreenController extends Controller
                 array_push($new_product_subcategories, $product_subcategory_array);
             }
 
+            $product_like_ = DB::connection('mysql')->select(
+                'SELECT * FROM product_like WHERE product_id = :product_id',
+                ['product_id' => $value->product_id],
+            );
+            $likes = count($product_like_);
+            $new_product['likes'] = $likes;
 
             $new_product['product_sub_categories'] = $new_product_subcategories;
             $new_product['product_attributes'] = $new_product_attributes;
