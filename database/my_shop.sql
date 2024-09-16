@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 12, 2024 at 10:22 AM
+-- Generation Time: Sep 16, 2024 at 05:51 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -261,6 +261,13 @@ CREATE TABLE `product_like` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_like`
+--
+
+INSERT INTO `product_like` (`product_like_id`, `product_id`, `user_id`, `created_at`, `updated_at`) VALUES
+(2, 26, 1, '2024-09-14 23:56:27', '2024-09-14 23:56:27');
 
 -- --------------------------------------------------------
 
@@ -551,7 +558,7 @@ ALTER TABLE `product_images`
 -- AUTO_INCREMENT for table `product_like`
 --
 ALTER TABLE `product_like`
-  MODIFY `product_like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `product_like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `product_shipping`
