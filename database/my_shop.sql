@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 16, 2024 at 05:51 PM
+-- Generation Time: Oct 19, 2024 at 07:11 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -278,12 +278,19 @@ INSERT INTO `product_like` (`product_like_id`, `product_id`, `user_id`, `created
 CREATE TABLE `product_shipping` (
   `product_shipping_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
+  `shipping_company_id` int(11) NOT NULL,
   `shipping_type` enum('Free','Paid') NOT NULL DEFAULT 'Free',
   `shipping_amount` decimal(10,0) NOT NULL DEFAULT 0,
-  `shipping_company` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_shipping`
+--
+
+INSERT INTO `product_shipping` (`product_shipping_id`, `product_id`, `shipping_company_id`, `shipping_type`, `shipping_amount`, `created_at`, `updated_at`) VALUES
+(2, 23, 1, 'Paid', 0, '2024-10-20 02:03:18', '2024-10-20 02:03:18');
 
 -- --------------------------------------------------------
 
@@ -319,6 +326,27 @@ INSERT INTO `product_sub_category` (`product_sub_category_id`, `sub_category_id`
 (45, 1, 27, '2024-08-23 16:28:50', '2024-08-23 16:28:50'),
 (46, 3, 28, '2024-08-23 16:50:39', '2024-08-23 16:50:39'),
 (47, 4, 28, '2024-08-23 16:50:39', '2024-08-23 16:50:39');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shipping_company`
+--
+
+CREATE TABLE `shipping_company` (
+  `shipping_company_id` int(11) NOT NULL,
+  `shipping_company_name` varchar(255) NOT NULL,
+  `shipping_company_address` text NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `shipping_company`
+--
+
+INSERT INTO `shipping_company` (`shipping_company_id`, `shipping_company_name`, `shipping_company_address`, `created_at`, `updated_at`) VALUES
+(1, 'Fedex', '', '2024-10-20 02:02:52', '2024-10-20 02:02:52');
 
 -- --------------------------------------------------------
 
@@ -473,7 +501,8 @@ ALTER TABLE `product_like`
 --
 ALTER TABLE `product_shipping`
   ADD PRIMARY KEY (`product_shipping_id`),
-  ADD KEY `product_id` (`product_id`);
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `shipping_company_id` (`shipping_company_id`);
 
 --
 -- Indexes for table `product_sub_category`
@@ -482,6 +511,12 @@ ALTER TABLE `product_sub_category`
   ADD PRIMARY KEY (`product_sub_category_id`),
   ADD KEY `sub_category_id` (`sub_category_id`),
   ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `shipping_company`
+--
+ALTER TABLE `shipping_company`
+  ADD PRIMARY KEY (`shipping_company_id`);
 
 --
 -- Indexes for table `sub_category`
@@ -564,13 +599,19 @@ ALTER TABLE `product_like`
 -- AUTO_INCREMENT for table `product_shipping`
 --
 ALTER TABLE `product_shipping`
-  MODIFY `product_shipping_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `product_shipping_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `product_sub_category`
 --
 ALTER TABLE `product_sub_category`
   MODIFY `product_sub_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+
+--
+-- AUTO_INCREMENT for table `shipping_company`
+--
+ALTER TABLE `shipping_company`
+  MODIFY `shipping_company_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `sub_category`
@@ -638,7 +679,8 @@ ALTER TABLE `product_like`
 -- Constraints for table `product_shipping`
 --
 ALTER TABLE `product_shipping`
-  ADD CONSTRAINT `product_shipping_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `product_shipping_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `product_shipping_ibfk_2` FOREIGN KEY (`shipping_company_id`) REFERENCES `shipping_company` (`shipping_company_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `product_sub_category`
