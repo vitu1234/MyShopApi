@@ -131,18 +131,24 @@ class HomeScreenController extends Controller
             $new_product['product_sub_categories'] = $new_product_subcategories;
             $new_product['product_attributes'] = $new_product_attributes;
             $new_product['product_images'] = $new_products_images;
-            $new_product['product_shipping'] = DB::connection('mysql')->selectOne(
+            
+
+            $product_shipping = DB::connection('mysql')->selectOne(
                 'SELECT product_shipping.*, shipping_company.shipping_company_name,shipping_company.shipping_company_address FROM product_shipping 
                         INNER JOIN shipping_company 
                             ON product_shipping.shipping_company_id = shipping_company.shipping_company_id
                         WHERE product_id = :product_id',
                 ['product_id' => $value->product_id],
             );
+            if(!empty($product_shipping) > 0){
+                $new_product['product_shipping'][0] =  $product_shipping;
+            }else{
+                $new_product['product_shipping'] =  [];
+            }
 
             array_push($new_products, $new_product);
         }
 
-        $array['products'] = $new_products;
         $array['products'] = $new_products;
         $array['categories'] = $categories;
         $array['sub_categories'] = $product_sub_category;
