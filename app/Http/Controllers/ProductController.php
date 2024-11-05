@@ -90,6 +90,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        \Log::info('Store method called with data: ', $request->all());
+
         $request->validate([
             'category_id' => 'integer|required',
             'product_name' => 'string|required',
