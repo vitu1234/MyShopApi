@@ -82,7 +82,7 @@ class CategoryController extends Controller
             $fileNamToStore = trim(str_replace(' ', '', $filename . '_' . substr($request->category_name, 0, 10) . '_' . time() . '.' . $extension));
 
             //upload the image
-            $path = $request->file('category_icon')->storeAs('public/category_icon', $fileNamToStore);
+            $path = $request->file('category_icon')->storeAs('public/category', $fileNamToStore);
 
         } else {
             $fileNamToStore = NULL;
