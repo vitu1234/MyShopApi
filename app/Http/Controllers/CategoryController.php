@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+
 
 class CategoryController extends Controller
 {
@@ -79,7 +81,7 @@ class CategoryController extends Controller
             $extension = $request->file('category_icon')->getClientOriginalExtension();
 
             //filename to store
-            $fileNamToStore = trim(str_replace(' ', '', $filename . '_' . substr($request->category_name, 0, 10) . '_' . time() . '.' . $extension));
+            $fileNamToStore = strtolower(trim(str_replace(' ', '', $filename . '_' . substr($request->category_name, 0, 10) . '_' . time() . '.' . $extension)));
 
             //upload the image
             $path = $request->file('category_icon')->storeAs('public/category', $fileNamToStore);
@@ -159,6 +161,7 @@ class CategoryController extends Controller
 
         $validator = Validator::make($request->all(), [
             'category_name' => 'string|required|max:255',
+            'category_icon.*' => 'image|nullable|max:1000',
             'category_description' => 'string|nullable'
         ]);
 
@@ -170,26 +173,60 @@ class CategoryController extends Controller
             ], 422);
         }
 
-        $saveData = DB::connection('mysql')->update(
-            '
-            UPDATE category 
-            SET
-            category_name =:category_name,
-            category_description  =:category_description,
-                
-            WHERE category_id =:id
-            ',
-            [
-                'category_name' => $request->category_name,
-                'category_description' => $request->category_description,
-                'id' => $id
-            ]
-        );
-        if ($saveData) {
-            return response()->json(['isError' => false, 'message' => 'Category update successful'], 200);
+        $checkCategory = DB::connection('mysql')->select('SELECT * FROM category WHERE category_id =:category_id', ['category_id' => $id]);
+
+        if (!empty($checkCategory)) {
+            $fileNamToStore=$checkCategory[0]->category_icon;
+            if ($request->file('category_icon') != null) {
+                // get filename with extension
+                $fileNameWithExt = $request->file('category_icon')->getClientOriginalName();
+
+                //get just filename
+                $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+
+                //get just extension
+                $extension = $request->file('category_icon')->getClientOriginalExtension();
+
+                //filename to store
+                $fileNamToStore = strtolower($filename . '_' . time() . '.' . $extension);
+
+                //upload the image
+                $path = $request->file('category_icon')->storeAs('public/category', $fileNamToStore);
+
+                if ($checkCategory[0]->category_icon != null) {
+                    //delete image
+                    Storage::delete('public/category/' . $checkCategory[0]->category_icon);
+                }
+
+            }
+
+            $saveData = DB::connection('mysql')->update(
+                '
+                UPDATE category 
+                SET
+                category_name =:category_name,
+                category_description  =:category_description,
+                category_icon  =:category_icon
+                    
+                WHERE category_id =:id
+                ',
+                [
+                    'category_name' => $request->category_name,
+                    'category_description' => $request->category_description,
+                    'category_icon' => $fileNamToStore,
+                    'id' => $id
+                ]
+            );
+            if ($saveData) {
+                return response()->json(['isError' => false, 'message' => 'Category update successful'], 200);
+            } else {
+                return response()->json(['isError' => true, 'message' => 'Category update failed'], 201);
+            }
         } else {
-            return response()->json(['isError' => true, 'message' => 'Category update failed'], 201);
+            return response()->json(['isError' => true, 'message' => 'Category update failed, requested category not found'], 201);
         }
+
+
     }
 
     /**

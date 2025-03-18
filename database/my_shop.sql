@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 19, 2024 at 07:11 PM
+-- Generation Time: Mar 18, 2025 at 01:50 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -60,6 +60,7 @@ CREATE TABLE `category` (
   `category_id` int(11) NOT NULL,
   `category_name` varchar(255) NOT NULL,
   `category_description` text DEFAULT NULL,
+  `category_icon` varchar(100) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -68,18 +69,18 @@ CREATE TABLE `category` (
 -- Dumping data for table `category`
 --
 
-INSERT INTO `category` (`category_id`, `category_name`, `category_description`, `created_at`, `updated_at`) VALUES
-(11, 'Electronics', 'Contains all Electronics stuff', '2024-08-08 23:48:57', '2024-08-08 23:48:57'),
-(12, 'Fashion', 'Contains all Fashion/clothes and related stuff', '2024-08-08 23:49:21', '2024-08-08 23:49:21'),
-(13, 'Home & Garden', 'Contains all house and related stuff', '2024-08-08 23:50:06', '2024-08-08 23:50:06'),
-(14, 'Health & Beauty', 'Contains beauty and cosmestics and related items', '2024-08-08 23:50:34', '2024-08-08 23:50:34'),
-(15, 'Toys & Games', 'Contains kids, playing and related items', '2024-08-08 23:51:01', '2024-08-08 23:51:01'),
-(16, 'Books & Media', NULL, '2024-08-08 23:51:18', '2024-08-08 23:51:18'),
-(17, 'Sports', NULL, '2024-08-08 23:51:30', '2024-08-08 23:51:30'),
-(18, 'Automotive', 'Car accessories, auto electronics and related items', '2024-08-08 23:52:32', '2024-08-08 23:52:32'),
-(19, 'Jewelry & Watches', NULL, '2024-08-08 23:52:51', '2024-08-08 23:52:51'),
-(20, 'Apparel Accessories', 'Fancy men and wowen Accessories', '2024-08-09 21:24:03', '2024-08-09 21:24:03'),
-(21, 'Kids Clothing', 'Kids clothes', '2024-08-09 23:04:45', '2024-08-09 23:04:45');
+INSERT INTO `category` (`category_id`, `category_name`, `category_description`, `category_icon`, `created_at`, `updated_at`) VALUES
+(11, 'Electronics', 'Contains all Electronics stuff', NULL, '2024-08-08 23:48:57', '2024-08-08 23:48:57'),
+(12, 'Fashion', 'Contains all Fashion/clothes and related stuff', NULL, '2024-08-08 23:49:21', '2024-08-08 23:49:21'),
+(13, 'Home & Garden', 'Contains all house and related stuff', NULL, '2024-08-08 23:50:06', '2024-08-08 23:50:06'),
+(14, 'Health & Beauty', 'Contains beauty and cosmestics and related items', NULL, '2024-08-08 23:50:34', '2024-08-08 23:50:34'),
+(15, 'Toys & Games', 'Contains kids, playing and related items', NULL, '2024-08-08 23:51:01', '2024-08-08 23:51:01'),
+(16, 'Books & Media', NULL, NULL, '2024-08-08 23:51:18', '2024-08-08 23:51:18'),
+(17, 'Sports', NULL, NULL, '2024-08-08 23:51:30', '2024-08-08 23:51:30'),
+(18, 'Automotive', 'Car accessories, auto electronics and related items', NULL, '2024-08-08 23:52:32', '2024-08-08 23:52:32'),
+(19, 'Jewelry & Watches', NULL, NULL, '2024-08-08 23:52:51', '2024-08-08 23:52:51'),
+(20, 'Apparel Accessories', 'Fancy men and wowen Accessories', NULL, '2024-08-09 21:24:03', '2024-08-09 21:24:03'),
+(21, 'Kids Clothing', 'Kids clothes', NULL, '2024-08-09 23:04:45', '2024-08-09 23:04:45');
 
 -- --------------------------------------------------------
 
@@ -551,7 +552,7 @@ ALTER TABLE `cart_item`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `orders`
