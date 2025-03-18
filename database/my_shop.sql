@@ -1,829 +1,1783 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
-<<<<<<< HEAD
--- Generation Time: Mar 18, 2025 at 01:50 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
-=======
--- Generation Time: Aug 09, 2024 at 07:24 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
->>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `my_shop`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cart`
---
-
-CREATE TABLE `cart` (
-  `cart_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `total` decimal(10,0) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cart_item`
---
-
-CREATE TABLE `cart_item` (
-  `cart_item_id` int(11) NOT NULL,
-  `cart_id` int(11) NOT NULL,
-  `product_attributes_id` int(11) NOT NULL,
-  `cart_qty` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `category`
---
-
-CREATE TABLE `category` (
-  `category_id` int(11) NOT NULL,
-  `category_name` varchar(255) NOT NULL,
-  `category_description` text DEFAULT NULL,
-<<<<<<< HEAD
-  `category_icon` varchar(100) DEFAULT NULL,
-=======
->>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `category`
---
-
-<<<<<<< HEAD
-INSERT INTO `category` (`category_id`, `category_name`, `category_description`, `category_icon`, `created_at`, `updated_at`) VALUES
-(11, 'Electronics', 'Contains all Electronics stuff', NULL, '2024-08-08 23:48:57', '2024-08-08 23:48:57'),
-(12, 'Fashion', 'Contains all Fashion/clothes and related stuff', NULL, '2024-08-08 23:49:21', '2024-08-08 23:49:21'),
-(13, 'Home & Garden', 'Contains all house and related stuff', NULL, '2024-08-08 23:50:06', '2024-08-08 23:50:06'),
-(14, 'Health & Beauty', 'Contains beauty and cosmestics and related items', NULL, '2024-08-08 23:50:34', '2024-08-08 23:50:34'),
-(15, 'Toys & Games', 'Contains kids, playing and related items', NULL, '2024-08-08 23:51:01', '2024-08-08 23:51:01'),
-(16, 'Books & Media', NULL, NULL, '2024-08-08 23:51:18', '2024-08-08 23:51:18'),
-(17, 'Sports', NULL, NULL, '2024-08-08 23:51:30', '2024-08-08 23:51:30'),
-(18, 'Automotive', 'Car accessories, auto electronics and related items', NULL, '2024-08-08 23:52:32', '2024-08-08 23:52:32'),
-(19, 'Jewelry & Watches', NULL, NULL, '2024-08-08 23:52:51', '2024-08-08 23:52:51'),
-(20, 'Apparel Accessories', 'Fancy men and wowen Accessories', NULL, '2024-08-09 21:24:03', '2024-08-09 21:24:03'),
-(21, 'Kids Clothing', 'Kids clothes', NULL, '2024-08-09 23:04:45', '2024-08-09 23:04:45');
-=======
-INSERT INTO `category` (`category_id`, `category_name`, `category_description`, `created_at`, `updated_at`) VALUES
-(11, 'Electronics', 'Contains all Electronics stuff', '2024-08-08 23:48:57', '2024-08-08 23:48:57'),
-(12, 'Fashion', 'Contains all Fashion/clothes and related stuff', '2024-08-08 23:49:21', '2024-08-08 23:49:21'),
-(13, 'Home & Garden', 'Contains all house and related stuff', '2024-08-08 23:50:06', '2024-08-08 23:50:06'),
-(14, 'Health & Beauty', 'Contains beauty and cosmestics and related items', '2024-08-08 23:50:34', '2024-08-08 23:50:34'),
-(15, 'Toys & Games', 'Contains kids, playing and related items', '2024-08-08 23:51:01', '2024-08-08 23:51:01'),
-(16, 'Books & Media', NULL, '2024-08-08 23:51:18', '2024-08-08 23:51:18'),
-(17, 'Sports', NULL, '2024-08-08 23:51:30', '2024-08-08 23:51:30'),
-(18, 'Automotive', 'Car accessories, auto electronics and related items', '2024-08-08 23:52:32', '2024-08-08 23:52:32'),
-(19, 'Jewelry & Watches', NULL, '2024-08-08 23:52:51', '2024-08-08 23:52:51'),
-(20, 'Apparel Accessories', 'Fancy men and wowen Accessories', '2024-08-09 21:24:03', '2024-08-09 21:24:03'),
-(21, 'Kids Clothing', 'Kids clothes', '2024-08-09 23:04:45', '2024-08-09 23:04:45');
->>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
-
--- --------------------------------------------------------
-
---
--- Table structure for table `orders`
---
-
-CREATE TABLE `orders` (
-  `order_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `payment_details_id` int(11) NOT NULL,
-  `total` decimal(10,0) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `order_item`
---
-
-CREATE TABLE `order_item` (
-  `order_item_id` int(11) NOT NULL,
-  `order_id` int(11) NOT NULL,
-  `product_attributes_id` int(11) NOT NULL,
-  `cart_qty` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `payment_details`
---
-
-CREATE TABLE `payment_details` (
-  `payment_details_id` int(11) NOT NULL,
-  `order_id` int(11) NOT NULL,
-  `amount` decimal(10,0) NOT NULL,
-  `provider` enum('Complete','Failed','Pending','Canceled') NOT NULL,
-  `status` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `product`
---
-
-CREATE TABLE `product` (
-  `product_id` int(11) NOT NULL,
-  `product_name` varchar(255) NOT NULL,
-  `cover` varchar(255) NOT NULL DEFAULT 'noimage.jpg',
-  `product_description` text DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `product`
---
-
-INSERT INTO `product` (`product_id`, `product_name`, `cover`, `product_description`, `created_at`, `updated_at`) VALUES
-<<<<<<< HEAD
-(19, 'Female colourful Jeans Waist Span', '1_Femalecol_1724393355.jpg', 'This is a sample product description', '2024-08-23 15:09:16', '2024-08-23 15:09:16'),
-(20, 'Sdang Club Men\'s Span Slim Fit Soft Jeans SKD0923', '7_SdangClub_1724393670.jpg', 'This is a sample product description', '2024-08-23 15:14:30', '2024-08-23 15:14:30'),
-(21, 'Women\'s Pretty Slim Blue Jeans', '194_Women\'sPr_1724393840.jpg', 'This is a sample product description', '2024-08-23 15:17:20', '2024-08-23 15:17:20'),
-(22, 'Wellfurniture Monster Premium Tybo Aquatex Fabric Sofa 3-seater Home Installation', '1_Wellfurnit_1724394119.jpg', 'Sofa/Chair Material: Fabric\nInstallation support method: On-site installation\nSize: 2000 x 980 x 930mm\nColor series: Beige series\nLength: 2000mm\nCoupang product number: 5766926027 - 9785670322', '2024-08-23 15:21:59', '2024-08-23 15:21:59'),
-(23, 'Crystal House Kids Dandy Check Shirt T242', '5425_CrystalHo_1724394866.jpg', 'This is a sample product description', '2024-08-23 15:34:26', '2024-08-23 15:34:26'),
-(24, 'Lollytree Kids 1-Piece Jeans Shorts', '37173_Lollytree_1724395330.jpg', 'This is a sample product description', '2024-08-23 15:42:10', '2024-08-23 15:42:10'),
-(25, 'Kisspo Kids City 2-Piece Pants + Armless shirt', '36746_KisspoKid_1724396501.jpg', 'This is a sample product description', '2024-08-23 16:01:41', '2024-08-23 16:01:41'),
-(26, 'Petitmue Toddler Today Stripe Short Sleeve T-shirt GMECT53', '38496_PetitmueT_1724396913.jpg', 'This is a sample product description', '2024-08-23 16:08:33', '2024-08-23 16:08:33'),
-(27, 'Samsung Galaxy Z Flip 6 Self-Payment', '1_SamsungGa_1724398130.png', 'This is a sample product description', '2024-08-23 16:28:50', '2024-08-23 16:28:50'),
-(28, 'Unisex Adidas Shoes Running Galaxy 7', '2219_UnisexAdi_1724399439.jpg', 'This is a sample product description', '2024-08-23 16:50:39', '2024-08-23 16:50:39');
-=======
-(7, 'Converse All Star Limited Edition', '7799_ConverseA_1723192134.jpg', 'This is a sample product description', '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
-(8, 'Stylehorn Gavin Polarized Sunglasses', '17308_Stylehorn_1723206840.jpg', 'This is a sample product description', '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
-(9, 'Business Men\'s Quartz Watch', '17417_BusinessM_1723207540.jpg', 'This is a sample product description', '2024-08-09 21:45:40', '2024-08-09 21:45:40'),
-(10, 'Vans Unisex Old School Black', '17706_VansUnise_1723208256.jpg', 'This is a sample product description', '2024-08-09 21:57:36', '2024-08-09 21:57:36'),
-(16, 'Vans Unisex Old Canvas', '17692_VansUnise_1723208870.jpg', 'This is a sample product description', '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
-(17, 'Men\'s Panties Drawers Square Functional Long Drawers', '17857_Men\'sPant_1723209973.jpg', 'This is a sample product description |  Season of use: All seasons', '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
-(18, '0-12 years twin shirt', '3813_0-12years_1723212682.jpg', 'This is a sample product description |  Season of use: All seasons', '2024-08-09 23:11:22', '2024-08-09 23:11:22');
->>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
-
--- --------------------------------------------------------
-
---
--- Table structure for table `product_attributes`
---
-
-CREATE TABLE `product_attributes` (
-  `product_attributes_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `product_attributes_default` tinyint(1) NOT NULL DEFAULT 1,
-  `product_attributes_name` varchar(255) NOT NULL,
-  `product_attributes_value` varchar(255) NOT NULL,
-  `product_attributes_summary` text DEFAULT NULL,
-  `product_attributes_price` decimal(10,0) NOT NULL,
-  `product_attributes_stock_qty` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `product_attributes`
---
-
-INSERT INTO `product_attributes` (`product_attributes_id`, `product_id`, `product_attributes_default`, `product_attributes_name`, `product_attributes_value`, `product_attributes_summary`, `product_attributes_price`, `product_attributes_stock_qty`, `created_at`, `updated_at`) VALUES
-<<<<<<< HEAD
-(23, 19, 1, 'Female colourful Jeans Waist Span', 'Series', 'Yellow Series', 21000, 4, '2024-08-23 15:09:16', '2024-08-23 15:09:16'),
-(24, 20, 1, 'Size', '32(L)', 'Season of use: All seasons\nColor series: Black series\nBottom size: Men\'s 32-33 inches\nTarget audience: Men', 42300, 10, '2024-08-23 15:14:30', '2024-08-23 15:14:30'),
-(25, 21, 1, 'Size', '26(L)', 'Season of use: All seasons\nColor series: Blue series\nBottom size: women\'s 26-29 inches\nTarget audience: Men', 42300, 11, '2024-08-23 15:17:20', '2024-08-23 15:17:20'),
-(26, 22, 1, 'Size, Color and Material', '2000 x 980 x 930mm - Black - Fabric', 'Season of use: All seasons\nColor series: Blue series\nBottom size: women\'s 26-29 inches\nTarget audience: Men', 551000, 5, '2024-08-23 15:21:59', '2024-08-23 15:21:59'),
-(27, 23, 1, 'Size, Color and Material', '150 - Gray - Fabric', 'Country of Origin: China OEM\nProduct material: 100% cotton\nRelease season: Spring/Fall\nSize (age): Long sleeve (longer than wrist)\nSize (Lake): 150/11', 551000, 12, '2024-08-23 15:34:26', '2024-08-23 15:34:26'),
-(28, 24, 1, 'Size, Color and Material', '110 (4-5years) - Red - Jeans', 'Country of Origin: INDIA\nMaterial: 100% Cotton\nRelease year: 2023\nRelease season: Summer\nColor series: Beige series', 13700, 20, '2024-08-23 15:42:10', '2024-08-23 15:42:10'),
-(29, 24, 0, 'Size, Color and Material', '100 (36M and Above ~) - Black - Jeans', 'Country of Origin: INDIA\nMaterial: 100% Cotton\nRelease year: 2023\nRelease season: Summer\nColor series: Beige series', 13700, 17, '2024-08-23 15:42:10', '2024-08-23 15:42:10'),
-(30, 25, 1, 'Size, Color and Material', 'No 13 - Red - Soft', 'Country of Origin: Korea\nMaterial: 100% cotton\nBottom length: Above knee\nGender: Children\'s\nRelease year: 2024', 17100, 20, '2024-08-23 16:01:41', '2024-08-23 16:01:41'),
-(31, 25, 0, 'Size, Color and Material', 'No 15 - Blue - Soft', 'Country of Origin: Korea\nMaterial: 100% cotton\nBottom length: Above knee\nGender: Children\'s\nRelease year: 2024', 19900, 3, '2024-08-23 16:01:41', '2024-08-23 16:01:41'),
-(32, 26, 1, 'Size, Color and Material', '105 - Blue - Soft', 'Country of Origin: Bangladesh\nMaterial: See contents\nQuantity: 1\nPattern/Print: Stripes\nRelease year: 2024', 5000, 11, '2024-08-23 16:08:33', '2024-08-23 16:08:33'),
-(33, 26, 0, 'Size, Color and Material', '120 - Green - Soft', 'Country of Origin: Bangladesh\nMaterial: See contents\nQuantity: 1\nPattern/Print: Stripes\nRelease year: 2024', 6500, 3, '2024-08-23 16:08:33', '2024-08-23 16:08:33'),
-(34, 26, 0, 'Size, Color and Material', '120 - Yellow - Soft', 'Country of Origin: Bangladesh\r\nMaterial: See contents\r\nQuantity: 1\r\nPattern/Print: Stripes\r\nRelease year: 2024', 4500, 3, '2024-08-23 16:08:33', '2024-08-23 16:08:33'),
-(35, 27, 1, 'Size, Color and OS', '5.5 - Purple - Flip-Android 14', 'Cellular carrier: Air Machine\nCore Type: Octacore\nHome Appliance Model: Galaxy Z Flip', 1500000, 33, '2024-08-23 16:28:50', '2024-08-23 16:28:50'),
-(36, 28, 1, 'Size, Color', '250 - Black', 'Season of use: All seasons\nColor series: Black series', 58000, 12, '2024-08-23 16:50:39', '2024-08-23 16:50:39');
-=======
-(6, 7, 1, 'Size', '8', 'This is a product sample attribute description', 200000, 15, '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
-(7, 8, 1, 'Frame Color', 'Black', 'WARNING: Fashion Glasses. Not to be worn outside to protect the eyes against strong sunlight. Not designed or intended for use in play by children', 10000, 11, '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
-(8, 9, 1, 'Watch Shape', 'Round', 'Strap Material:	Zinc Alloy, PU Leather\nDial Color:	Orange\nWater Resistance:	No Waterproof\nGender:	Men\nStyle:	Casual, Simple\nType:	Wrist Watches\nBoxes Included:	No\nScale Display:	Bar Scale\nCase Material:	Zinc Alloy\nSpecular Material:	Mineral Glass\nPower Supply:	Battery Powered(Button/Coin Cell Battery)', 200000, 4, '2024-08-09 21:45:40', '2024-08-09 21:45:40'),
-(9, 10, 1, 'Color', 'Black Series | All Seasons', 'Strap Material:	Zinc Alloy, PU Leather\nDial Color:	Orange\nWater Resistance:	No Waterproof\nGender:	Men\nStyle:	Casual, Simple\nType:	Wrist Watches\nBoxes Included:	No\nScale Display:	Bar Scale\nCase Material:	Zinc Alloy\nSpecular Material:	Mineral Glass\nPower Supply:	Battery Powered(Button/Coin Cell Battery)', 56000, 23, '2024-08-09 21:57:36', '2024-08-09 21:57:36'),
-(18, 16, 1, 'Color', 'Red Series | All Seasons', 'This is a description for first Product', 33500, 17, '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
-(19, 16, 0, 'Color', 'Maron Series | All Seasons', NULL, 41000, 10, '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
-(20, 17, 1, 'Tape Multicolor Set', '95% Polyester, 5% Elastane', 'This is a description for first Product', 15000, 50, '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
-(21, 18, 1, 'Color', 'Yellow Shirt', 'This is a description for first Product attribute 1', 5000, 12, '2024-08-09 23:11:22', '2024-08-09 23:11:22'),
-(22, 18, 0, 'Color', 'Black Shirt', 'Description goes here', 5200, 24, '2024-08-09 23:11:22', '2024-08-09 23:11:22');
->>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
-
--- --------------------------------------------------------
-
---
--- Table structure for table `product_images`
---
-
-CREATE TABLE `product_images` (
-  `product_images_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `img_url` varchar(255) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `product_images`
---
-
-INSERT INTO `product_images` (`product_images_id`, `product_id`, `img_url`, `created_at`, `updated_at`) VALUES
-<<<<<<< HEAD
-(44, 19, '2_1724393356.jpg', '2024-08-23 15:09:16', '2024-08-23 15:09:16'),
-(45, 19, '3_1724393356.jpg', '2024-08-23 15:09:16', '2024-08-23 15:09:16'),
-(46, 19, '4_1724393356.jpg', '2024-08-23 15:09:16', '2024-08-23 15:09:16'),
-(47, 19, '5_1724393356.jpg', '2024-08-23 15:09:16', '2024-08-23 15:09:16'),
-(48, 19, '6_1724393356.jpg', '2024-08-23 15:09:16', '2024-08-23 15:09:16'),
-(49, 20, '8_1724393670.jpg', '2024-08-23 15:14:30', '2024-08-23 15:14:30'),
-(50, 20, '9_1724393670.jpg', '2024-08-23 15:14:30', '2024-08-23 15:14:30'),
-(51, 20, '10_1724393670.jpg', '2024-08-23 15:14:30', '2024-08-23 15:14:30'),
-(52, 20, '11_1724393670.jpg', '2024-08-23 15:14:30', '2024-08-23 15:14:30'),
-(53, 20, '12_1724393670.jpg', '2024-08-23 15:14:30', '2024-08-23 15:14:30'),
-(54, 21, '195_1724393840.jpg', '2024-08-23 15:17:20', '2024-08-23 15:17:20'),
-(55, 21, '196_1724393840.jpg', '2024-08-23 15:17:20', '2024-08-23 15:17:20'),
-(56, 21, '197_1724393840.jpg', '2024-08-23 15:17:20', '2024-08-23 15:17:20'),
-(57, 21, '198_1724393840.jpg', '2024-08-23 15:17:20', '2024-08-23 15:17:20'),
-(58, 21, '199_1724393840.jpg', '2024-08-23 15:17:20', '2024-08-23 15:17:20'),
-(59, 22, '1_1724394119.jpg', '2024-08-23 15:21:59', '2024-08-23 15:21:59'),
-(60, 23, '5425_1724394866.jpg', '2024-08-23 15:34:26', '2024-08-23 15:34:26'),
-(61, 24, '37172_1724395330.jpg', '2024-08-23 15:42:10', '2024-08-23 15:42:10'),
-(62, 24, '37173_1724395330.jpg', '2024-08-23 15:42:10', '2024-08-23 15:42:10'),
-(63, 25, '36746_1724396501.jpg', '2024-08-23 16:01:41', '2024-08-23 16:01:41'),
-(64, 25, '36747_1724396501.jpg', '2024-08-23 16:01:41', '2024-08-23 16:01:41'),
-(65, 25, '36748_1724396501.jpg', '2024-08-23 16:01:41', '2024-08-23 16:01:41'),
-(66, 26, '38987_1724396913.jpg', '2024-08-23 16:08:33', '2024-08-23 16:08:33'),
-(67, 26, '38989_1724396913.jpg', '2024-08-23 16:08:33', '2024-08-23 16:08:33'),
-(68, 26, '38988_1724396913.jpg', '2024-08-23 16:08:33', '2024-08-23 16:08:33'),
-(69, 26, '38496_1724396913.jpg', '2024-08-23 16:08:33', '2024-08-23 16:08:33'),
-(70, 27, '2_1724398130.png', '2024-08-23 16:28:50', '2024-08-23 16:28:50'),
-(71, 27, '3_1724398130.png', '2024-08-23 16:28:50', '2024-08-23 16:28:50'),
-(72, 27, '4_1724398130.png', '2024-08-23 16:28:50', '2024-08-23 16:28:50'),
-(73, 27, '5_1724398130.png', '2024-08-23 16:28:50', '2024-08-23 16:28:50'),
-(74, 28, '59943_1724399439.jpg', '2024-08-23 16:50:39', '2024-08-23 16:50:39');
-=======
-(16, 7, '3594_1723192134.jpg', '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
-(17, 7, '3798_1723192134.jpg', '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
-(18, 7, '9001_1723192134.jpg', '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
-(19, 8, '17209_1723206841.jpg', '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
-(20, 8, '17210_1723206841.jpg', '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
-(21, 8, '17215_1723206841.jpg', '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
-(22, 9, '17417_1723207540.jpg', '2024-08-09 21:45:40', '2024-08-09 21:45:40'),
-(23, 10, '17704_1723208256.jpg', '2024-08-09 21:57:36', '2024-08-09 21:57:36'),
-(33, 16, '17695_1723208870.jpg', '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
-(34, 16, '17692_1723208870.jpg', '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
-(35, 16, '17708_1723208870.jpg', '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
-(36, 17, '17858_1723209973.jpg', '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
-(37, 17, '17859_1723209973.jpg', '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
-(38, 17, '17861_1723209973.jpg', '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
-(39, 17, '17862_1723209973.jpg', '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
-(40, 18, '3813_1723212682.jpg', '2024-08-09 23:11:22', '2024-08-09 23:11:22'),
-(41, 18, '3814_1723212682.jpg', '2024-08-09 23:11:22', '2024-08-09 23:11:22'),
-(42, 18, '3816_1723212682.jpg', '2024-08-09 23:11:22', '2024-08-09 23:11:22'),
-(43, 18, '3815_1723212682.jpg', '2024-08-09 23:11:22', '2024-08-09 23:11:22');
->>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
-
--- --------------------------------------------------------
-
---
--- Table structure for table `product_like`
---
-
-CREATE TABLE `product_like` (
-<<<<<<< HEAD
-  `product_like_id` int(11) NOT NULL,
-=======
-  `product_like` int(11) NOT NULL,
->>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
-  `product_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-<<<<<<< HEAD
---
--- Dumping data for table `product_like`
---
-
-INSERT INTO `product_like` (`product_like_id`, `product_id`, `user_id`, `created_at`, `updated_at`) VALUES
-(2, 26, 1, '2024-09-14 23:56:27', '2024-09-14 23:56:27');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `product_shipping`
---
-
-CREATE TABLE `product_shipping` (
-  `product_shipping_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `shipping_company_id` int(11) NOT NULL,
-  `shipping_type` enum('Free','Paid') NOT NULL DEFAULT 'Free',
-  `shipping_amount` decimal(10,0) NOT NULL DEFAULT 0,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `product_shipping`
---
-
-INSERT INTO `product_shipping` (`product_shipping_id`, `product_id`, `shipping_company_id`, `shipping_type`, `shipping_amount`, `created_at`, `updated_at`) VALUES
-(2, 23, 1, 'Paid', 0, '2024-10-20 02:03:18', '2024-10-20 02:03:18');
-
-=======
->>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
--- --------------------------------------------------------
-
---
--- Table structure for table `product_sub_category`
---
-
-CREATE TABLE `product_sub_category` (
-  `product_sub_category_id` int(11) NOT NULL,
-  `sub_category_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `product_sub_category`
---
-
-INSERT INTO `product_sub_category` (`product_sub_category_id`, `sub_category_id`, `product_id`, `created_at`, `updated_at`) VALUES
-<<<<<<< HEAD
-(33, 4, 19, '2024-08-23 15:09:16', '2024-08-23 15:09:16'),
-(34, 3, 20, '2024-08-23 15:14:30', '2024-08-23 15:14:30'),
-(35, 4, 21, '2024-08-23 15:17:20', '2024-08-23 15:17:20'),
-(36, 5, 22, '2024-08-23 15:21:59', '2024-08-23 15:21:59'),
-(37, 23, 23, '2024-08-23 15:34:26', '2024-08-23 15:34:26'),
-(38, 24, 23, '2024-08-23 15:34:26', '2024-08-23 15:34:26'),
-(39, 23, 24, '2024-08-23 15:42:10', '2024-08-23 15:42:10'),
-(40, 24, 24, '2024-08-23 15:42:10', '2024-08-23 15:42:10'),
-(41, 23, 25, '2024-08-23 16:01:41', '2024-08-23 16:01:41'),
-(42, 24, 25, '2024-08-23 16:01:41', '2024-08-23 16:01:41'),
-(43, 23, 26, '2024-08-23 16:08:33', '2024-08-23 16:08:33'),
-(44, 24, 26, '2024-08-23 16:08:33', '2024-08-23 16:08:33'),
-(45, 1, 27, '2024-08-23 16:28:50', '2024-08-23 16:28:50'),
-(46, 3, 28, '2024-08-23 16:50:39', '2024-08-23 16:50:39'),
-(47, 4, 28, '2024-08-23 16:50:39', '2024-08-23 16:50:39');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `shipping_company`
---
-
-CREATE TABLE `shipping_company` (
-  `shipping_company_id` int(11) NOT NULL,
-  `shipping_company_name` varchar(255) NOT NULL,
-  `shipping_company_address` text NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `shipping_company`
---
-
-INSERT INTO `shipping_company` (`shipping_company_id`, `shipping_company_name`, `shipping_company_address`, `created_at`, `updated_at`) VALUES
-(1, 'Fedex', '', '2024-10-20 02:02:52', '2024-10-20 02:02:52');
-=======
-(11, 3, 7, '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
-(12, 4, 7, '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
-(13, 22, 8, '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
-(14, 21, 8, '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
-(15, 19, 9, '2024-08-09 21:45:40', '2024-08-09 21:45:40'),
-(16, 3, 10, '2024-08-09 21:57:36', '2024-08-09 21:57:36'),
-(17, 4, 10, '2024-08-09 21:57:36', '2024-08-09 21:57:36'),
-(28, 3, 16, '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
-(29, 4, 16, '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
-(30, 3, 17, '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
-(31, 23, 18, '2024-08-09 23:11:22', '2024-08-09 23:11:22'),
-(32, 4, 18, '2024-08-09 23:11:22', '2024-08-09 23:11:22');
->>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sub_category`
---
-
-CREATE TABLE `sub_category` (
-  `sub_category_id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
-  `sub_category_name` varchar(255) NOT NULL,
-  `sub_category_description` text DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `sub_category`
---
-
-INSERT INTO `sub_category` (`sub_category_id`, `category_id`, `sub_category_name`, `sub_category_description`, `created_at`, `updated_at`) VALUES
-(1, 11, 'Mobile Phones', NULL, '2024-08-09 00:10:50', '2024-08-09 00:10:50'),
-(2, 11, 'Laptops & Computers', NULL, '2024-08-09 00:11:07', '2024-08-09 00:11:07'),
-(3, 12, 'Men’s Clothing', NULL, '2024-08-09 00:11:20', '2024-08-09 00:11:20'),
-(4, 12, 'Women’s Clothing', NULL, '2024-08-09 00:11:32', '2024-08-09 00:11:32'),
-(5, 13, 'Furniture', NULL, '2024-08-09 00:12:18', '2024-08-09 00:12:18'),
-(6, 13, 'Bedding', NULL, '2024-08-09 00:12:25', '2024-08-09 00:12:25'),
-(7, 14, 'Skincare', NULL, '2024-08-09 00:12:35', '2024-08-09 00:12:35'),
-(8, 14, 'Makeup', NULL, '2024-08-09 00:12:44', '2024-08-09 00:12:44'),
-(9, 15, 'Action Figures', NULL, '2024-08-09 00:13:55', '2024-08-09 00:13:55'),
-(10, 15, 'Board Games', NULL, '2024-08-09 00:14:04', '2024-08-09 00:14:04'),
-(11, 16, 'Books', NULL, '2024-08-09 00:14:15', '2024-08-09 00:14:15'),
-(12, 16, 'Movies', NULL, '2024-08-09 00:14:22', '2024-08-09 00:14:22'),
-(13, 17, 'Fitness Equipment', NULL, '2024-08-09 00:14:34', '2024-08-09 00:14:34'),
-(14, 17, 'Camping Gear', NULL, '2024-08-09 00:14:49', '2024-08-09 00:14:49'),
-(15, 18, 'Car Accessories', NULL, '2024-08-09 00:15:00', '2024-08-09 00:15:00'),
-(16, 18, 'Car Care', NULL, '2024-08-09 00:15:08', '2024-08-09 00:15:08'),
-(17, 19, 'Fine Jewelry', NULL, '2024-08-09 00:15:20', '2024-08-09 00:15:20'),
-(18, 19, 'Fashion Jewelry', NULL, '2024-08-09 00:15:29', '2024-08-09 00:15:29'),
-(19, 20, 'Men Accessories', NULL, '2024-08-09 21:25:16', '2024-08-09 21:25:16'),
-(20, 20, 'Women Accessories', NULL, '2024-08-09 21:25:16', '2024-08-09 21:25:16'),
-(21, 20, 'Customized Accessories', NULL, '2024-08-09 21:25:35', '2024-08-09 21:25:35'),
-(22, 20, 'Gender Neutral Accessories', NULL, '2024-08-09 21:26:18', '2024-08-09 21:26:18'),
-(23, 21, 'Boys\' Clothing', 'boy\'s clothing', '2024-08-09 23:05:43', '2024-08-09 23:05:43'),
-(24, 21, 'Girls\' Clothing', 'girls\' Clothing', '2024-08-09 23:05:43', '2024-08-09 23:05:43');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user`
---
-
-CREATE TABLE `user` (
-  `user_id` int(11) NOT NULL,
-  `first_name` varchar(255) NOT NULL,
-  `last_name` varchar(255) NOT NULL,
-  `phone` varchar(15) NOT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `is_admin` int(11) NOT NULL DEFAULT 0 COMMENT '1 = person is admin, 0 is not',
-  `profile_img` varchar(255) DEFAULT 'noimage.jpg',
-  `is_verified` int(11) NOT NULL DEFAULT 0 COMMENT '1 = person is email/phone verified, 0 is not',
-  `is_active` int(11) NOT NULL DEFAULT 1 COMMENT '1 = person is active, 0 is not',
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`user_id`, `first_name`, `last_name`, `phone`, `email`, `password`, `is_admin`, `profile_img`, `is_verified`, `is_active`, `created_at`, `updated_at`) VALUES
-(1, 'Vitu', 'Mafeni', '+265882992942', NULL, '$2y$10$zhdNbM.B1S1ufHgv8JWA8exceMEZC.vZXrxcphmCWKbz/HmoGpAdq', 0, 'noimage.jpg', 2, 1, '2022-09-17 00:51:21', '2022-09-17 00:51:21');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `cart`
---
-ALTER TABLE `cart`
-  ADD PRIMARY KEY (`cart_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `cart_item`
---
-ALTER TABLE `cart_item`
-  ADD PRIMARY KEY (`cart_item_id`),
-  ADD KEY `cart_id` (`cart_id`),
-  ADD KEY `product_attributes_id` (`product_attributes_id`);
-
---
--- Indexes for table `category`
---
-ALTER TABLE `category`
-  ADD PRIMARY KEY (`category_id`);
-
---
--- Indexes for table `orders`
---
-ALTER TABLE `orders`
-  ADD PRIMARY KEY (`order_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `payment_details_id` (`payment_details_id`);
-
---
--- Indexes for table `order_item`
---
-ALTER TABLE `order_item`
-  ADD PRIMARY KEY (`order_item_id`),
-  ADD KEY `cart_id` (`order_id`),
-  ADD KEY `product_attributes_id` (`product_attributes_id`);
-
---
--- Indexes for table `payment_details`
---
-ALTER TABLE `payment_details`
-  ADD PRIMARY KEY (`payment_details_id`);
-
---
--- Indexes for table `product`
---
-ALTER TABLE `product`
-  ADD PRIMARY KEY (`product_id`);
-
---
--- Indexes for table `product_attributes`
---
-ALTER TABLE `product_attributes`
-  ADD PRIMARY KEY (`product_attributes_id`),
-  ADD KEY `product_id` (`product_id`);
-
---
--- Indexes for table `product_images`
---
-ALTER TABLE `product_images`
-  ADD PRIMARY KEY (`product_images_id`),
-  ADD KEY `product_id` (`product_id`);
-
---
--- Indexes for table `product_like`
---
-ALTER TABLE `product_like`
-<<<<<<< HEAD
-  ADD PRIMARY KEY (`product_like_id`),
-=======
-  ADD PRIMARY KEY (`product_like`),
->>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
-  ADD KEY `product_id` (`product_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
-<<<<<<< HEAD
--- Indexes for table `product_shipping`
---
-ALTER TABLE `product_shipping`
-  ADD PRIMARY KEY (`product_shipping_id`),
-  ADD KEY `product_id` (`product_id`),
-  ADD KEY `shipping_company_id` (`shipping_company_id`);
-
---
-=======
->>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
--- Indexes for table `product_sub_category`
---
-ALTER TABLE `product_sub_category`
-  ADD PRIMARY KEY (`product_sub_category_id`),
-  ADD KEY `sub_category_id` (`sub_category_id`),
-  ADD KEY `product_id` (`product_id`);
-
---
-<<<<<<< HEAD
--- Indexes for table `shipping_company`
---
-ALTER TABLE `shipping_company`
-  ADD PRIMARY KEY (`shipping_company_id`);
-
---
-=======
->>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
--- Indexes for table `sub_category`
---
-ALTER TABLE `sub_category`
-  ADD PRIMARY KEY (`sub_category_id`),
-  ADD KEY `category_id` (`category_id`);
-
---
--- Indexes for table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`user_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `cart`
---
-ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `cart_item`
---
-ALTER TABLE `cart_item`
-  MODIFY `cart_item_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `category`
---
-ALTER TABLE `category`
-<<<<<<< HEAD
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
-=======
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
->>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
-
---
--- AUTO_INCREMENT for table `orders`
---
-ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `order_item`
---
-ALTER TABLE `order_item`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `payment_details`
---
-ALTER TABLE `payment_details`
-  MODIFY `payment_details_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `product`
---
-ALTER TABLE `product`
-<<<<<<< HEAD
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
-=======
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
->>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
-
---
--- AUTO_INCREMENT for table `product_attributes`
---
-ALTER TABLE `product_attributes`
-<<<<<<< HEAD
-  MODIFY `product_attributes_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
-=======
-  MODIFY `product_attributes_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
->>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
-
---
--- AUTO_INCREMENT for table `product_images`
---
-ALTER TABLE `product_images`
-<<<<<<< HEAD
-  MODIFY `product_images_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
-=======
-  MODIFY `product_images_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
->>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
-
---
--- AUTO_INCREMENT for table `product_like`
---
-ALTER TABLE `product_like`
-<<<<<<< HEAD
-  MODIFY `product_like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `product_shipping`
---
-ALTER TABLE `product_shipping`
-  MODIFY `product_shipping_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-=======
-  MODIFY `product_like` int(11) NOT NULL AUTO_INCREMENT;
->>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
-
---
--- AUTO_INCREMENT for table `product_sub_category`
---
-ALTER TABLE `product_sub_category`
-<<<<<<< HEAD
-  MODIFY `product_sub_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
-
---
--- AUTO_INCREMENT for table `shipping_company`
---
-ALTER TABLE `shipping_company`
-  MODIFY `shipping_company_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-=======
-  MODIFY `product_sub_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
->>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
-
---
--- AUTO_INCREMENT for table `sub_category`
---
-ALTER TABLE `sub_category`
-  MODIFY `sub_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
-
---
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `cart`
---
-ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `cart_item`
---
-ALTER TABLE `cart_item`
-  ADD CONSTRAINT `cart_item_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`cart_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `cart_item_ibfk_2` FOREIGN KEY (`product_attributes_id`) REFERENCES `product_attributes` (`product_attributes_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `orders`
---
-ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`payment_details_id`) REFERENCES `payment_details` (`payment_details_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `order_item`
---
-ALTER TABLE `order_item`
-  ADD CONSTRAINT `order_item_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `order_item_ibfk_2` FOREIGN KEY (`product_attributes_id`) REFERENCES `product_attributes` (`product_attributes_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `product_attributes`
---
-ALTER TABLE `product_attributes`
-  ADD CONSTRAINT `product_attributes_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `product_images`
---
-ALTER TABLE `product_images`
-  ADD CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `product_like`
---
-ALTER TABLE `product_like`
-  ADD CONSTRAINT `product_like_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `product_like_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
-<<<<<<< HEAD
--- Constraints for table `product_shipping`
---
-ALTER TABLE `product_shipping`
-  ADD CONSTRAINT `product_shipping_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `product_shipping_ibfk_2` FOREIGN KEY (`shipping_company_id`) REFERENCES `shipping_company` (`shipping_company_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
-=======
->>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
--- Constraints for table `product_sub_category`
---
-ALTER TABLE `product_sub_category`
-  ADD CONSTRAINT `product_sub_category_ibfk_1` FOREIGN KEY (`sub_category_id`) REFERENCES `sub_category` (`sub_category_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `product_sub_category_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `sub_category`
---
-ALTER TABLE `sub_category`
-  ADD CONSTRAINT `sub_category_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex,nofollow,notranslate">
+  <meta name="google" content="notranslate">
+  <style id="cfs-style">html{display: none;}</style>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="./themes/pmahomme/jquery/jquery-ui.css">
+  <link rel="stylesheet" type="text/css" href="js/vendor/codemirror/lib/codemirror.css?v=5.2.1">
+  <link rel="stylesheet" type="text/css" href="js/vendor/codemirror/addon/hint/show-hint.css?v=5.2.1">
+  <link rel="stylesheet" type="text/css" href="js/vendor/codemirror/addon/lint/lint.css?v=5.2.1">
+  <link rel="stylesheet" type="text/css" href="./themes/pmahomme/css/theme.css?v=5.2.1">
+  <title>localhost / 127.0.0.1 | phpMyAdmin 5.2.1</title>
+    <script data-cfasync="false" type="text/javascript" src="js/vendor/jquery/jquery.min.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/vendor/jquery/jquery-migrate.min.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/vendor/sprintf.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/dist/ajax.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/dist/keyhandler.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/vendor/jquery/jquery-ui.min.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/dist/name-conflict-fixes.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/vendor/bootstrap/bootstrap.bundle.min.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/vendor/js.cookie.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/vendor/jquery/jquery.validate.min.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/vendor/jquery/jquery-ui-timepicker-addon.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/vendor/jquery/jquery.debounce-1.0.6.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/dist/menu_resizer.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/dist/cross_framing_protection.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/messages.php?l=en&v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/dist/config.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/dist/doclinks.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/dist/functions.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/dist/navigation.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/dist/indexes.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/dist/common.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/dist/page_settings.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/dist/export_output.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/vendor/codemirror/lib/codemirror.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/vendor/codemirror/mode/sql/sql.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/vendor/codemirror/addon/runmode/runmode.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/vendor/codemirror/addon/hint/show-hint.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/vendor/codemirror/addon/hint/sql-hint.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/vendor/codemirror/addon/lint/lint.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/dist/codemirror/addon/lint/sql-lint.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/vendor/tracekit.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/dist/error_report.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/dist/drag_drop_import.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/dist/shortcuts_handler.js?v=5.2.1"></script>
+  <script data-cfasync="false" type="text/javascript" src="js/dist/console.js?v=5.2.1"></script>
+
+<script data-cfasync="false" type="text/javascript">
+// <![CDATA[
+CommonParams.setAll({common_query:"",opendb_url:"index.php?route=/database/structure",lang:"en",server:"1",table:"",db:"",token:"2765702d753f4a595754226c45314a3a",text_dir:"ltr",LimitChars:"50",pftext:"P",confirm:true,LoginCookieValidity:"1440",session_gc_maxlifetime:"1440",logged_in:true,is_https:false,rootPath:"/phpmyadmin/",arg_separator:"&",version:"5.2.1",auth_type:"config",user:"root"});
+var firstDayOfCalendar = '0';
+var themeImagePath = '.\/themes\/pmahomme\/img\/';
+var mysqlDocTemplate = '.\/url.php\u003Furl\u003Dhttps\u00253A\u00252F\u00252Fdev.mysql.com\u00252Fdoc\u00252Frefman\u00252F8.0\u00252Fen\u00252F\u002525s.html';
+var maxInputVars = 1000;
+
+if ($.datepicker) {
+  $.datepicker.regional[''].closeText = 'Done';
+  $.datepicker.regional[''].prevText = 'Prev';
+  $.datepicker.regional[''].nextText = 'Next';
+  $.datepicker.regional[''].currentText = 'Today';
+  $.datepicker.regional[''].monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  $.datepicker.regional[''].monthNamesShort = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+  $.datepicker.regional[''].dayNames = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
+  $.datepicker.regional[''].dayNamesShort = [
+    'Sun',
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thu',
+    'Fri',
+    'Sat',
+  ];
+  $.datepicker.regional[''].dayNamesMin = [
+    'Su',
+    'Mo',
+    'Tu',
+    'We',
+    'Th',
+    'Fr',
+    'Sa',
+  ];
+  $.datepicker.regional[''].weekHeader = 'Wk';
+  $.datepicker.regional[''].showMonthAfterYear = false;
+  $.datepicker.regional[''].yearSuffix = '';
+  $.extend($.datepicker._defaults, $.datepicker.regional['']);
+}
+
+if ($.timepicker) {
+  $.timepicker.regional[''].timeText = 'Time';
+  $.timepicker.regional[''].hourText = 'Hour';
+  $.timepicker.regional[''].minuteText = 'Minute';
+  $.timepicker.regional[''].secondText = 'Second';
+  $.extend($.timepicker._defaults, $.timepicker.regional['']);
+}
+
+function extendingValidatorMessages () {
+  $.extend($.validator.messages, {
+    required: 'This\u0020field\u0020is\u0020required',
+    remote: 'Please\u0020fix\u0020this\u0020field',
+    email: 'Please\u0020enter\u0020a\u0020valid\u0020email\u0020address',
+    url: 'Please\u0020enter\u0020a\u0020valid\u0020URL',
+    date: 'Please\u0020enter\u0020a\u0020valid\u0020date',
+    dateISO: 'Please\u0020enter\u0020a\u0020valid\u0020date\u0020\u0028\u0020ISO\u0020\u0029',
+    number: 'Please\u0020enter\u0020a\u0020valid\u0020number',
+    creditcard: 'Please\u0020enter\u0020a\u0020valid\u0020credit\u0020card\u0020number',
+    digits: 'Please\u0020enter\u0020only\u0020digits',
+    equalTo: 'Please\u0020enter\u0020the\u0020same\u0020value\u0020again',
+    maxlength: $.validator.format('Please\u0020enter\u0020no\u0020more\u0020than\u0020\u007B0\u007D\u0020characters'),
+    minlength: $.validator.format('Please\u0020enter\u0020at\u0020least\u0020\u007B0\u007D\u0020characters'),
+    rangelength: $.validator.format('Please\u0020enter\u0020a\u0020value\u0020between\u0020\u007B0\u007D\u0020and\u0020\u007B1\u007D\u0020characters\u0020long'),
+    range: $.validator.format('Please\u0020enter\u0020a\u0020value\u0020between\u0020\u007B0\u007D\u0020and\u0020\u007B1\u007D'),
+    max: $.validator.format('Please\u0020enter\u0020a\u0020value\u0020less\u0020than\u0020or\u0020equal\u0020to\u0020\u007B0\u007D'),
+    min: $.validator.format('Please\u0020enter\u0020a\u0020value\u0020greater\u0020than\u0020or\u0020equal\u0020to\u0020\u007B0\u007D'),
+    validationFunctionForDateTime: $.validator.format('Please\u0020enter\u0020a\u0020valid\u0020date\u0020or\u0020time'),
+    validationFunctionForHex: $.validator.format('Please\u0020enter\u0020a\u0020valid\u0020HEX\u0020input'),
+    validationFunctionForMd5: $.validator.format('This\u0020column\u0020can\u0020not\u0020contain\u0020a\u002032\u0020chars\u0020value'),
+    validationFunctionForAesDesEncrypt: $.validator.format('These\u0020functions\u0020are\u0020meant\u0020to\u0020return\u0020a\u0020binary\u0020result\u003B\u0020to\u0020avoid\u0020inconsistent\u0020results\u0020you\u0020should\u0020store\u0020it\u0020in\u0020a\u0020BINARY,\u0020VARBINARY,\u0020or\u0020BLOB\u0020column.')
+  });
+}
+
+ConsoleEnterExecutes=false
+
+AJAX.scriptHandler
+  .add('vendor/jquery/jquery.min.js', 0)
+  .add('vendor/jquery/jquery-migrate.min.js', 0)
+  .add('vendor/sprintf.js', 1)
+  .add('ajax.js', 0)
+  .add('keyhandler.js', 1)
+  .add('vendor/jquery/jquery-ui.min.js', 0)
+  .add('name-conflict-fixes.js', 1)
+  .add('vendor/bootstrap/bootstrap.bundle.min.js', 1)
+  .add('vendor/js.cookie.js', 1)
+  .add('vendor/jquery/jquery.validate.min.js', 0)
+  .add('vendor/jquery/jquery-ui-timepicker-addon.js', 0)
+  .add('vendor/jquery/jquery.debounce-1.0.6.js', 0)
+  .add('menu_resizer.js', 1)
+  .add('cross_framing_protection.js', 0)
+  .add('messages.php', 0)
+  .add('config.js', 1)
+  .add('doclinks.js', 1)
+  .add('functions.js', 1)
+  .add('navigation.js', 1)
+  .add('indexes.js', 1)
+  .add('common.js', 1)
+  .add('page_settings.js', 1)
+  .add('export_output.js', 1)
+  .add('vendor/codemirror/lib/codemirror.js', 0)
+  .add('vendor/codemirror/mode/sql/sql.js', 0)
+  .add('vendor/codemirror/addon/runmode/runmode.js', 0)
+  .add('vendor/codemirror/addon/hint/show-hint.js', 0)
+  .add('vendor/codemirror/addon/hint/sql-hint.js', 0)
+  .add('vendor/codemirror/addon/lint/lint.js', 0)
+  .add('codemirror/addon/lint/sql-lint.js', 0)
+  .add('vendor/tracekit.js', 1)
+  .add('error_report.js', 1)
+  .add('drag_drop_import.js', 1)
+  .add('shortcuts_handler.js', 1)
+  .add('console.js', 1)
+;
+$(function() {
+        AJAX.fireOnload('vendor/sprintf.js');
+        AJAX.fireOnload('keyhandler.js');
+        AJAX.fireOnload('name-conflict-fixes.js');
+      AJAX.fireOnload('vendor/bootstrap/bootstrap.bundle.min.js');
+      AJAX.fireOnload('vendor/js.cookie.js');
+            AJAX.fireOnload('menu_resizer.js');
+          AJAX.fireOnload('config.js');
+      AJAX.fireOnload('doclinks.js');
+      AJAX.fireOnload('functions.js');
+      AJAX.fireOnload('navigation.js');
+      AJAX.fireOnload('indexes.js');
+      AJAX.fireOnload('common.js');
+      AJAX.fireOnload('page_settings.js');
+      AJAX.fireOnload('export_output.js');
+                    AJAX.fireOnload('vendor/tracekit.js');
+      AJAX.fireOnload('error_report.js');
+      AJAX.fireOnload('drag_drop_import.js');
+      AJAX.fireOnload('shortcuts_handler.js');
+      AJAX.fireOnload('console.js');
+  });
+// ]]>
+</script>
+
+  <noscript><style>html{display:block}</style></noscript>
+</head>
+<body>
+    <div id="pma_navigation" class="d-print-none" data-config-navigation-width="240">
+    <div id="pma_navigation_resizer"></div>
+    <div id="pma_navigation_collapser"></div>
+    <div id="pma_navigation_content">
+      <div id="pma_navigation_header">
+
+                  <div id="pmalogo">
+                          <a href="index.php">
+                                      <img id="imgpmalogo" src="./themes/pmahomme/img/logo_left.png" alt="phpMyAdmin">
+                                      </a>
+                      </div>
+        
+        <div id="navipanellinks">
+          <a href="index.php?route=/" title="Home"><img src="themes/dot.gif" title="Home" alt="Home" class="icon ic_b_home"></a>
+
+                      <a class="logout disableAjax" href="index.php?route=/logout" title="Empty session data"><img src="themes/dot.gif" title="Empty session data" alt="Empty session data" class="icon ic_s_loggoff"></a>
+          
+          <a href="./doc/html/index.html" title="phpMyAdmin documentation" target="_blank" rel="noopener noreferrer"><img src="themes/dot.gif" title="phpMyAdmin documentation" alt="phpMyAdmin documentation" class="icon ic_b_docs"></a>
+
+          <a href="./url.php?url=https%3A%2F%2Fmariadb.com%2Fkb%2Fen%2Fdocumentation%2F" title="MariaDB Documentation" target="_blank" rel="noopener noreferrer"><img src="themes/dot.gif" title="MariaDB Documentation" alt="MariaDB Documentation" class="icon ic_b_sqlhelp"></a>
+
+          <a id="pma_navigation_settings_icon" href="#" title="Navigation panel settings"><img src="themes/dot.gif" title="Navigation panel settings" alt="Navigation panel settings" class="icon ic_s_cog"></a>
+
+          <a id="pma_navigation_reload" href="#" title="Reload navigation panel"><img src="themes/dot.gif" title="Reload navigation panel" alt="Reload navigation panel" class="icon ic_s_reload"></a>
+        </div>
+
+        
+        <img src="themes/dot.gif" title="Loading…" alt="Loading…" style="visibility: hidden; display:none" class="icon ic_ajax_clock_small throbber">
+      </div>
+      <div id="pma_navigation_tree" class="list_container synced highlight autoexpand">
+
+  <div class="pma_quick_warp">
+    <div class="drop_list"><button title="Recent tables" class="drop_button btn">Recent</button><ul id="pma_recent_list"><li class="warp_link">
+  <a href="index.php?route=/table/recent-favorite&db=my_shop&table=category">
+    `my_shop`.`category`
+  </a>
+</li>
+<li class="warp_link">
+  <a href="index.php?route=/table/recent-favorite&db=my_shop&table=product_images">
+    `my_shop`.`product_images`
+  </a>
+</li>
+<li class="warp_link">
+  <a href="index.php?route=/table/recent-favorite&db=my_shop&table=product">
+    `my_shop`.`product`
+  </a>
+</li>
+<li class="warp_link">
+  <a href="index.php?route=/table/recent-favorite&db=my_shop&table=product_attributes">
+    `my_shop`.`product_attributes`
+  </a>
+</li>
+<li class="warp_link">
+  <a href="index.php?route=/table/recent-favorite&db=my_shop&table=cart">
+    `my_shop`.`cart`
+  </a>
+</li>
+<li class="warp_link">
+  <a href="index.php?route=/table/recent-favorite&db=my_shop&table=product_sub_category">
+    `my_shop`.`product_sub_category`
+  </a>
+</li>
+<li class="warp_link">
+  <a href="index.php?route=/table/recent-favorite&db=my_shop&table=shipping_company">
+    `my_shop`.`shipping_company`
+  </a>
+</li>
+<li class="warp_link">
+  <a href="index.php?route=/table/recent-favorite&db=my_shop&table=product_shipping">
+    `my_shop`.`product_shipping`
+  </a>
+</li>
+<li class="warp_link">
+  <a href="index.php?route=/table/recent-favorite&db=my_shop&table=sub_category">
+    `my_shop`.`sub_category`
+  </a>
+</li>
+</ul></div>    <div class="drop_list"><button title="Favorite tables" class="drop_button btn">Favorites</button><ul id="pma_favorite_list"><li class="warp_link">
+            There are no favorite tables.    </li>
+</ul></div>    <div class="clearfloat"></div>
+</div>
+
+
+<div class="clearfloat"></div>
+
+<ul>
+  
+  <!-- CONTROLS START -->
+<li id="navigation_controls_outer">
+    <div id="navigation_controls">
+        <a href="#" id="pma_navigation_collapse" title="Collapse all"><img src="themes/dot.gif" title="Collapse all" alt="Collapse all" class="icon ic_s_collapseall"></a>
+        <a href="#" id="pma_navigation_sync" title="Unlink from main panel"><img src="themes/dot.gif" title="Unlink from main panel" alt="Unlink from main panel" class="icon ic_s_link"></a>
+    </div>
+</li>
+<!-- CONTROLS ENDS -->
+
+</ul>
+
+
+
+<div id='pma_navigation_tree_content'>
+  <ul>
+      <li class="first new_database italics">
+    <div class="block">
+      <i class="first"></i>
+          </div>
+    
+          <div class="block second">
+                  <a href="index.php?route=/server/databases"><img src="themes/dot.gif" title="New" alt="New" class="icon ic_b_newdb"></a>
+              </div>
+
+              <a class="hover_show_full" href="index.php?route=/server/databases" title="New">New</a>
+          
+    
+
+    
+    <div class="clearfloat"></div>
+
+
+
+  </li>
+  <li class="database">
+    <div class="block">
+      <i></i>
+              <b></b>
+        <a class="expander" href="#">
+          <span class="hide paths_nav" data-apath="cm9vdA==.aW5mb3JtYXRpb25fc2NoZW1h" data-vpath="cm9vdA==.aW5mb3JtYXRpb25fc2NoZW1h" data-pos="0"></span>
+                    <img src="themes/dot.gif" title="Expand/Collapse" alt="Expand/Collapse" class="icon ic_b_plus">
+        </a>
+          </div>
+    
+          <div class="block second">
+                  <a href="index.php?route=/database/operations&db=information_schema"><img src="themes/dot.gif" title="Database operations" alt="Database operations" class="icon ic_s_db"></a>
+              </div>
+
+              <a class="hover_show_full" href="index.php?route=/database/structure&db=information_schema" title="Structure">information_schema</a>
+          
+    
+
+    
+    <div class="clearfloat"></div>
+
+
+
+  </li>
+  <li class="database">
+    <div class="block">
+      <i></i>
+              <b></b>
+        <a class="expander" href="#">
+          <span class="hide paths_nav" data-apath="cm9vdA==.bXlzcWw=" data-vpath="cm9vdA==.bXlzcWw=" data-pos="0"></span>
+                    <img src="themes/dot.gif" title="Expand/Collapse" alt="Expand/Collapse" class="icon ic_b_plus">
+        </a>
+          </div>
+    
+          <div class="block second">
+                  <a href="index.php?route=/database/operations&db=mysql"><img src="themes/dot.gif" title="Database operations" alt="Database operations" class="icon ic_s_db"></a>
+              </div>
+
+              <a class="hover_show_full" href="index.php?route=/database/structure&db=mysql" title="Structure">mysql</a>
+          
+    
+
+    
+    <div class="clearfloat"></div>
+
+
+
+  </li>
+  <li class="database">
+    <div class="block">
+      <i></i>
+              <b></b>
+        <a class="expander" href="#">
+          <span class="hide paths_nav" data-apath="cm9vdA==.bXlfc2hvcA==" data-vpath="cm9vdA==.bXlfc2hvcA==" data-pos="0"></span>
+                    <img src="themes/dot.gif" title="Expand/Collapse" alt="Expand/Collapse" class="icon ic_b_plus">
+        </a>
+          </div>
+    
+          <div class="block second">
+                  <a href="index.php?route=/database/operations&db=my_shop"><img src="themes/dot.gif" title="Database operations" alt="Database operations" class="icon ic_s_db"></a>
+              </div>
+
+              <a class="hover_show_full" href="index.php?route=/database/structure&db=my_shop" title="Structure">my_shop</a>
+          
+    
+
+    
+    <div class="clearfloat"></div>
+
+
+
+  </li>
+  <li class="database">
+    <div class="block">
+      <i></i>
+              <b></b>
+        <a class="expander" href="#">
+          <span class="hide paths_nav" data-apath="cm9vdA==.cGVyZm9ybWFuY2Vfc2NoZW1h" data-vpath="cm9vdA==.cGVyZm9ybWFuY2Vfc2NoZW1h" data-pos="0"></span>
+                    <img src="themes/dot.gif" title="Expand/Collapse" alt="Expand/Collapse" class="icon ic_b_plus">
+        </a>
+          </div>
+    
+          <div class="block second">
+                  <a href="index.php?route=/database/operations&db=performance_schema"><img src="themes/dot.gif" title="Database operations" alt="Database operations" class="icon ic_s_db"></a>
+              </div>
+
+              <a class="hover_show_full" href="index.php?route=/database/structure&db=performance_schema" title="Structure">performance_schema</a>
+          
+    
+
+    
+    <div class="clearfloat"></div>
+
+
+
+  </li>
+  <li class="database">
+    <div class="block">
+      <i></i>
+              <b></b>
+        <a class="expander" href="#">
+          <span class="hide paths_nav" data-apath="cm9vdA==.cGhwbXlhZG1pbg==" data-vpath="cm9vdA==.cGhwbXlhZG1pbg==" data-pos="0"></span>
+                    <img src="themes/dot.gif" title="Expand/Collapse" alt="Expand/Collapse" class="icon ic_b_plus">
+        </a>
+          </div>
+    
+          <div class="block second">
+                  <a href="index.php?route=/database/operations&db=phpmyadmin"><img src="themes/dot.gif" title="Database operations" alt="Database operations" class="icon ic_s_db"></a>
+              </div>
+
+              <a class="hover_show_full" href="index.php?route=/database/structure&db=phpmyadmin" title="Structure">phpmyadmin</a>
+          
+    
+
+    
+    <div class="clearfloat"></div>
+
+
+
+  </li>
+  <li class="last database">
+    <div class="block">
+      <i></i>
+              
+        <a class="expander" href="#">
+          <span class="hide paths_nav" data-apath="cm9vdA==.dGVzdA==" data-vpath="cm9vdA==.dGVzdA==" data-pos="0"></span>
+                    <img src="themes/dot.gif" title="Expand/Collapse" alt="Expand/Collapse" class="icon ic_b_plus">
+        </a>
+          </div>
+    
+          <div class="block second">
+                  <a href="index.php?route=/database/operations&db=test"><img src="themes/dot.gif" title="Database operations" alt="Database operations" class="icon ic_s_db"></a>
+              </div>
+
+              <a class="hover_show_full" href="index.php?route=/database/structure&db=test" title="Structure">test</a>
+          
+    
+
+    
+    <div class="clearfloat"></div>
+
+
+
+  </li>
+
+  </ul>
+</div>
+
+
+      </div>
+
+      <div id="pma_navi_settings_container">
+                  <div id="pma_navigation_settings"><div class="page_settings"><form method="post" action="index.php&#x3F;route&#x3D;&#x25;2Fexport&amp;server&#x3D;1" class="config-form disableAjax">
+  <input type="hidden" name="tab_hash" value="">
+      <input type="hidden" name="check_page_refresh" id="check_page_refresh" value="">
+    <input type="hidden" name="token" value="2765702d753f4a595754226c45314a3a">
+  <input type="hidden" name="submit_save" value="Navi">
+
+  <ul class="nav nav-tabs" id="configFormDisplayTab" role="tablist">
+          <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="Navi_panel-tab" href="#Navi_panel" data-bs-toggle="tab" role="tab" aria-controls="Navi_panel" aria-selected="true">Navigation panel</a>
+      </li>
+          <li class="nav-item" role="presentation">
+        <a class="nav-link" id="Navi_tree-tab" href="#Navi_tree" data-bs-toggle="tab" role="tab" aria-controls="Navi_tree" aria-selected="false">Navigation tree</a>
+      </li>
+          <li class="nav-item" role="presentation">
+        <a class="nav-link" id="Navi_servers-tab" href="#Navi_servers" data-bs-toggle="tab" role="tab" aria-controls="Navi_servers" aria-selected="false">Servers</a>
+      </li>
+          <li class="nav-item" role="presentation">
+        <a class="nav-link" id="Navi_databases-tab" href="#Navi_databases" data-bs-toggle="tab" role="tab" aria-controls="Navi_databases" aria-selected="false">Databases</a>
+      </li>
+          <li class="nav-item" role="presentation">
+        <a class="nav-link" id="Navi_tables-tab" href="#Navi_tables" data-bs-toggle="tab" role="tab" aria-controls="Navi_tables" aria-selected="false">Tables</a>
+      </li>
+      </ul>
+  <div class="tab-content">
+          <div class="tab-pane fade show active" id="Navi_panel" role="tabpanel" aria-labelledby="Navi_panel-tab">
+        <div class="card border-top-0">
+          <div class="card-body">
+            <h5 class="card-title visually-hidden">Navigation panel</h5>
+                          <h6 class="card-subtitle mb-2 text-muted">Customize appearance of the navigation panel.</h6>
+            
+            <fieldset class="optbox">
+              <legend>Navigation panel</legend>
+
+                            
+              <table class="table table-borderless">
+                <tr>
+  <th>
+    <label for="ShowDatabasesNavigationAsTree">Show databases navigation as tree</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_ShowDatabasesNavigationAsTree" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+          <small>In the navigation panel, replaces the database tree with a selector</small>
+      </th>
+
+  <td>
+          <span class="checkbox">
+        <input type="checkbox" name="ShowDatabasesNavigationAsTree" id="ShowDatabasesNavigationAsTree" checked>
+      </span>
+    
+    
+    
+          <a class="restore-default hide" href="#ShowDatabasesNavigationAsTree" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+<tr>
+  <th>
+    <label for="NavigationLinkWithMainPanel">Link with main panel</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_NavigationLinkWithMainPanel" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+          <small>Link with main panel by highlighting the current database or table.</small>
+      </th>
+
+  <td>
+          <span class="checkbox">
+        <input type="checkbox" name="NavigationLinkWithMainPanel" id="NavigationLinkWithMainPanel" checked>
+      </span>
+    
+    
+    
+          <a class="restore-default hide" href="#NavigationLinkWithMainPanel" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+<tr>
+  <th>
+    <label for="NavigationDisplayLogo">Display logo</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_NavigationDisplayLogo" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+          <small>Show logo in navigation panel.</small>
+      </th>
+
+  <td>
+          <span class="checkbox">
+        <input type="checkbox" name="NavigationDisplayLogo" id="NavigationDisplayLogo" checked>
+      </span>
+    
+    
+    
+          <a class="restore-default hide" href="#NavigationDisplayLogo" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+<tr>
+  <th>
+    <label for="NavigationLogoLink">Logo link URL</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_NavigationLogoLink" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+          <small>URL where logo in the navigation panel will point to.</small>
+      </th>
+
+  <td>
+          <input type="text" name="NavigationLogoLink" id="NavigationLogoLink" value="index.php" class="w-75">
+    
+    
+    
+          <a class="restore-default hide" href="#NavigationLogoLink" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+<tr>
+  <th>
+    <label for="NavigationLogoLinkWindow">Logo link target</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_NavigationLogoLinkWindow" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+          <small>Open the linked page in the main window (<code>main</code>) or in a new one (<code>new</code>).</small>
+      </th>
+
+  <td>
+          <select name="NavigationLogoLinkWindow" id="NavigationLogoLinkWindow" class="w-75">
+                            <option value="main" selected>main</option>
+                            <option value="new">new</option>
+              </select>
+    
+    
+    
+          <a class="restore-default hide" href="#NavigationLogoLinkWindow" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+<tr>
+  <th>
+    <label for="NavigationTreePointerEnable">Enable highlighting</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_NavigationTreePointerEnable" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+          <small>Highlight server under the mouse cursor.</small>
+      </th>
+
+  <td>
+          <span class="checkbox">
+        <input type="checkbox" name="NavigationTreePointerEnable" id="NavigationTreePointerEnable" checked>
+      </span>
+    
+    
+    
+          <a class="restore-default hide" href="#NavigationTreePointerEnable" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+<tr>
+  <th>
+    <label for="FirstLevelNavigationItems">Maximum items on first level</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_FirstLevelNavigationItems" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+          <small>The number of items that can be displayed on each page on the first level of the navigation tree.</small>
+      </th>
+
+  <td>
+          <input type="number" name="FirstLevelNavigationItems" id="FirstLevelNavigationItems" value="100" class="">
+    
+    
+    
+          <a class="restore-default hide" href="#FirstLevelNavigationItems" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+<tr>
+  <th>
+    <label for="NavigationTreeDisplayItemFilterMinimum">Minimum number of items to display the filter box</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_NavigationTreeDisplayItemFilterMinimum" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+          <small>Defines the minimum number of items (tables, views, routines and events) to display a filter box.</small>
+      </th>
+
+  <td>
+          <input type="number" name="NavigationTreeDisplayItemFilterMinimum" id="NavigationTreeDisplayItemFilterMinimum" value="30" class="">
+    
+    
+    
+          <a class="restore-default hide" href="#NavigationTreeDisplayItemFilterMinimum" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+<tr>
+  <th>
+    <label for="NumRecentTables">Recently used tables</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_NumRecentTables" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+          <small>Maximum number of recently used tables; set 0 to disable.</small>
+      </th>
+
+  <td>
+          <input type="number" name="NumRecentTables" id="NumRecentTables" value="10" class="">
+    
+    
+    
+          <a class="restore-default hide" href="#NumRecentTables" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+<tr>
+  <th>
+    <label for="NumFavoriteTables">Favorite tables</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_NumFavoriteTables" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+          <small>Maximum number of favorite tables; set 0 to disable.</small>
+      </th>
+
+  <td>
+          <input type="number" name="NumFavoriteTables" id="NumFavoriteTables" value="10" class="">
+    
+    
+    
+          <a class="restore-default hide" href="#NumFavoriteTables" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+<tr>
+  <th>
+    <label for="NavigationWidth">Navigation panel width</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_NavigationWidth" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+          <small>Set to 0 to collapse navigation panel.</small>
+      </th>
+
+  <td>
+          <input type="number" name="NavigationWidth" id="NavigationWidth" value="240" class="">
+    
+    
+    
+          <a class="restore-default hide" href="#NavigationWidth" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+
+              </table>
+            </fieldset>
+          </div>
+
+                  </div>
+      </div>
+          <div class="tab-pane fade" id="Navi_tree" role="tabpanel" aria-labelledby="Navi_tree-tab">
+        <div class="card border-top-0">
+          <div class="card-body">
+            <h5 class="card-title visually-hidden">Navigation tree</h5>
+                          <h6 class="card-subtitle mb-2 text-muted">Customize the navigation tree.</h6>
+            
+            <fieldset class="optbox">
+              <legend>Navigation tree</legend>
+
+                            
+              <table class="table table-borderless">
+                <tr>
+  <th>
+    <label for="MaxNavigationItems">Maximum items in branch</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_MaxNavigationItems" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+          <small>The number of items that can be displayed on each page of the navigation tree.</small>
+      </th>
+
+  <td>
+          <input type="number" name="MaxNavigationItems" id="MaxNavigationItems" value="50" class="">
+    
+    
+    
+          <a class="restore-default hide" href="#MaxNavigationItems" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+<tr>
+  <th>
+    <label for="NavigationTreeEnableGrouping">Group items in the tree</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_NavigationTreeEnableGrouping" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+          <small>Group items in the navigation tree (determined by the separator defined in the Databases and Tables tabs above).</small>
+      </th>
+
+  <td>
+          <span class="checkbox">
+        <input type="checkbox" name="NavigationTreeEnableGrouping" id="NavigationTreeEnableGrouping" checked>
+      </span>
+    
+    
+    
+          <a class="restore-default hide" href="#NavigationTreeEnableGrouping" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+<tr>
+  <th>
+    <label for="NavigationTreeEnableExpansion">Enable navigation tree expansion</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_NavigationTreeEnableExpansion" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+          <small>Whether to offer the possibility of tree expansion in the navigation panel.</small>
+      </th>
+
+  <td>
+          <span class="checkbox">
+        <input type="checkbox" name="NavigationTreeEnableExpansion" id="NavigationTreeEnableExpansion" checked>
+      </span>
+    
+    
+    
+          <a class="restore-default hide" href="#NavigationTreeEnableExpansion" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+<tr>
+  <th>
+    <label for="NavigationTreeShowTables">Show tables in tree</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_NavigationTreeShowTables" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+          <small>Whether to show tables under database in the navigation tree</small>
+      </th>
+
+  <td>
+          <span class="checkbox">
+        <input type="checkbox" name="NavigationTreeShowTables" id="NavigationTreeShowTables" checked>
+      </span>
+    
+    
+    
+          <a class="restore-default hide" href="#NavigationTreeShowTables" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+<tr>
+  <th>
+    <label for="NavigationTreeShowViews">Show views in tree</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_NavigationTreeShowViews" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+          <small>Whether to show views under database in the navigation tree</small>
+      </th>
+
+  <td>
+          <span class="checkbox">
+        <input type="checkbox" name="NavigationTreeShowViews" id="NavigationTreeShowViews" checked>
+      </span>
+    
+    
+    
+          <a class="restore-default hide" href="#NavigationTreeShowViews" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+<tr>
+  <th>
+    <label for="NavigationTreeShowFunctions">Show functions in tree</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_NavigationTreeShowFunctions" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+          <small>Whether to show functions under database in the navigation tree</small>
+      </th>
+
+  <td>
+          <span class="checkbox">
+        <input type="checkbox" name="NavigationTreeShowFunctions" id="NavigationTreeShowFunctions" checked>
+      </span>
+    
+    
+    
+          <a class="restore-default hide" href="#NavigationTreeShowFunctions" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+<tr>
+  <th>
+    <label for="NavigationTreeShowProcedures">Show procedures in tree</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_NavigationTreeShowProcedures" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+          <small>Whether to show procedures under database in the navigation tree</small>
+      </th>
+
+  <td>
+          <span class="checkbox">
+        <input type="checkbox" name="NavigationTreeShowProcedures" id="NavigationTreeShowProcedures" checked>
+      </span>
+    
+    
+    
+          <a class="restore-default hide" href="#NavigationTreeShowProcedures" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+<tr>
+  <th>
+    <label for="NavigationTreeShowEvents">Show events in tree</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_NavigationTreeShowEvents" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+          <small>Whether to show events under database in the navigation tree</small>
+      </th>
+
+  <td>
+          <span class="checkbox">
+        <input type="checkbox" name="NavigationTreeShowEvents" id="NavigationTreeShowEvents" checked>
+      </span>
+    
+    
+    
+          <a class="restore-default hide" href="#NavigationTreeShowEvents" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+<tr>
+  <th>
+    <label for="NavigationTreeAutoexpandSingleDb">Expand single database</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_NavigationTreeAutoexpandSingleDb" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+          <small>Whether to expand single database in the navigation tree automatically.</small>
+      </th>
+
+  <td>
+          <span class="checkbox">
+        <input type="checkbox" name="NavigationTreeAutoexpandSingleDb" id="NavigationTreeAutoexpandSingleDb" checked>
+      </span>
+    
+    
+    
+          <a class="restore-default hide" href="#NavigationTreeAutoexpandSingleDb" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+
+              </table>
+            </fieldset>
+          </div>
+
+                  </div>
+      </div>
+          <div class="tab-pane fade" id="Navi_servers" role="tabpanel" aria-labelledby="Navi_servers-tab">
+        <div class="card border-top-0">
+          <div class="card-body">
+            <h5 class="card-title visually-hidden">Servers</h5>
+                          <h6 class="card-subtitle mb-2 text-muted">Servers display options.</h6>
+            
+            <fieldset class="optbox">
+              <legend>Servers</legend>
+
+                            
+              <table class="table table-borderless">
+                <tr>
+  <th>
+    <label for="NavigationDisplayServers">Display servers selection</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_NavigationDisplayServers" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+          <small>Display server choice at the top of the navigation panel.</small>
+      </th>
+
+  <td>
+          <span class="checkbox">
+        <input type="checkbox" name="NavigationDisplayServers" id="NavigationDisplayServers" checked>
+      </span>
+    
+    
+    
+          <a class="restore-default hide" href="#NavigationDisplayServers" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+<tr>
+  <th>
+    <label for="DisplayServersList">Display servers as a list</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_DisplayServersList" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+          <small>Show server listing as a list instead of a drop down.</small>
+      </th>
+
+  <td>
+          <span class="checkbox">
+        <input type="checkbox" name="DisplayServersList" id="DisplayServersList">
+      </span>
+    
+    
+    
+          <a class="restore-default hide" href="#DisplayServersList" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+
+              </table>
+            </fieldset>
+          </div>
+
+                  </div>
+      </div>
+          <div class="tab-pane fade" id="Navi_databases" role="tabpanel" aria-labelledby="Navi_databases-tab">
+        <div class="card border-top-0">
+          <div class="card-body">
+            <h5 class="card-title visually-hidden">Databases</h5>
+                          <h6 class="card-subtitle mb-2 text-muted">Databases display options.</h6>
+            
+            <fieldset class="optbox">
+              <legend>Databases</legend>
+
+                            
+              <table class="table table-borderless">
+                <tr>
+  <th>
+    <label for="NavigationTreeDisplayDbFilterMinimum">Minimum number of databases to display the database filter box</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_NavigationTreeDisplayDbFilterMinimum" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+      </th>
+
+  <td>
+          <input type="number" name="NavigationTreeDisplayDbFilterMinimum" id="NavigationTreeDisplayDbFilterMinimum" value="30" class="">
+    
+    
+    
+          <a class="restore-default hide" href="#NavigationTreeDisplayDbFilterMinimum" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+<tr>
+  <th>
+    <label for="NavigationTreeDbSeparator">Database tree separator</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_NavigationTreeDbSeparator" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+          <small>String that separates databases into different tree levels.</small>
+      </th>
+
+  <td>
+                <input type="text" size="25" name="NavigationTreeDbSeparator" id="NavigationTreeDbSeparator" value="_" class="">
+    
+    
+    
+          <a class="restore-default hide" href="#NavigationTreeDbSeparator" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+
+              </table>
+            </fieldset>
+          </div>
+
+                  </div>
+      </div>
+          <div class="tab-pane fade" id="Navi_tables" role="tabpanel" aria-labelledby="Navi_tables-tab">
+        <div class="card border-top-0">
+          <div class="card-body">
+            <h5 class="card-title visually-hidden">Tables</h5>
+                          <h6 class="card-subtitle mb-2 text-muted">Tables display options.</h6>
+            
+            <fieldset class="optbox">
+              <legend>Tables</legend>
+
+                            
+              <table class="table table-borderless">
+                <tr>
+  <th>
+    <label for="NavigationTreeDefaultTabTable">Target for quick access icon</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_NavigationTreeDefaultTabTable" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+      </th>
+
+  <td>
+          <select name="NavigationTreeDefaultTabTable" id="NavigationTreeDefaultTabTable" class="w-75">
+                            <option value="structure" selected>Structure</option>
+                            <option value="sql">SQL</option>
+                            <option value="search">Search</option>
+                            <option value="insert">Insert</option>
+                            <option value="browse">Browse</option>
+              </select>
+    
+    
+    
+          <a class="restore-default hide" href="#NavigationTreeDefaultTabTable" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+<tr>
+  <th>
+    <label for="NavigationTreeDefaultTabTable2">Target for second quick access icon</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_NavigationTreeDefaultTabTable2" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+      </th>
+
+  <td>
+          <select name="NavigationTreeDefaultTabTable2" id="NavigationTreeDefaultTabTable2" class="w-75">
+                            <option value="" selected></option>
+                            <option value="structure">Structure</option>
+                            <option value="sql">SQL</option>
+                            <option value="search">Search</option>
+                            <option value="insert">Insert</option>
+                            <option value="browse">Browse</option>
+              </select>
+    
+    
+    
+          <a class="restore-default hide" href="#NavigationTreeDefaultTabTable2" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+<tr>
+  <th>
+    <label for="NavigationTreeTableSeparator">Table tree separator</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_NavigationTreeTableSeparator" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+          <small>String that separates tables into different tree levels.</small>
+      </th>
+
+  <td>
+                <input type="text" size="25" name="NavigationTreeTableSeparator" id="NavigationTreeTableSeparator" value="__" class="">
+    
+    
+    
+          <a class="restore-default hide" href="#NavigationTreeTableSeparator" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+<tr>
+  <th>
+    <label for="NavigationTreeTableLevel">Maximum table tree depth</label>
+
+          <span class="doc">
+        <a href="./doc/html/config.html#cfg_NavigationTreeTableLevel" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a>
+      </span>
+    
+    
+      </th>
+
+  <td>
+          <input type="number" name="NavigationTreeTableLevel" id="NavigationTreeTableLevel" value="1" class="">
+    
+    
+    
+          <a class="restore-default hide" href="#NavigationTreeTableLevel" title="Restore default value"><img src="themes/dot.gif" title="Restore default value" alt="Restore default value" class="icon ic_s_reload"></a>
+    
+          </td>
+
+  </tr>
+
+              </table>
+            </fieldset>
+          </div>
+
+                  </div>
+      </div>
+      </div>
+</form>
+
+<script type="text/javascript">
+  if (typeof configInlineParams === 'undefined' || !Array.isArray(configInlineParams)) {
+    configInlineParams = [];
+  }
+  configInlineParams.push(function () {
+    registerFieldValidator('FirstLevelNavigationItems', 'validatePositiveNumber', true);
+registerFieldValidator('NavigationTreeDisplayItemFilterMinimum', 'validatePositiveNumber', true);
+registerFieldValidator('NumRecentTables', 'validateNonNegativeNumber', true);
+registerFieldValidator('NumFavoriteTables', 'validateNonNegativeNumber', true);
+registerFieldValidator('NavigationWidth', 'validateNonNegativeNumber', true);
+registerFieldValidator('MaxNavigationItems', 'validatePositiveNumber', true);
+registerFieldValidator('NavigationTreeTableLevel', 'validatePositiveNumber', true);
+
+    $.extend(Messages, {
+      'error_nan_p': 'Not\u0020a\u0020positive\u0020number\u0021',
+      'error_nan_nneg': 'Not\u0020a\u0020non\u002Dnegative\u0020number\u0021',
+      'error_incorrect_port': 'Not\u0020a\u0020valid\u0020port\u0020number\u0021',
+      'error_invalid_value': 'Incorrect\u0020value\u0021',
+      'error_value_lte': 'Value\u0020must\u0020be\u0020less\u0020than\u0020or\u0020equal\u0020to\u0020\u0025s\u0021',
+    });
+
+    $.extend(defaultValues, {
+      'ShowDatabasesNavigationAsTree': true,
+      'NavigationLinkWithMainPanel': true,
+      'NavigationDisplayLogo': true,
+      'NavigationLogoLink': 'index.php',
+      'NavigationLogoLinkWindow': ['main'],
+      'NavigationTreePointerEnable': true,
+      'FirstLevelNavigationItems': '100',
+      'NavigationTreeDisplayItemFilterMinimum': '30',
+      'NumRecentTables': '10',
+      'NumFavoriteTables': '10',
+      'NavigationWidth': '240',
+      'MaxNavigationItems': '50',
+      'NavigationTreeEnableGrouping': true,
+      'NavigationTreeEnableExpansion': true,
+      'NavigationTreeShowTables': true,
+      'NavigationTreeShowViews': true,
+      'NavigationTreeShowFunctions': true,
+      'NavigationTreeShowProcedures': true,
+      'NavigationTreeShowEvents': true,
+      'NavigationTreeAutoexpandSingleDb': true,
+      'NavigationDisplayServers': true,
+      'DisplayServersList': false,
+      'NavigationTreeDisplayDbFilterMinimum': '30',
+      'NavigationTreeDbSeparator': '_',
+      'NavigationTreeDefaultTabTable': ['structure'],
+      'NavigationTreeDefaultTabTable2': [''],
+      'NavigationTreeTableSeparator': '__',
+      'NavigationTreeTableLevel': '1'
+    });
+  });
+  if (typeof configScriptLoaded !== 'undefined' && configInlineParams) {
+    loadInlineConfig();
+  }
+</script>
+</div></div>
+              </div>
+    </div>
+
+          <div class="pma_drop_handler">
+        Drop files here      </div>
+      <div class="pma_sql_import_status">
+        <h2>
+          SQL upload          ( <span class="pma_import_count">0</span> )
+          <span class="close">x</span>
+          <span class="minimize">-</span>
+        </h2>
+        <div></div>
+      </div>
+      </div>
+  <div class="modal fade" id="unhideNavItemModal" tabindex="-1" aria-labelledby="unhideNavItemModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="unhideNavItemModalLabel">Show hidden navigation tree items.</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="modal fade" id="createViewModal" tabindex="-1" aria-labelledby="createViewModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" id="createViewModalDialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createViewModalLabel">Create view</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="createViewModalGoButton">Go</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  
+  <div id="prefs_autoload" class="alert alert-primary d-print-none hide" role="alert">
+    <form action="index.php?route=/preferences/manage" method="post" class="disableAjax">
+        <input type="hidden" name="token" value="2765702d753f4a595754226c45314a3a">
+        <input type="hidden" name="json" value="">
+        <input type="hidden" name="submit_import" value="1">
+        <input type="hidden" name="return_url" value="index.php?route=%2Fexport">
+        Your browser has phpMyAdmin configuration for this domain. Would you like to import it for current session?        <br>
+        <a href="#yes">Yes</a>
+        / <a href="#no">No</a>
+        / <a href="#delete">Delete settings</a>
+    </form>
+</div>
+
+
+  
+      <noscript>
+      <div class="alert alert-danger" role="alert">
+  <img src="themes/dot.gif" title="" alt="" class="icon ic_s_error"> Javascript must be enabled past this point!
+</div>
+
+    </noscript>
+  
+      <div id="floating_menubar" class="d-print-none"></div>
+<nav id="server-breadcrumb" aria-label="breadcrumb">
+  <ol class="breadcrumb breadcrumb-navbar">
+    <li class="breadcrumb-item">
+      <img src="themes/dot.gif" title="" alt="" class="icon ic_s_host">
+      <a href="index.php?route=/" data-raw-text="127.0.0.1" draggable="false">
+        Server:        127.0.0.1
+      </a>
+    </li>
+
+      </ol>
+</nav>
+<div id="topmenucontainer" class="menucontainer">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation" aria-controls="navbarNav" aria-expanded="false">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul id="topmenu" class="navbar-nav">
+                  <li class="nav-item">
+            <a class="nav-link text-nowrap" href="index.php?route=/server/databases">
+              <img src="themes/dot.gif" title="Databases" alt="Databases" class="icon ic_s_db">&nbsp;Databases
+                          </a>
+          </li>
+                  <li class="nav-item">
+            <a class="nav-link text-nowrap" href="index.php?route=/server/sql">
+              <img src="themes/dot.gif" title="SQL" alt="SQL" class="icon ic_b_sql">&nbsp;SQL
+                          </a>
+          </li>
+                  <li class="nav-item">
+            <a class="nav-link text-nowrap" href="index.php?route=/server/status">
+              <img src="themes/dot.gif" title="Status" alt="Status" class="icon ic_s_status">&nbsp;Status
+                          </a>
+          </li>
+                  <li class="nav-item">
+            <a class="nav-link text-nowrap" href="index.php?route=/server/privileges&viewing_mode=server">
+              <img src="themes/dot.gif" title="User accounts" alt="User accounts" class="icon ic_s_rights">&nbsp;User accounts
+                          </a>
+          </li>
+                  <li class="nav-item">
+            <a class="nav-link text-nowrap" href="index.php?route=/server/export">
+              <img src="themes/dot.gif" title="Export" alt="Export" class="icon ic_b_export">&nbsp;Export
+                          </a>
+          </li>
+                  <li class="nav-item">
+            <a class="nav-link text-nowrap" href="index.php?route=/server/import">
+              <img src="themes/dot.gif" title="Import" alt="Import" class="icon ic_b_import">&nbsp;Import
+                          </a>
+          </li>
+                  <li class="nav-item">
+            <a class="nav-link text-nowrap" href="index.php?route=/preferences/manage">
+              <img src="themes/dot.gif" title="Settings" alt="Settings" class="icon ic_b_tblops">&nbsp;Settings
+                          </a>
+          </li>
+                  <li class="nav-item">
+            <a class="nav-link text-nowrap" href="index.php?route=/server/replication">
+              <img src="themes/dot.gif" title="Replication" alt="Replication" class="icon ic_s_replication">&nbsp;Replication
+                          </a>
+          </li>
+                  <li class="nav-item">
+            <a class="nav-link text-nowrap" href="index.php?route=/server/variables">
+              <img src="themes/dot.gif" title="Variables" alt="Variables" class="icon ic_s_vars">&nbsp;Variables
+                          </a>
+          </li>
+                  <li class="nav-item">
+            <a class="nav-link text-nowrap" href="index.php?route=/server/collations">
+              <img src="themes/dot.gif" title="Charsets" alt="Charsets" class="icon ic_s_asci">&nbsp;Charsets
+                          </a>
+          </li>
+                  <li class="nav-item">
+            <a class="nav-link text-nowrap" href="index.php?route=/server/engines">
+              <img src="themes/dot.gif" title="Engines" alt="Engines" class="icon ic_b_engine">&nbsp;Engines
+                          </a>
+          </li>
+                  <li class="nav-item">
+            <a class="nav-link text-nowrap" href="index.php?route=/server/plugins">
+              <img src="themes/dot.gif" title="Plugins" alt="Plugins" class="icon ic_b_plugin">&nbsp;Plugins
+                          </a>
+          </li>
+              </ul>
+    </div>
+  </nav>
+</div>
+
+    <span id="page_nav_icons" class="d-print-none">
+      <span id="lock_page_icon"></span>
+      <span id="page_settings_icon">
+        <img src="themes/dot.gif" title="Page-related settings" alt="Page-related settings" class="icon ic_s_cog">
+      </span>
+      <a id="goto_pagetop" href="#"><img src="themes/dot.gif" title="Click on the bar to scroll to top of page" alt="Click on the bar to scroll to top of page" class="icon ic_s_top"></a>
+    </span>
+  
+  <div id="pma_console_container" class="d-print-none">
+    <div id="pma_console">
+                <div class="toolbar collapsed">
+                    <div class="switch_button console_switch">
+            <img src="themes/dot.gif" title="SQL Query Console" alt="SQL Query Console" class="icon ic_console">
+            <span>Console</span>
+        </div>
+                            <div class="button clear">
+            
+            <span>Clear</span>
+        </div>
+                            <div class="button history">
+            
+            <span>History</span>
+        </div>
+                            <div class="button options">
+            
+            <span>Options</span>
+        </div>
+                                        <div class="button debug hide">
+            
+            <span>Debug SQL</span>
+        </div>
+            </div>
+                <div class="content">
+            <div class="console_message_container">
+                <div class="message welcome">
+                    <span id="instructions-0">
+                        Press Ctrl+Enter to execute query                    </span>
+                    <span class="hide" id="instructions-1">
+                        Press Enter to execute query                    </span>
+                </div>
+                            </div><!-- console_message_container -->
+            <div class="query_input">
+                <span class="console_query_input"></span>
+            </div>
+        </div><!-- message end -->
+                <div class="mid_layer"></div>
+                <div class="card" id="debug_console">
+            <div class="toolbar ">
+                    <div class="button order order_asc">
+            
+            <span>ascending</span>
+        </div>
+                            <div class="button order order_desc">
+            
+            <span>descending</span>
+        </div>
+                            <div class="text">
+            
+            <span>Order:</span>
+        </div>
+                            <div class="switch_button">
+            
+            <span>Debug SQL</span>
+        </div>
+                            <div class="button order_by sort_count">
+            
+            <span>Count</span>
+        </div>
+                            <div class="button order_by sort_exec">
+            
+            <span>Execution order</span>
+        </div>
+                            <div class="button order_by sort_time">
+            
+            <span>Time taken</span>
+        </div>
+                            <div class="text">
+            
+            <span>Order by:</span>
+        </div>
+                            <div class="button group_queries">
+            
+            <span>Group queries</span>
+        </div>
+                            <div class="button ungroup_queries">
+            
+            <span>Ungroup queries</span>
+        </div>
+            </div>
+            <div class="content debug">
+                <div class="message welcome"></div>
+                <div class="debugLog"></div>
+            </div> <!-- Content -->
+            <div class="templates">
+                <div class="debug_query action_content">
+                    <span class="action collapse">
+            Collapse
+                    </span>
+                            <span class="action expand">
+            Expand
+                    </span>
+                            <span class="action dbg_show_trace">
+            Show trace
+                    </span>
+                            <span class="action dbg_hide_trace">
+            Hide trace
+                    </span>
+                            <span class="text count hide">
+            Count
+                            : <span></span>
+                    </span>
+                            <span class="text time">
+            Time taken
+                            : <span></span>
+                    </span>
+            </div>
+            </div> <!-- Template -->
+        </div> <!-- Debug SQL card -->
+                        <div class="card" id="pma_console_options">
+            <div class="toolbar ">
+                    <div class="switch_button">
+            
+            <span>Options</span>
+        </div>
+                            <div class="button default">
+            
+            <span>Set default</span>
+        </div>
+            </div>
+            <div class="content">
+                <label>
+                    <input type="checkbox" name="always_expand">Always expand query messages                </label>
+                <br>
+                <label>
+                    <input type="checkbox" name="start_history">Show query history at start                </label>
+                <br>
+                <label>
+                    <input type="checkbox" name="current_query">Show current browsing query                </label>
+                <br>
+                <label>
+                    <input type="checkbox" name="enter_executes">
+                        Execute queries on Enter and insert new line with Shift+Enter. To make this permanent, view settings.                </label>
+                <br>
+                <label>
+                    <input type="checkbox" name="dark_theme">Switch to dark theme                </label>
+                <br>
+            </div>
+        </div> <!-- Options card -->
+        <div class="templates">
+                        <div class="query_actions">
+                    <span class="action collapse">
+            Collapse
+                    </span>
+                            <span class="action expand">
+            Expand
+                    </span>
+                            <span class="action requery">
+            Requery
+                    </span>
+                            <span class="action edit">
+            Edit
+                    </span>
+                            <span class="action explain">
+            Explain
+                    </span>
+                            <span class="action profiling">
+            Profiling
+                    </span>
+                            <span class="">
+            
+                    </span>
+                            <span class="text failed">
+            Query failed
+                    </span>
+                            <span class="text targetdb">
+            Database
+                            : <span></span>
+                    </span>
+                            <span class="text query_time">
+            Queried time
+                            : <span></span>
+                    </span>
+            </div>
+        </div>
+    </div> <!-- #console end -->
+</div> <!-- #console_container end -->
+
+
+  <div id="page_content">
+    
+
+    <div class="modal fade" id="previewSqlModal" tabindex="-1" aria-labelledby="previewSqlModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="previewSqlModalLabel">Loading</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="modal fade" id="enumEditorModal" tabindex="-1" aria-labelledby="enumEditorModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="enumEditorModalLabel">ENUM/SET editor</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="enumEditorGoButton" data-bs-dismiss="modal">Go</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="modal fade" id="createViewModal" tabindex="-1" aria-labelledby="createViewModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" id="createViewModalDialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createViewModalLabel">Create view</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="createViewModalGoButton">Go</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!DOCTYPE HTML>
+<html lang="en" dir="ltr">
+<head>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <title>phpMyAdmin</title>
+    <meta charset="utf-8">
+    <style type="text/css">
+        html {
+            padding: 0;
+            margin: 0;
+        }
+        body  {
+            font-family: sans-serif;
+            font-size: small;
+            color: #000000;
+            background-color: #F5F5F5;
+            margin: 1em;
+        }
+        h1 {
+            margin: 0;
+            padding: 0.3em;
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #ff0000;
+        }
+        p {
+            margin: 0;
+            padding: 0.5em;
+            border: 0.1em solid red;
+            background-color: #ffeeee;
+        }
+    </style>
+</head>
+<body>
+<h1>phpMyAdmin - Error</h1>
+<p>index.php: Missing parameter: what<a href="./doc/html/faq.html#faqmissingparameters" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a><br>index.php: Missing parameter: export_type<a href="./doc/html/faq.html#faqmissingparameters" target="documentation"><img src="themes/dot.gif" title="Documentation" alt="Documentation" class="icon ic_b_help"></a><br></p>
+</body>
+</html>
+  </div>
+      <div id="selflink" class="d-print-none">
+      <a href="index.php?route=%2Fexport&amp;server=1" title="Open new phpMyAdmin window" target="_blank" rel="noopener noreferrer">
+                  <img src="themes/dot.gif" title="Open new phpMyAdmin window" alt="Open new phpMyAdmin window" class="icon ic_window-new">
+              </a>
+    </div>
+  
+  <div class="clearfloat d-print-none" id="pma_errors">
+    
+  </div>
+
+  
+<script data-cfasync="false" type="text/javascript">
+// <![CDATA[
+var debugSQLInfo = 'null';
+
+// ]]>
+</script>
+
+
+  
+  
+  </body>
+</html>
