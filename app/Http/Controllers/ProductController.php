@@ -6,13 +6,13 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['index', 'product_by_category',]]);
+        $this->middleware('auth:api', ['except' => ['index', 'product_by_category', 'get_limited_products', 'store']]);
     }
 
     //===============================================
@@ -26,19 +26,250 @@ class ProductController extends Controller
     public function index()
     {
         $products = DB::connection('mysql')->select(
-            'SELECT product.*, category.category_name,
+            'SELECT product.*,
                     (SELECT COUNT(*) FROM product_like WHERE product_like.product_id = product.product_id) AS likes
                     FROM product
-                    LEFT JOIN category
-                    ON product.category_id = category.category_id
                '
         );
         $categories = DB::connection('mysql')->select(
             'SELECT * FROM category ORDER BY category_name ASC',
         );
+        $product_sub_category = DB::connection('mysql')->select(
+            'SELECT * FROM sub_category ORDER BY sub_category_name ASC',
+        );
         $array = array();
+
+        $new_products = array();
+
+        foreach ($products as $key => $value) {
+            $new_product['product_id'] = $value->product_id;
+            $new_product['product_name'] = $value->product_name;
+            $new_product['likes'] = $value->likes;
+            $new_product['cover'] = asset('storage/products/' . $value->cover);
+            $new_product['product_description'] = $value->product_description;
+            $new_product['created_at'] = $value->created_at;
+            $new_product['updated_at'] = $value->updated_at;
+
+
+            $product_images = DB::connection('mysql')->select(
+                'SELECT * FROM product_images WHERE product_id = :product_id',
+                ['product_id' => $value->product_id],
+            );
+
+            $new_products_images = array();
+            foreach ($product_images as $product_image) {
+                $product_image_array = array();
+                $product_image_array['product_images_id'] = $product_image->product_images_id;
+                $product_image_array['product_id'] = $value->product_id;
+                $product_image_array['img_url'] = asset('storage/products/' . $product_image->img_url);
+                $product_image_array['created_at'] = $product_image->created_at;
+                $product_image_array['updated_at'] = $product_image->updated_at;
+                array_push($new_products_images, $product_image_array);
+            }
+
+            //retrieve product attributes
+            $product_attributes = DB::connection('mysql')->select(
+                'SELECT * FROM product_attributes WHERE product_id = :product_id',
+                ['product_id' => $value->product_id],
+            );
+
+            $new_product_attributes = array();
+            foreach ($product_attributes as $product_attribute) {
+                $product_attribute_array = array();
+                $product_attribute_array['product_id'] = $value->product_id;
+                $product_attribute_array['product_attributes_default'] = $product_attribute->product_attributes_default;
+                $product_attribute_array['product_attributes_name'] = $product_attribute->product_attributes_name;
+                $product_attribute_array['product_attributes_value'] = $product_attribute->product_attributes_value;
+                $product_attribute_array['product_attributes_price'] = $product_attribute->product_attributes_price;
+                $product_attribute_array['product_attributes_stock_qty'] = $product_attribute->product_attributes_stock_qty;
+                $product_attribute_array['product_attributes_summary'] = !empty($product_attribute->product_attributes_summary) ? $product_attribute->product_attributes_summary : NULL;
+                $product_attribute_array['created_at'] = $product_attribute->created_at;
+                $product_attribute_array['updated_at'] = $product_attribute->updated_at;
+                array_push($new_product_attributes, $product_attribute_array);
+            }
+
+            //retrieve product subcategories
+            $product_subcategories = DB::connection('mysql')->select(
+                'SELECT 
+                            product_sub_category.product_sub_category_id, 
+                            product_sub_category.sub_category_id, 
+                            category.category_id, 
+                            sub_category.sub_category_name, 
+                            sub_category.sub_category_description,
+                            category.category_name, 
+                            category.category_description
+                        FROM 
+                            product_sub_category
+                            INNER JOIN sub_category 
+                                ON product_sub_category.sub_category_id = sub_category.sub_category_id
+                            INNER JOIN category 
+                                ON sub_category.category_id = category.category_id
+                        WHERE 
+                            product_sub_category.product_id =:product_id',
+                ['product_id' => $value->product_id],
+            );
+
+            $new_product_subcategories = array();
+            foreach ($product_subcategories as $product_subcategory) {
+                $product_subcategory_array = array();
+                $product_subcategory_array['product_id'] = $value->product_id;
+                $product_subcategory_array['sub_category_id'] = $product_subcategory->sub_category_id;
+                $product_subcategory_array['category_id'] = $product_subcategory->category_id;
+                $product_subcategory_array['product_id'] = $value->product_id;
+                $product_subcategory_array['product_sub_category_id'] = $product_subcategory->product_sub_category_id;
+                $product_subcategory_array['sub_category_name'] = $product_subcategory->sub_category_name;
+                $product_subcategory_array['category_name'] = $product_subcategory->category_name;
+                $product_subcategory_array['sub_category_description'] = !empty($product_subcategory->sub_category_description) ? $product_subcategory->sub_category_description : NULL;
+                $product_subcategory_array['category_description'] = !empty($product_subcategory->category_description) ? $product_subcategory->category_description : NULL;
+
+                array_push($new_product_subcategories, $product_subcategory_array);
+            }
+
+
+            $new_product['product_sub_categories'] = $new_product_subcategories;
+            $new_product['product_attributes'] = $new_product_attributes;
+            $new_product['product_images'] = $new_products_images;
+
+            array_push($new_products, $new_product);
+        }
+
+        $array['products'] = $new_products;
+        $array['products'] = $new_products;
         $array['categories'] = $categories;
-        $array['products'] = $products;
+        $array['sub_categories'] = $product_sub_category;
+
+        return response()->json($array, 200);
+    }
+
+
+    public function get_limited_products($limit, $randomize)
+    {
+        if (!is_numeric($limit) || !is_numeric($randomize) || $randomize > 1 || $randomize < 0 || $randomize < 1) {
+            return response()->json([
+                'isError' => true,
+                'message' => 'Invalid URL request',
+            ], 422);
+        }
+        //wheather to get products randomly or not
+        $products = ($randomize == 1) ? DB::connection('mysql')->select(
+            'SELECT product.*,
+                    (SELECT COUNT(*) FROM product_like WHERE product_like.product_id = product.product_id) AS likes
+                    FROM product ORDER BY RAND() LIMIT ' . $limit . ' 
+               '
+        ) : DB::connection('mysql')->select(
+                    'SELECT product.*,
+                    (SELECT COUNT(*) FROM product_like WHERE product_like.product_id = product.product_id) AS likes
+                    FROM product LIMIT ' . $limit . '
+               '
+                );
+
+        $categories = DB::connection('mysql')->select(
+            'SELECT * FROM category ORDER BY category_name ASC',
+        );
+        $product_sub_category = DB::connection('mysql')->select(
+            'SELECT * FROM sub_category ORDER BY sub_category_name ASC',
+        );
+        $array = array();
+
+        $new_products = array();
+
+        foreach ($products as $key => $value) {
+            $new_product['product_id'] = $value->product_id;
+            $new_product['product_name'] = $value->product_name;
+            $new_product['likes'] = $value->likes;
+            $new_product['cover'] = asset('storage/products/' . $value->cover);
+            $new_product['product_description'] = $value->product_description;
+            $new_product['created_at'] = $value->created_at;
+            $new_product['updated_at'] = $value->updated_at;
+
+
+            $product_images = DB::connection('mysql')->select(
+                'SELECT * FROM product_images WHERE product_id = :product_id',
+                ['product_id' => $value->product_id],
+            );
+
+            $new_products_images = array();
+            foreach ($product_images as $product_image) {
+                $product_image_array = array();
+                $product_image_array['product_id'] = $value->product_id;
+                $product_image_array['product_images_id'] = $product_image->product_images_id;
+                $product_image_array['product_id'] = $value->product_id;
+                $product_image_array['img_url'] = asset('storage/products/' . $product_image->img_url);
+                $product_image_array['created_at'] = $product_image->created_at;
+                $product_image_array['updated_at'] = $product_image->updated_at;
+                array_push($new_products_images, $product_image_array);
+            }
+
+            //retrieve product attributes
+            $product_attributes = DB::connection('mysql')->select(
+                'SELECT * FROM product_attributes WHERE product_id = :product_id',
+                ['product_id' => $value->product_id],
+            );
+
+            $new_product_attributes = array();
+            foreach ($product_attributes as $product_attribute) {
+                $product_attribute_array = array();
+                $product_attribute_array['product_id'] = $value->product_id;
+                $product_attribute_array['product_attributes_default'] = $product_attribute->product_attributes_default;
+                $product_attribute_array['product_attributes_name'] = $product_attribute->product_attributes_name;
+                $product_attribute_array['product_attributes_value'] = $product_attribute->product_attributes_value;
+                $product_attribute_array['product_attributes_price'] = $product_attribute->product_attributes_price;
+                $product_attribute_array['product_attributes_stock_qty'] = $product_attribute->product_attributes_stock_qty;
+                $product_attribute_array['product_attributes_summary'] = !empty($product_attribute->product_attributes_summary) ? $product_attribute->product_attributes_summary : NULL;
+                $product_attribute_array['created_at'] = $product_attribute->created_at;
+                $product_attribute_array['updated_at'] = $product_attribute->updated_at;
+                array_push($new_product_attributes, $product_attribute_array);
+            }
+
+            //retrieve product subcategories
+            $product_subcategories = DB::connection('mysql')->select(
+                'SELECT 
+                            product_sub_category.product_sub_category_id, 
+                            product_sub_category.sub_category_id, 
+                            category.category_id, 
+                            sub_category.sub_category_name, 
+                            sub_category.sub_category_description,
+                            category.category_name, 
+                            category.category_description
+                        FROM 
+                            product_sub_category
+                            INNER JOIN sub_category 
+                                ON product_sub_category.sub_category_id = sub_category.sub_category_id
+                            INNER JOIN category 
+                                ON sub_category.category_id = category.category_id
+                        WHERE 
+                            product_sub_category.product_id =:product_id',
+                ['product_id' => $value->product_id],
+            );
+
+            $new_product_subcategories = array();
+            foreach ($product_subcategories as $product_subcategory) {
+                $product_subcategory_array = array();
+                $product_subcategory_array['product_id'] = $value->product_id;
+                $product_subcategory_array['sub_category_id'] = $product_subcategory->sub_category_id;
+                $product_subcategory_array['category_id'] = $product_subcategory->category_id;
+                $product_subcategory_array['product_id'] = $value->product_id;
+                $product_subcategory_array['product_sub_category_id'] = $product_subcategory->product_sub_category_id;
+                $product_subcategory_array['sub_category_name'] = $product_subcategory->sub_category_name;
+                $product_subcategory_array['category_name'] = $product_subcategory->category_name;
+                $product_subcategory_array['sub_category_description'] = !empty($product_subcategory->sub_category_description) ? $product_subcategory->sub_category_description : NULL;
+                $product_subcategory_array['category_description'] = !empty($product_subcategory->category_description) ? $product_subcategory->category_description : NULL;
+
+                array_push($new_product_subcategories, $product_subcategory_array);
+            }
+
+
+            $new_product['product_sub_categories'] = $new_product_subcategories;
+            $new_product['product_attributes'] = $new_product_attributes;
+            $new_product['product_images'] = $new_products_images;
+
+            array_push($new_products, $new_product);
+        }
+
+        $array['products'] = $new_products;
+        $array['products'] = $new_products;
+        $array['categories'] = $categories;
+        $array['sub_categories'] = $product_sub_category;
 
         return response()->json($array, 200);
     }
@@ -67,7 +298,24 @@ class ProductController extends Controller
         );
         $array = array();
         $array['categories'] = $categories;
-        $array['products'] = $products;
+        $new_products = array();
+        foreach ($products as $key => $value) {
+            $new_product['product_id'] = $value->product_id;
+            $new_product['category_id'] = $value->category_id;
+            $new_product['product_name'] = $value->product_name;
+            $new_product['qty'] = $value->qty;
+            $new_product['price'] = $value->price;
+            $new_product['img_url'] = asset('storage/products/' . $value->img_url);
+            $new_product['product_description'] = $value->product_description;
+            $new_product['created_at'] = $value->created_at;
+            $new_product['updated_at'] = $value->updated_at;
+            $new_product['category_name'] = $value->category_name;
+            $new_product['likes'] = $value->likes;
+
+            array_push($new_products, $new_product);
+        }
+
+        $array['products'] = $new_products;
 
         return response()->json($array, 200);
     }
@@ -92,31 +340,56 @@ class ProductController extends Controller
     {
         \Log::info('Store method called with data: ', $request->all());
 
-        $request->validate([
-            'category_id' => 'integer|required',
-            'product_name' => 'string|required',
-            'product_description' => 'string|nullable',
-            'qty' => 'integer|required',
-            'price' => 'numeric|required',
-            'img_url' => 'image|required|max:3000'
+
+
+        $validator = Validator::make($request->all(), [
+            'product_name' => 'required|string|max:255',
+            'product_description' => 'nullable|string',
+            'cover' => 'image|required|max:2000',
+
+            'sub_category_id' => 'required|array',
+            'sub_category_id.*' => 'required|integer',
+
+            'product_images' => 'required|array',
+            'product_images.*' => 'image|required|max:1000',
+
+            'product_attributes' => 'required|array',
+            'product_attributes.*.product_attributes_default' => 'required|integer',
+            'product_attributes.*.product_attributes_name' => 'required|string|max:255',
+            'product_attributes.*.product_attributes_value' => 'required|string|max:255',
+            'product_attributes.*.product_attributes_summary' => 'nullable|string',
+            'product_attributes.*.product_attributes_price' => 'required|numeric',
+            'product_attributes.*.product_attributes_stock_qty' => 'required|integer',
         ]);
 
-        //Handle file upload
-        if ($request->file('img_url') != null) {
+
+
+
+        if ($validator->fails()) {
+            return response()->json([
+                'isError' => true,
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+
+        //Handle cover photo file upload
+        if ($request->file('cover') != null) {
             // get filename with extension
-            $fileNameWithExt = $request->file('img_url')->getClientOriginalName();
+            $fileNameWithExt = $request->file('cover')->getClientOriginalName();
 
             //get just filename
             $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
 
             //get just extension
-            $extension = $request->file('img_url')->getClientOriginalExtension();
+            $extension = $request->file('cover')->getClientOriginalExtension();
 
             //filename to store
-            $fileNamToStore = $filename . '_' . time() . '.' . $extension;
+            $fileNamToStore = trim(str_replace(' ', '', $filename . '_' . substr($request->product_name, 0, 10) . '_' . time() . '.' . $extension));
 
             //upload the image
-            $path = $request->file('img_url')->storeAs('public/products', $fileNamToStore);
+            $path = $request->file('cover')->storeAs('public/products', $fileNamToStore);
 
         } else {
             $fileNamToStore = 'noimage.jpg';
@@ -126,31 +399,144 @@ class ProductController extends Controller
         $saveData = DB::connection('mysql')->insert(
             '
                 INSERT INTO product(
-                    category_id,
                     product_name,
-                    qty,
-                    price,
-                    product_description,
-                    img_url
+                    cover,
+                    product_description
                     ) VALUES (
-                    :category_id,
                     :product_name,
-                    :qty,
-                    :price,
-                    :product_description,
-                    :img_url
+                    :cover,
+                    :product_description
                     )
             ',
             [
-                'category_id' => $request->category_id,
                 'product_name' => $request->product_name,
-                'qty' => $request->qty,
-                'price' => $request->price,
-                'product_description' => $request->product_description,
-                'img_url' => $fileNamToStore
+                'product_description' => !empty($request->product_description) ? $request->product_description : NULL,
+                'cover' => $fileNamToStore
             ]
         );
         if ($saveData) {
+
+            // Get the ID of the last inserted record
+            $lastInsertId = DB::connection('mysql')->select('SELECT LAST_INSERT_ID() as product_id');
+            $insertedProductId = $lastInsertId[0]->product_id;
+
+
+            //save product sub categories
+            for ($i = 0; $i < count($request->sub_category_id); $i++) {
+                $getSubCategoryNameByID = DB::connection('mysql')->select('SELECT sub_category_name FROM sub_category WHERE sub_category_id =:id ', ['id' => $request->sub_category_id[$i]]);
+
+                if (!empty($getSubCategoryNameByID)) {
+                    $sub_category_name = $getSubCategoryNameByID[0]->sub_category_name;
+                    $saveDataProductSubCategory = DB::connection('mysql')->insert(
+                        '
+                            INSERT INTO product_sub_category(
+                                product_id,
+                                sub_category_id
+                                ) VALUES (
+                                :product_id,
+                                :sub_category_id
+                                )
+                        ',
+                        [
+                            'product_id' => $insertedProductId,
+                            'sub_category_id' => $request->sub_category_id[$i]
+                        ]
+                    );
+
+                    if (!$saveDataProductSubCategory) {
+                        return response()->json(['isError' => true, 'message' => 'Product save failed but an error is keeping you from saving product sub category name: ' . $sub_category_name], 201);
+                    }
+                } else {
+                    return response()->json(['isError' => true, 'message' => 'Product save failed but an error is keeping you from saving product sub category name, check input'], 201);
+                }
+
+
+            }
+
+            //save product attributes
+            foreach ($request->product_attributes as $key => $value) {
+                $saveDataProductAttributes = DB::connection('mysql')->insert(
+                    '
+                        INSERT INTO product_attributes(
+                            product_id,
+                            product_attributes_default,
+                            product_attributes_name,
+                            product_attributes_value,
+                            product_attributes_summary,
+                            product_attributes_price,
+                            product_attributes_stock_qty
+                            ) VALUES (
+                            :product_id,
+                            :product_attributes_default,
+                            :product_attributes_name,
+                            :product_attributes_value,
+                            :product_attributes_summary,
+                            :product_attributes_price,
+                            :product_attributes_stock_qty
+                            )
+                    ',
+                    [
+                        'product_id' => $insertedProductId,
+                        'product_attributes_default' => $value['product_attributes_default'],
+                        'product_attributes_name' => $value['product_attributes_name'],
+                        'product_attributes_value' => $value['product_attributes_value'],
+                        'product_attributes_summary' => !empty($value['product_attributes_summary']) ? $value['product_attributes_summary'] : NULL,
+                        'product_attributes_price' => $value['product_attributes_price'],
+                        'product_attributes_stock_qty' => $value['product_attributes_stock_qty']
+                    ]
+                );
+
+                if (!$saveDataProductAttributes) {
+                    return response()->json(['isError' => true, 'message' => 'Product save failed but an error is keeping you from saving product attribute: ' . $value['product_attributes_name']], 201);
+                }
+            }
+
+
+            // handle product images file upload
+            for ($i = 0; $i < count($request->product_images); $i++) {
+                //Handle file upload
+                if ($request->product_images[$i] != null) {
+                    // get filename with extension
+                    $fileNameWithExt = $request->product_images[$i]->getClientOriginalName();
+
+                    //get just filename
+                    $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+
+                    //get just extension
+                    $extension = $request->product_images[$i]->getClientOriginalExtension();
+
+                    //filename to store
+                    $fileNamToStore = $filename . '_' . time() . '.' . $extension;
+
+                    //upload the image
+                    $path = $request->product_images[$i]->storeAs('public/products', $fileNamToStore);
+
+                } else {
+                    $fileNamToStore = 'noimage.jpg';
+                }
+
+                $saveDataProductImages = DB::connection('mysql')->insert(
+                    '
+                        INSERT INTO product_images(
+                            product_id,
+                            img_url
+                            ) VALUES (
+                            :product_id,
+                            :img_url
+                            )
+                    ',
+                    [
+                        'product_id' => $insertedProductId,
+                        'img_url' => $fileNamToStore
+                    ]
+                );
+
+                if (!$saveDataProductImages) {
+                    return response()->json(['isError' => true, 'message' => 'Product save failed but an error is keeping you from saving product picture: ' . $fileNamToStore], 201);
+                }
+            }
+
+
             return response()->json(['isError' => false, 'message' => 'Product save successful'], 200);
         } else {
             return response()->json(['isError' => true, 'message' => 'Product save failed'], 201);
@@ -188,7 +574,16 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+        // $request->validate([
+        //     'category_id' => 'integer|required',
+        //     'product_name' => 'string|required',
+        //     'product_description' => 'string|nullable',
+        //     'qty' => 'integer|required',
+        //     'price' => 'numeric|required',
+        //     'img_url' => 'image|required|max:3000'
+        // ]);
+
+        $validator = Validator::make($request->all(), [
             'category_id' => 'integer|required',
             'product_name' => 'string|required',
             'product_description' => 'string|nullable',
@@ -196,6 +591,15 @@ class ProductController extends Controller
             'price' => 'numeric|required',
             'img_url' => 'image|required|max:3000'
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'isError' => true,
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
 
         $checkProduct = DB::connection('mysql')->select('SELECT * FROM product WHERE product_id =:product_id', ['product_id' => $id]);
         if (!empty($checkProduct)) {
@@ -323,10 +727,25 @@ class ProductController extends Controller
     //like a product | add product to wishlist
     public function like_product(Request $request)
     {
-        $request->validate([
-//            'user_id' => 'integer|required',
-            'product_id' => 'integer|required',
+        //         $request->validate([
+// //            'user_id' => 'integer|required',
+//             'product_id' => 'integer|required',
+//         ]);
+
+        $validator = Validator::make($request->all(), [
+            'product_id' => 'integer|required'
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'isError' => true,
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+
+
         $auth_instance = new AuthController();
         $user = $auth_instance->me()->getData()->user_data;
         $user_id = $user->user_id;
@@ -379,7 +798,19 @@ class ProductController extends Controller
     //===============================================
     public function user_add_products_order(Request $request)
     {
-        $request->validate([
+        // $request->validate([
+        //     'product_order' => 'required|array',
+        //     'product_order.*' => 'required|array',
+        //     "product_order.*.product_id" => "integer|required",
+        //     "product_order.*.prod_order_user_id" => "integer|required",
+        //     "product_order.*.prod_order_qty" => "integer|required",
+        //     "product_order.*.prod_order_amount" => "required|regex:/^\d+(\.\d{1,2})?$/",
+
+        //     'order_qty' => 'integer|required',
+        //     'total_amount' => 'required|regex:/^\d+(\.\d{1,2})?$/',
+        // ]);
+
+        $validator = Validator::make($request->all(), [
             'product_order' => 'required|array',
             'product_order.*' => 'required|array',
             "product_order.*.product_id" => "integer|required",
@@ -390,6 +821,15 @@ class ProductController extends Controller
             'order_qty' => 'integer|required',
             'total_amount' => 'required|regex:/^\d+(\.\d{1,2})?$/',
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'isError' => true,
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
 
 
         $data = $request->all();
@@ -475,7 +915,7 @@ class ProductController extends Controller
         $auth_instance = new AuthController();
         $user = $auth_instance->me()->getData()->user_data;
         $user_id = $user->user_id;
-//echo $user_id;return;
+        //echo $user_id;return;
         $orderlist = DB::connection('mysql')->select(
             '
             SELECT

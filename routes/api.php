@@ -27,8 +27,18 @@ Route::prefix('category')->group(function () {
     Route::delete('/{id}', ['App\Http\Controllers\CategoryController', 'destroy']);
 });
 
+Route::prefix('subcategory')->group(function () {
+    Route::get('/', ['App\Http\Controllers\SubCategoryController', 'index']);
+    Route::get('/{id}', ['App\Http\Controllers\SubCategoryController', 'show']);
+    Route::post('/', ['App\Http\Controllers\SubCategoryController', 'store']);
+    Route::put('/{id}', ['App\Http\Controllers\SubCategoryController', 'update']);
+    Route::delete('/{id}', ['App\Http\Controllers\SubCategoryController', 'destroy']);
+});
+
+
 Route::prefix('product')->group(function () {
     Route::get('/', ['App\Http\Controllers\ProductController', 'index']);
+    Route::get('/{limit}/{randomize}', ['App\Http\Controllers\ProductController', 'get_limited_products']);
     Route::get('/{id}', ['App\Http\Controllers\ProductController', 'show']);
     Route::get('product_by_category/{category_id}', ['App\Http\Controllers\ProductController', 'product_by_category']);
     Route::post('/', ['App\Http\Controllers\ProductController', 'store']);
