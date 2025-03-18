@@ -3,9 +3,15 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
+<<<<<<< HEAD
 -- Generation Time: Mar 18, 2025 at 01:50 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
+=======
+-- Generation Time: Aug 09, 2024 at 07:24 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.0.30
+>>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -60,7 +66,10 @@ CREATE TABLE `category` (
   `category_id` int(11) NOT NULL,
   `category_name` varchar(255) NOT NULL,
   `category_description` text DEFAULT NULL,
+<<<<<<< HEAD
   `category_icon` varchar(100) DEFAULT NULL,
+=======
+>>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -69,6 +78,7 @@ CREATE TABLE `category` (
 -- Dumping data for table `category`
 --
 
+<<<<<<< HEAD
 INSERT INTO `category` (`category_id`, `category_name`, `category_description`, `category_icon`, `created_at`, `updated_at`) VALUES
 (11, 'Electronics', 'Contains all Electronics stuff', NULL, '2024-08-08 23:48:57', '2024-08-08 23:48:57'),
 (12, 'Fashion', 'Contains all Fashion/clothes and related stuff', NULL, '2024-08-08 23:49:21', '2024-08-08 23:49:21'),
@@ -81,6 +91,20 @@ INSERT INTO `category` (`category_id`, `category_name`, `category_description`, 
 (19, 'Jewelry & Watches', NULL, NULL, '2024-08-08 23:52:51', '2024-08-08 23:52:51'),
 (20, 'Apparel Accessories', 'Fancy men and wowen Accessories', NULL, '2024-08-09 21:24:03', '2024-08-09 21:24:03'),
 (21, 'Kids Clothing', 'Kids clothes', NULL, '2024-08-09 23:04:45', '2024-08-09 23:04:45');
+=======
+INSERT INTO `category` (`category_id`, `category_name`, `category_description`, `created_at`, `updated_at`) VALUES
+(11, 'Electronics', 'Contains all Electronics stuff', '2024-08-08 23:48:57', '2024-08-08 23:48:57'),
+(12, 'Fashion', 'Contains all Fashion/clothes and related stuff', '2024-08-08 23:49:21', '2024-08-08 23:49:21'),
+(13, 'Home & Garden', 'Contains all house and related stuff', '2024-08-08 23:50:06', '2024-08-08 23:50:06'),
+(14, 'Health & Beauty', 'Contains beauty and cosmestics and related items', '2024-08-08 23:50:34', '2024-08-08 23:50:34'),
+(15, 'Toys & Games', 'Contains kids, playing and related items', '2024-08-08 23:51:01', '2024-08-08 23:51:01'),
+(16, 'Books & Media', NULL, '2024-08-08 23:51:18', '2024-08-08 23:51:18'),
+(17, 'Sports', NULL, '2024-08-08 23:51:30', '2024-08-08 23:51:30'),
+(18, 'Automotive', 'Car accessories, auto electronics and related items', '2024-08-08 23:52:32', '2024-08-08 23:52:32'),
+(19, 'Jewelry & Watches', NULL, '2024-08-08 23:52:51', '2024-08-08 23:52:51'),
+(20, 'Apparel Accessories', 'Fancy men and wowen Accessories', '2024-08-09 21:24:03', '2024-08-09 21:24:03'),
+(21, 'Kids Clothing', 'Kids clothes', '2024-08-09 23:04:45', '2024-08-09 23:04:45');
+>>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
 
 -- --------------------------------------------------------
 
@@ -148,6 +172,7 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`product_id`, `product_name`, `cover`, `product_description`, `created_at`, `updated_at`) VALUES
+<<<<<<< HEAD
 (19, 'Female colourful Jeans Waist Span', '1_Femalecol_1724393355.jpg', 'This is a sample product description', '2024-08-23 15:09:16', '2024-08-23 15:09:16'),
 (20, 'Sdang Club Men\'s Span Slim Fit Soft Jeans SKD0923', '7_SdangClub_1724393670.jpg', 'This is a sample product description', '2024-08-23 15:14:30', '2024-08-23 15:14:30'),
 (21, 'Women\'s Pretty Slim Blue Jeans', '194_Women\'sPr_1724393840.jpg', 'This is a sample product description', '2024-08-23 15:17:20', '2024-08-23 15:17:20'),
@@ -158,6 +183,15 @@ INSERT INTO `product` (`product_id`, `product_name`, `cover`, `product_descripti
 (26, 'Petitmue Toddler Today Stripe Short Sleeve T-shirt GMECT53', '38496_PetitmueT_1724396913.jpg', 'This is a sample product description', '2024-08-23 16:08:33', '2024-08-23 16:08:33'),
 (27, 'Samsung Galaxy Z Flip 6 Self-Payment', '1_SamsungGa_1724398130.png', 'This is a sample product description', '2024-08-23 16:28:50', '2024-08-23 16:28:50'),
 (28, 'Unisex Adidas Shoes Running Galaxy 7', '2219_UnisexAdi_1724399439.jpg', 'This is a sample product description', '2024-08-23 16:50:39', '2024-08-23 16:50:39');
+=======
+(7, 'Converse All Star Limited Edition', '7799_ConverseA_1723192134.jpg', 'This is a sample product description', '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
+(8, 'Stylehorn Gavin Polarized Sunglasses', '17308_Stylehorn_1723206840.jpg', 'This is a sample product description', '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
+(9, 'Business Men\'s Quartz Watch', '17417_BusinessM_1723207540.jpg', 'This is a sample product description', '2024-08-09 21:45:40', '2024-08-09 21:45:40'),
+(10, 'Vans Unisex Old School Black', '17706_VansUnise_1723208256.jpg', 'This is a sample product description', '2024-08-09 21:57:36', '2024-08-09 21:57:36'),
+(16, 'Vans Unisex Old Canvas', '17692_VansUnise_1723208870.jpg', 'This is a sample product description', '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
+(17, 'Men\'s Panties Drawers Square Functional Long Drawers', '17857_Men\'sPant_1723209973.jpg', 'This is a sample product description |  Season of use: All seasons', '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
+(18, '0-12 years twin shirt', '3813_0-12years_1723212682.jpg', 'This is a sample product description |  Season of use: All seasons', '2024-08-09 23:11:22', '2024-08-09 23:11:22');
+>>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
 
 -- --------------------------------------------------------
 
@@ -183,6 +217,7 @@ CREATE TABLE `product_attributes` (
 --
 
 INSERT INTO `product_attributes` (`product_attributes_id`, `product_id`, `product_attributes_default`, `product_attributes_name`, `product_attributes_value`, `product_attributes_summary`, `product_attributes_price`, `product_attributes_stock_qty`, `created_at`, `updated_at`) VALUES
+<<<<<<< HEAD
 (23, 19, 1, 'Female colourful Jeans Waist Span', 'Series', 'Yellow Series', 21000, 4, '2024-08-23 15:09:16', '2024-08-23 15:09:16'),
 (24, 20, 1, 'Size', '32(L)', 'Season of use: All seasons\nColor series: Black series\nBottom size: Men\'s 32-33 inches\nTarget audience: Men', 42300, 10, '2024-08-23 15:14:30', '2024-08-23 15:14:30'),
 (25, 21, 1, 'Size', '26(L)', 'Season of use: All seasons\nColor series: Blue series\nBottom size: women\'s 26-29 inches\nTarget audience: Men', 42300, 11, '2024-08-23 15:17:20', '2024-08-23 15:17:20'),
@@ -197,6 +232,17 @@ INSERT INTO `product_attributes` (`product_attributes_id`, `product_id`, `produc
 (34, 26, 0, 'Size, Color and Material', '120 - Yellow - Soft', 'Country of Origin: Bangladesh\r\nMaterial: See contents\r\nQuantity: 1\r\nPattern/Print: Stripes\r\nRelease year: 2024', 4500, 3, '2024-08-23 16:08:33', '2024-08-23 16:08:33'),
 (35, 27, 1, 'Size, Color and OS', '5.5 - Purple - Flip-Android 14', 'Cellular carrier: Air Machine\nCore Type: Octacore\nHome Appliance Model: Galaxy Z Flip', 1500000, 33, '2024-08-23 16:28:50', '2024-08-23 16:28:50'),
 (36, 28, 1, 'Size, Color', '250 - Black', 'Season of use: All seasons\nColor series: Black series', 58000, 12, '2024-08-23 16:50:39', '2024-08-23 16:50:39');
+=======
+(6, 7, 1, 'Size', '8', 'This is a product sample attribute description', 200000, 15, '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
+(7, 8, 1, 'Frame Color', 'Black', 'WARNING: Fashion Glasses. Not to be worn outside to protect the eyes against strong sunlight. Not designed or intended for use in play by children', 10000, 11, '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
+(8, 9, 1, 'Watch Shape', 'Round', 'Strap Material:	Zinc Alloy, PU Leather\nDial Color:	Orange\nWater Resistance:	No Waterproof\nGender:	Men\nStyle:	Casual, Simple\nType:	Wrist Watches\nBoxes Included:	No\nScale Display:	Bar Scale\nCase Material:	Zinc Alloy\nSpecular Material:	Mineral Glass\nPower Supply:	Battery Powered(Button/Coin Cell Battery)', 200000, 4, '2024-08-09 21:45:40', '2024-08-09 21:45:40'),
+(9, 10, 1, 'Color', 'Black Series | All Seasons', 'Strap Material:	Zinc Alloy, PU Leather\nDial Color:	Orange\nWater Resistance:	No Waterproof\nGender:	Men\nStyle:	Casual, Simple\nType:	Wrist Watches\nBoxes Included:	No\nScale Display:	Bar Scale\nCase Material:	Zinc Alloy\nSpecular Material:	Mineral Glass\nPower Supply:	Battery Powered(Button/Coin Cell Battery)', 56000, 23, '2024-08-09 21:57:36', '2024-08-09 21:57:36'),
+(18, 16, 1, 'Color', 'Red Series | All Seasons', 'This is a description for first Product', 33500, 17, '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
+(19, 16, 0, 'Color', 'Maron Series | All Seasons', NULL, 41000, 10, '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
+(20, 17, 1, 'Tape Multicolor Set', '95% Polyester, 5% Elastane', 'This is a description for first Product', 15000, 50, '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
+(21, 18, 1, 'Color', 'Yellow Shirt', 'This is a description for first Product attribute 1', 5000, 12, '2024-08-09 23:11:22', '2024-08-09 23:11:22'),
+(22, 18, 0, 'Color', 'Black Shirt', 'Description goes here', 5200, 24, '2024-08-09 23:11:22', '2024-08-09 23:11:22');
+>>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
 
 -- --------------------------------------------------------
 
@@ -217,6 +263,7 @@ CREATE TABLE `product_images` (
 --
 
 INSERT INTO `product_images` (`product_images_id`, `product_id`, `img_url`, `created_at`, `updated_at`) VALUES
+<<<<<<< HEAD
 (44, 19, '2_1724393356.jpg', '2024-08-23 15:09:16', '2024-08-23 15:09:16'),
 (45, 19, '3_1724393356.jpg', '2024-08-23 15:09:16', '2024-08-23 15:09:16'),
 (46, 19, '4_1724393356.jpg', '2024-08-23 15:09:16', '2024-08-23 15:09:16'),
@@ -248,6 +295,27 @@ INSERT INTO `product_images` (`product_images_id`, `product_id`, `img_url`, `cre
 (72, 27, '4_1724398130.png', '2024-08-23 16:28:50', '2024-08-23 16:28:50'),
 (73, 27, '5_1724398130.png', '2024-08-23 16:28:50', '2024-08-23 16:28:50'),
 (74, 28, '59943_1724399439.jpg', '2024-08-23 16:50:39', '2024-08-23 16:50:39');
+=======
+(16, 7, '3594_1723192134.jpg', '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
+(17, 7, '3798_1723192134.jpg', '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
+(18, 7, '9001_1723192134.jpg', '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
+(19, 8, '17209_1723206841.jpg', '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
+(20, 8, '17210_1723206841.jpg', '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
+(21, 8, '17215_1723206841.jpg', '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
+(22, 9, '17417_1723207540.jpg', '2024-08-09 21:45:40', '2024-08-09 21:45:40'),
+(23, 10, '17704_1723208256.jpg', '2024-08-09 21:57:36', '2024-08-09 21:57:36'),
+(33, 16, '17695_1723208870.jpg', '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
+(34, 16, '17692_1723208870.jpg', '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
+(35, 16, '17708_1723208870.jpg', '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
+(36, 17, '17858_1723209973.jpg', '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
+(37, 17, '17859_1723209973.jpg', '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
+(38, 17, '17861_1723209973.jpg', '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
+(39, 17, '17862_1723209973.jpg', '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
+(40, 18, '3813_1723212682.jpg', '2024-08-09 23:11:22', '2024-08-09 23:11:22'),
+(41, 18, '3814_1723212682.jpg', '2024-08-09 23:11:22', '2024-08-09 23:11:22'),
+(42, 18, '3816_1723212682.jpg', '2024-08-09 23:11:22', '2024-08-09 23:11:22'),
+(43, 18, '3815_1723212682.jpg', '2024-08-09 23:11:22', '2024-08-09 23:11:22');
+>>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
 
 -- --------------------------------------------------------
 
@@ -256,13 +324,18 @@ INSERT INTO `product_images` (`product_images_id`, `product_id`, `img_url`, `cre
 --
 
 CREATE TABLE `product_like` (
+<<<<<<< HEAD
   `product_like_id` int(11) NOT NULL,
+=======
+  `product_like` int(11) NOT NULL,
+>>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
   `product_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+<<<<<<< HEAD
 --
 -- Dumping data for table `product_like`
 --
@@ -293,6 +366,8 @@ CREATE TABLE `product_shipping` (
 INSERT INTO `product_shipping` (`product_shipping_id`, `product_id`, `shipping_company_id`, `shipping_type`, `shipping_amount`, `created_at`, `updated_at`) VALUES
 (2, 23, 1, 'Paid', 0, '2024-10-20 02:03:18', '2024-10-20 02:03:18');
 
+=======
+>>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
 -- --------------------------------------------------------
 
 --
@@ -312,6 +387,7 @@ CREATE TABLE `product_sub_category` (
 --
 
 INSERT INTO `product_sub_category` (`product_sub_category_id`, `sub_category_id`, `product_id`, `created_at`, `updated_at`) VALUES
+<<<<<<< HEAD
 (33, 4, 19, '2024-08-23 15:09:16', '2024-08-23 15:09:16'),
 (34, 3, 20, '2024-08-23 15:14:30', '2024-08-23 15:14:30'),
 (35, 4, 21, '2024-08-23 15:17:20', '2024-08-23 15:17:20'),
@@ -348,6 +424,20 @@ CREATE TABLE `shipping_company` (
 
 INSERT INTO `shipping_company` (`shipping_company_id`, `shipping_company_name`, `shipping_company_address`, `created_at`, `updated_at`) VALUES
 (1, 'Fedex', '', '2024-10-20 02:02:52', '2024-10-20 02:02:52');
+=======
+(11, 3, 7, '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
+(12, 4, 7, '2024-08-09 17:28:54', '2024-08-09 17:28:54'),
+(13, 22, 8, '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
+(14, 21, 8, '2024-08-09 21:34:01', '2024-08-09 21:34:01'),
+(15, 19, 9, '2024-08-09 21:45:40', '2024-08-09 21:45:40'),
+(16, 3, 10, '2024-08-09 21:57:36', '2024-08-09 21:57:36'),
+(17, 4, 10, '2024-08-09 21:57:36', '2024-08-09 21:57:36'),
+(28, 3, 16, '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
+(29, 4, 16, '2024-08-09 22:07:50', '2024-08-09 22:07:50'),
+(30, 3, 17, '2024-08-09 22:26:13', '2024-08-09 22:26:13'),
+(31, 23, 18, '2024-08-09 23:11:22', '2024-08-09 23:11:22'),
+(32, 4, 18, '2024-08-09 23:11:22', '2024-08-09 23:11:22');
+>>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
 
 -- --------------------------------------------------------
 
@@ -493,11 +583,16 @@ ALTER TABLE `product_images`
 -- Indexes for table `product_like`
 --
 ALTER TABLE `product_like`
+<<<<<<< HEAD
   ADD PRIMARY KEY (`product_like_id`),
+=======
+  ADD PRIMARY KEY (`product_like`),
+>>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
   ADD KEY `product_id` (`product_id`),
   ADD KEY `user_id` (`user_id`);
 
 --
+<<<<<<< HEAD
 -- Indexes for table `product_shipping`
 --
 ALTER TABLE `product_shipping`
@@ -506,6 +601,8 @@ ALTER TABLE `product_shipping`
   ADD KEY `shipping_company_id` (`shipping_company_id`);
 
 --
+=======
+>>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
 -- Indexes for table `product_sub_category`
 --
 ALTER TABLE `product_sub_category`
@@ -514,12 +611,15 @@ ALTER TABLE `product_sub_category`
   ADD KEY `product_id` (`product_id`);
 
 --
+<<<<<<< HEAD
 -- Indexes for table `shipping_company`
 --
 ALTER TABLE `shipping_company`
   ADD PRIMARY KEY (`shipping_company_id`);
 
 --
+=======
+>>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
 -- Indexes for table `sub_category`
 --
 ALTER TABLE `sub_category`
@@ -552,7 +652,11 @@ ALTER TABLE `cart_item`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
+<<<<<<< HEAD
   MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+=======
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+>>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -576,24 +680,37 @@ ALTER TABLE `payment_details`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
+<<<<<<< HEAD
   MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+=======
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+>>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
 
 --
 -- AUTO_INCREMENT for table `product_attributes`
 --
 ALTER TABLE `product_attributes`
+<<<<<<< HEAD
   MODIFY `product_attributes_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+=======
+  MODIFY `product_attributes_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+>>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
 
 --
 -- AUTO_INCREMENT for table `product_images`
 --
 ALTER TABLE `product_images`
+<<<<<<< HEAD
   MODIFY `product_images_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+=======
+  MODIFY `product_images_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+>>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
 
 --
 -- AUTO_INCREMENT for table `product_like`
 --
 ALTER TABLE `product_like`
+<<<<<<< HEAD
   MODIFY `product_like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
@@ -601,11 +718,15 @@ ALTER TABLE `product_like`
 --
 ALTER TABLE `product_shipping`
   MODIFY `product_shipping_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+=======
+  MODIFY `product_like` int(11) NOT NULL AUTO_INCREMENT;
+>>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
 
 --
 -- AUTO_INCREMENT for table `product_sub_category`
 --
 ALTER TABLE `product_sub_category`
+<<<<<<< HEAD
   MODIFY `product_sub_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
@@ -613,6 +734,9 @@ ALTER TABLE `product_sub_category`
 --
 ALTER TABLE `shipping_company`
   MODIFY `shipping_company_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+=======
+  MODIFY `product_sub_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+>>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
 
 --
 -- AUTO_INCREMENT for table `sub_category`
@@ -677,6 +801,7 @@ ALTER TABLE `product_like`
   ADD CONSTRAINT `product_like_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+<<<<<<< HEAD
 -- Constraints for table `product_shipping`
 --
 ALTER TABLE `product_shipping`
@@ -684,6 +809,8 @@ ALTER TABLE `product_shipping`
   ADD CONSTRAINT `product_shipping_ibfk_2` FOREIGN KEY (`shipping_company_id`) REFERENCES `shipping_company` (`shipping_company_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+=======
+>>>>>>> d40537128c39c377367a3c9d552d85a8f166ff2b
 -- Constraints for table `product_sub_category`
 --
 ALTER TABLE `product_sub_category`
