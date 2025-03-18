@@ -51,8 +51,11 @@ class CategoryController extends Controller
         //     'category_description' => 'string|nullable|max:255'
         // ]);
 
+        \Log::info('Store method called with data: ', $request->all());
+
         $validator = Validator::make($request->all(), [
             'category_name' => 'string|required|max:255',
+            'category_icon.*' => 'image|nullable|max:1000',
             'category_description' => 'string|nullable'
         ]);
 
@@ -64,19 +67,43 @@ class CategoryController extends Controller
             ], 422);
         }
 
+        //Handle category_icon photo file upload
+        if ($request->file('category_icon') != null) {
+            // get filename with extension
+            $fileNameWithExt = $request->file('category_icon')->getClientOriginalName();
+
+            //get just Ffilename
+            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+
+            //get just extension
+            $extension = $request->file('category_icon')->getClientOriginalExtension();
+
+            //filename to store
+            $fileNamToStore = trim(str_replace(' ', '', $filename . '_' . substr($request->category_name, 0, 10) . '_' . time() . '.' . $extension));
+
+            //upload the image
+            $path = $request->file('category_icon')->storeAs('public/category_icon', $fileNamToStore);
+
+        } else {
+            $fileNamToStore = NULL;
+        }
+
         $saveData = DB::connection('mysql')->insert(
             '
                 INSERT INTO category(
                     category_name,
-                    category_description
+                    category_description,
+                    category_icon
                     ) VALUES (
                     :category_name,
-                    :category_description
+                    :category_description,
+                    :category_icon
                     )
             ',
             [
                 'category_name' => $request->category_name,
-                'category_description' => $request->category_description
+                'category_description' => $request->category_description,
+                'category_icon' => $fileNamToStore
             ]
         );
         if ($saveData) {
@@ -95,7 +122,8 @@ class CategoryController extends Controller
     public function show($id)
     {
         $category = DB::connection('mysql')->select(
-            'SELECT * FROM category WHERE category_id =:id ', ['id' => $id]
+            'SELECT * FROM category WHERE category_id =:id ',
+            ['id' => $id]
         );
         if (!empty($category)) {
             return response()->json($category[0], 200);
