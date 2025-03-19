@@ -18,6 +18,20 @@ class HomeScreenController extends Controller
             'SELECT * FROM category ORDER BY RAND()',
         );
 
+        $categories = DB::connection('mysql')->select(
+            'SELECT * FROM category ORDER BY category_name ASC',
+        );
+
+        $new_category = array();
+        foreach ($categories as $key => $value) {
+            $array_cat =array();
+            $array_cat['category_id'] = $value->category_id;
+            $array_cat['category_name'] = $value->category_name;
+            $array_cat['category_description'] = $value->category_description;
+            $array_cat['category_icon'] = asset('storage/category/' . $value->category_icon);
+            array_push($new_category, $array_cat);
+        }
+
         //wheather to get products randomly or not
         $products =  DB::connection('mysql')->select(
                     'SELECT product.*,
@@ -26,9 +40,7 @@ class HomeScreenController extends Controller
                        '
                 );
 
-        $categories = DB::connection('mysql')->select(
-            'SELECT * FROM category ORDER BY category_name ASC',
-        );
+        
         $product_sub_category = DB::connection('mysql')->select(
             'SELECT * FROM sub_category ORDER BY sub_category_name ASC',
         );
@@ -150,7 +162,7 @@ class HomeScreenController extends Controller
         }
 
         $array['products'] = $new_products;
-        $array['categories'] = $categories;
+        $array['categories'] = $new_category;
         $array['sub_categories'] = $product_sub_category;
 
         return response()->json($array, 200);

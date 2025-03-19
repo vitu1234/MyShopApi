@@ -16,10 +16,21 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category = DB::connection('mysql')->select(
+        $categories = DB::connection('mysql')->select(
             'SELECT * FROM category'
         );
-        return response()->json($category, 200);
+        $new_category = array();
+        foreach ($categories as $key => $value) {
+            $array_cat =array();
+            $array_cat['category_id'] = $value->category_id;
+            $array_cat['category_name'] = $value->category_name;
+            $array_cat['category_description'] = $value->category_description;
+            $array_cat['category_icon'] = asset('storage/category/' . $value->category_icon);
+            array_push($new_category, $array_cat);
+        }
+
+
+        return response()->json($new_category, 200);
     }
 
     public function limited_categories()
